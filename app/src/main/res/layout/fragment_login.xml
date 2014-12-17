@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity$PlaceholderFragment">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+
+     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.5">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/edit_text_email"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/edit_text_password"
+                android:layout_gravity="bottom"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="fill_parent"
+            android:text="Play"
+            android:id="@+id/btn_regular_login"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:background="#b35e2f"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:text="Facebook Login"
+                android:id="@+id/btn_facebook_login"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:background="#4261be"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Twitter Login"
+                android:id="@+id/btn_twitter_login"
+                android:layout_below="@+id/btn_facebook_login"
+                android:layout_centerHorizontal="true"
+                android:background="#45a9e6"/>
+        </LinearLayout>
+</LinearLayout>
