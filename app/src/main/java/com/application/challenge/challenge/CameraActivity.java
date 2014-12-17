@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,35 +16,32 @@ import com.commonsware.cwac.camera.CameraHost;
 import com.commonsware.cwac.camera.SimpleCameraHost;
 
 
-public class CameraActivity extends Activity {
+public class CameraActivity extends Activity implements ChallengeCameraFragment.Contract{
 
     private final String TAG_CAMERA_FRAGMENT = "camera_fragment";
     private CameraFragment f;
-
+    private static final String STATE_SELECTED_NAVIGATION_ITEM=
+            "selected_navigation_item";
+    private static final String STATE_SINGLE_SHOT="single_shot";
+    private static final String STATE_LOCK_TO_LANDSCAPE=
+            "lock_to_landscape";
+    private static final int CONTENT_REQUEST=1337;
+    private ChallengeCameraFragment std=null;
+    private ChallengeCameraFragment ffc=null;
+    private ChallengeCameraFragment current=null;
+    private boolean hasTwoCameras=(android.hardware.Camera.getNumberOfCameras() > 1);
+    private boolean singleShot=false;
+    private boolean isLockedToLandscape=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        f = new CameraFragment();
+        current=ChallengeCameraFragment.newInstance(false);
+
         getFragmentManager().beginTransaction()
-                .add(R.id.camera_fragment, f, TAG_CAMERA_FRAGMENT)
-                .commit();
-
-        f.setHost(new SimpleCameraHost(this));
-
-        Toast.makeText(getApplicationContext(),String.valueOf(f.getHost().getCameraId()),Toast.LENGTH_LONG).show();
-//        f.restartPreview();
-
-        findViewById(R.id.btn_camera_shutter).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                takePicture();
-                Toast.makeText(getApplicationContext(),"Hola",Toast.LENGTH_LONG).show();
-
-            }
-        });
+                .replace(R.id.container, current).commit();
 
     }
 
@@ -71,10 +69,19 @@ public class CameraActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void takePicture() {
-        CameraFragment f = (CameraFragment) getFragmentManager().findFragmentByTag(TAG_CAMERA_FRAGMENT);
-        if (f != null && f.isVisible()) {
-            f.takePicture();
+    @Override
+    public boolean isSingleShotMode() {
+        return(singleShot);
+    }
+
+    @Override
+    public void setSingleShotMode(boolean mode) {
+        singleShot=mode;
+    }
+
+    public void takePicture(View v) {
+        if (current != null   && !current.isSingleShotProcessing()) {
+            current.takePicture();
         }
     }
 }
