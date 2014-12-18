@@ -4,25 +4,57 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:background="#15191b">
+
+        <Button
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:id="@+id/btn_camera_close"
+            android:layout_margin="16dp"
+            android:background="@drawable/btn_cancel"
+            />
+        </LinearLayout>
+
     <FrameLayout
         android:id="@+id/camera"
         android:layout_width="match_parent"
         android:layout_height="0dip"
-        android:layout_weight="1"/>
+        android:layout_weight="1">
+    </FrameLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:id="@+id/btn_camera_shutter"
-        android:onClick="takePicture"
-        android:text="Sacar foto"/>
-
-
-    <SeekBar
-        android:id="@+id/skbr_camera_zoom"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="60dp"
+        android:background="#CC151a1a"
+        android:layout_gravity="center_horizontal|bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_camera_change"
+            android:layout_centerInParent="true"
+            android:background="@drawable/btn_rotate_camera"
+            android:onClick="turnCamera"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="#15191b">
+
+        <at.markushi.ui.CircleButton
+            android:layout_width="72dip"
+            android:layout_height="72dip"
+            android:layout_centerInParent="true"
+            android:id="@+id/btn_camera_shutter"
+            android:onClick="takePicture"
+        />
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.application.challenge.challenge;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Camera;
 import android.os.Bundle;
@@ -32,13 +33,15 @@ public class CameraActivity extends Activity implements ChallengeCameraFragment.
     private boolean hasTwoCameras=(android.hardware.Camera.getNumberOfCameras() > 1);
     private boolean singleShot=false;
     private boolean isLockedToLandscape=false;
+    private boolean usingFFC = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        current=ChallengeCameraFragment.newInstance(false);
+        current=ChallengeCameraFragment.newInstance(usingFFC);
+        std = current;
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, current).commit();
@@ -83,5 +86,32 @@ public class CameraActivity extends Activity implements ChallengeCameraFragment.
         if (current != null   && !current.isSingleShotProcessing()) {
             current.takePicture();
         }
+       // startActivity(new Intent(),ShareOptions.class);
+    }
+
+    public void turnCamera(View v) {
+        usingFFC = !usingFFC;
+        if(hasTwoCameras){
+            if(ffc == null && usingFFC == true){
+                ffc = ChallengeCameraFragment.newInstance(usingFFC);
+            }
+            if(usingFFC == true){
+                std = current;
+                current = ffc;
+            }else{
+                current = std;
+            }
+        }
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, current).commit();
+
+        findViewById(android.R.id.content).post(new Runnable() {
+            @Override
+            public void run() {
+                current.lockToLandscape(false);
+            }
+        });
+
     }
 }

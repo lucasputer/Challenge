@@ -7,5 +7,7 @@
     <string name="facebook_app_id">770936766313089</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_display">DisplayActivity</string>
+    <string name="no_image">No hay imagen para mostrar</string>
 
 </resources>

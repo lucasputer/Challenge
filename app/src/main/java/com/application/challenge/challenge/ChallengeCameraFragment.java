@@ -4,6 +4,7 @@ package com.application.challenge.challenge;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -25,8 +26,9 @@ import com.commonsware.cwac.camera.CameraUtils;
 import com.commonsware.cwac.camera.SimpleCameraHost;
 import com.commonsware.cwac.camera.PictureTransaction;
 
-public class ChallengeCameraFragment extends CameraFragment implements
-        OnSeekBarChangeListener {
+import at.markushi.ui.CircleButton;
+
+public class ChallengeCameraFragment extends CameraFragment {
     private static final String KEY_USE_FFC= "com.commonsware.cwac.camera.demo.USE_FFC";
     private MenuItem singleShotItem=null;
     private MenuItem autoFocusItem=null;
@@ -36,8 +38,8 @@ public class ChallengeCameraFragment extends CameraFragment implements
     private MenuItem stopRecordItem=null;
     private MenuItem mirrorFFC=null;
     private boolean singleShotProcessing=false;
-    private SeekBar zoom=null;
-    private Button shutterButton=null;
+    private CircleButton shutterButton=null;
+    private Button changeCameraButton=null;
     private long lastFaceToast=0L;
     String flashMode=null;
 
@@ -72,10 +74,11 @@ public class ChallengeCameraFragment extends CameraFragment implements
         View results=inflater.inflate(R.layout.fragment_camera, container, false);
 
         ((ViewGroup)results.findViewById(R.id.camera)).addView(cameraView);
-        zoom=(SeekBar)results.findViewById(R.id.skbr_camera_zoom);
-        zoom.setKeepScreenOn(true);
 
-        shutterButton=(Button)results.findViewById(R.id.btn_camera_shutter);
+
+        shutterButton=(CircleButton)results.findViewById(R.id.btn_camera_shutter);
+        changeCameraButton=(Button)results.findViewById(R.id.btn_camera_change);
+        shutterButton.setColor(Color.parseColor("#ed5800"));
 
         setRecordingItemVisibility();
 
@@ -179,32 +182,10 @@ public class ChallengeCameraFragment extends CameraFragment implements
         return(singleShotProcessing);
     }
 
-    @Override
-    public void onProgressChanged(SeekBar seekBar, int progress,
-                                  boolean fromUser) {
-        if (fromUser) {
-            zoom.setEnabled(false);
-            zoomTo(zoom.getProgress()).onComplete(new Runnable() {
-                @Override
-                public void run() {
-                    zoom.setEnabled(true);
-                }
-            }).go();
-        }
-    }
 
-    @Override
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // ignore
-    }
-
-    @Override
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        // ignore
-    }
 
     void setRecordingItemVisibility() {
-        if (zoom != null && recordItem != null) {
+        if (recordItem != null) {
             if (getDisplayOrientation() != 0
                     && getDisplayOrientation() != 180) {
                 recordItem.setVisible(false);
@@ -274,9 +255,9 @@ public class ChallengeCameraFragment extends CameraFragment implements
                         takePictureItem.setEnabled(true);
                     }
                 });
-//
-//                DisplayActivity.imageToShow=image;
-//                startActivity(new Intent(getActivity(), DisplayActivity.class));
+
+               DisplayActivity.imageToShow=image;
+                startActivity(new Intent(getActivity(), DisplayActivity.class));
             }
             else {
                 super.saveImage(xact, image);
@@ -320,13 +301,7 @@ public class ChallengeCameraFragment extends CameraFragment implements
                             Camera.Parameters.FLASH_MODE_AUTO,
                             Camera.Parameters.FLASH_MODE_ON);
 
-            if (doesZoomReallyWork() && parameters.getMaxZoom() > 0) {
-                zoom.setMax(parameters.getMaxZoom());
-                zoom.setOnSeekBarChangeListener(ChallengeCameraFragment.this);
-            }
-            else {
-                zoom.setEnabled(false);
-            }
+
 
             if (parameters.getMaxNumDetectedFaces() > 0) {
                 supportsFaces=true;
@@ -363,7 +338,7 @@ public class ChallengeCameraFragment extends CameraFragment implements
 
         @Override
         public boolean mirrorFFC() {
-            return(mirrorFFC.isChecked());
+            return false;
         }
     }
 }
