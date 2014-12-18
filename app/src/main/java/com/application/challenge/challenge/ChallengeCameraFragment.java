@@ -95,8 +95,7 @@ public class ChallengeCameraFragment extends CameraFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 //        inflater.inflate(R.menu.camera, menu);
-//
-//        takePictureItem=menu.findItem(R.id.camera);
+//            takePictureItem= menu.findItem(R.id.camera);
 //        singleShotItem=menu.findItem(R.id.single_shot);
 //        singleShotItem.setChecked(getContract().isSingleShotMode());
 //        autoFocusItem=menu.findItem(R.id.autofocus);
@@ -237,24 +236,13 @@ public class ChallengeCameraFragment extends CameraFragment {
 
         @Override
         public boolean useSingleShotMode() {
-            if (singleShotItem == null) {
-                return(false);
-            }
-
-            return(singleShotItem.isChecked());
+            return true;
         }
 
         @Override
         public void saveImage(PictureTransaction xact, byte[] image) {
             if (useSingleShotMode()) {
                 singleShotProcessing=false;
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        takePictureItem.setEnabled(true);
-                    }
-                });
 
                DisplayActivity.imageToShow=image;
                 startActivity(new Intent(getActivity(), DisplayActivity.class));
@@ -340,6 +328,16 @@ public class ChallengeCameraFragment extends CameraFragment {
         public boolean mirrorFFC() {
             return false;
         }
+
+        @Override
+        public Camera.ShutterCallback getShutterCallback(){
+            return new Camera.ShutterCallback() {
+                @Override
+                public void onShutter() {
+                }
+            };
+        }
+
     }
 }
 
