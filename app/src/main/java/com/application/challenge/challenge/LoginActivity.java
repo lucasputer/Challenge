@@ -50,6 +50,10 @@ public class LoginActivity extends Activity {
 
         setContentView(R.layout.activity_login);
 
+//        Typeface tf = Typeface.createFromAsset(getAssets(),
+//                "fonts/HarabaraMaisDemo.otf");
+//        TextView title = (TextView) findViewById(R.id.txt_challenge_login);
+//        title.setTypeface(tf);
 
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
