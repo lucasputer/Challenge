@@ -42,6 +42,7 @@ public class ChallengeCameraFragment extends CameraFragment {
     private Button changeCameraButton=null;
     private long lastFaceToast=0L;
     String flashMode=null;
+    private View cameraView;
 
     static ChallengeCameraFragment newInstance(boolean useFFC) {
         ChallengeCameraFragment f=new ChallengeCameraFragment();
@@ -59,19 +60,21 @@ public class ChallengeCameraFragment extends CameraFragment {
 
         setHasOptionsMenu(true);
 
-        SimpleCameraHost.Builder builder=
-                new SimpleCameraHost.Builder(new ChallengeCameraHost(getActivity()));
+        ChallengeCameraHost.Builder builder=
+                new ChallengeCameraHost.Builder(new ChallengeCameraHost(getActivity()));
 
         setHost(builder.useFullBleedPreview(true).build());
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View cameraView=
+        cameraView=
                 super.onCreateView(inflater, container, savedInstanceState);
         View results=inflater.inflate(R.layout.fragment_camera, container, false);
+
 
         ((ViewGroup)results.findViewById(R.id.camera)).addView(cameraView);
 
@@ -245,6 +248,7 @@ public class ChallengeCameraFragment extends CameraFragment {
                 singleShotProcessing=false;
 
                DisplayActivity.imageToShow=image;
+
                 startActivity(new Intent(getActivity(), DisplayActivity.class));
             }
             else {
@@ -326,7 +330,7 @@ public class ChallengeCameraFragment extends CameraFragment {
 
         @Override
         public boolean mirrorFFC() {
-            return false;
+            return true;
         }
 
         @Override
@@ -337,6 +341,17 @@ public class ChallengeCameraFragment extends CameraFragment {
                 }
             };
         }
+
+        @Override
+        public Camera.Size getPreviewSize(int orientation, int w, int h, Camera.Parameters p) {
+            Camera.Size size = super.getPreviewSize(orientation, 720, 960, p);
+            ViewGroup.LayoutParams params = cameraView.getLayoutParams();
+            params.width = 1080;
+            params.height = 960 * 1080/720;
+            cameraView.setLayoutParams(params);
+            return size;
+        }
+
 
     }
 }

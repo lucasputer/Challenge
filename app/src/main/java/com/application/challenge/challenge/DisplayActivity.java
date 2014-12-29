@@ -23,7 +23,8 @@ public class DisplayActivity extends Activity {
             finish();
         }
         else {
-            ImageView iv=new ImageView(this);
+            setContentView(R.layout.activity_display);
+            ImageView iv= (ImageView) this.findViewById(R.id.img_display_preview);
             BitmapFactory.Options opts=new BitmapFactory.Options();
 
             opts.inPurgeable=true;
@@ -38,7 +39,7 @@ public class DisplayActivity extends Activity {
             imageToShow=null;
 
             iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-            setContentView(iv);
+
         }
     }
 

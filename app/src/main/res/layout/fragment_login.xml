@@ -2,16 +2,27 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginActivity$PlaceholderFragment">
+    tools:context=".LoginActivity$PlaceholderFragment"
+    android:background="@drawable/login_backround">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Challenge"
+            android:textSize="40sp"
+            android:id="@+id/txt_challenge_login"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="#FFFFFF"
+            />
 
-     </LinearLayout>
+     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -32,7 +43,11 @@
                 android:ems="10"
                 android:id="@+id/edit_text_email"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1" />
+                android:background="#AAFFFFFF"
+                android:layout_marginBottom="2px"
+                android:layout_weight="1"
+                android:hint="Email"
+                android:padding="8px"/>
 
             <EditText
                 android:layout_width="fill_parent"
@@ -41,7 +56,11 @@
                 android:ems="10"
                 android:id="@+id/edit_text_password"
                 android:layout_gravity="bottom"
-                android:layout_weight="1" />
+                android:background="#AAFFFFFF"
+                android:layout_marginTop="2px"
+                android:layout_weight="1"
+                android:hint="Password"
+                android:padding="8px"/>
 
 
         </LinearLayout>
@@ -50,10 +69,11 @@
             android:layout_width="0dp"
             android:layout_weight="0.5"
             android:layout_height="fill_parent"
-            android:text="Play"
+            android:text="PLAY"
             android:id="@+id/btn_regular_login"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
+            android:textColor="#FFFFFF"
             android:background="#b35e2f"/>
     </LinearLayout>
 
@@ -62,24 +82,58 @@
             android:layout_height="0dp"
             android:orientation="horizontal"
             android:layout_weight="1">
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="fill_parent"
-                android:text="Facebook Login"
-                android:id="@+id/btn_facebook_login"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:background="#4261be"/>
 
-            <Button
+
+            <RelativeLayout
+                android:id="@+id/btn_facebook_login"
+                android:clickable="true"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:text="Twitter Login"
+                android:background="#4261be">
+                <ImageView
+                    android:id="@+id/image"
+                    android:src="@drawable/icon_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true">
+                </ImageView>
+
+                <TextView
+                    android:text="Login with Facebook"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/image"
+                    android:layout_centerHorizontal="true"></TextView>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/btn_twitter_login"
-                android:layout_below="@+id/btn_facebook_login"
-                android:layout_centerHorizontal="true"
-                android:background="#45a9e6"/>
+                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#45a9e6">
+                <ImageView
+                    android:id="@+id/image"
+                    android:src="@drawable/icon_twitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true">
+                </ImageView>
+
+                <TextView
+                    android:text="Login with Twitter"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/image"
+                    android:layout_centerHorizontal="true"></TextView>
+            </RelativeLayout>
+
+
         </LinearLayout>
 </LinearLayout>

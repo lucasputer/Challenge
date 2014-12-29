@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import com.parse.SignUpCallback;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -46,6 +49,8 @@ public class LoginActivity extends Activity {
         }
 
         setContentView(R.layout.activity_login);
+
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -89,8 +94,8 @@ public class LoginActivity extends Activity {
      */
     public static class PlaceholderFragment extends Fragment {
 
-        private Button twitterLoginButton;
-        private Button facebookLoginButton;
+        private RelativeLayout twitterLoginButton;
+        private RelativeLayout facebookLoginButton;
         private Button regularLoginButton;
         private EditText emailInput;
         private EditText passwordInput;
@@ -105,7 +110,7 @@ public class LoginActivity extends Activity {
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-            facebookLoginButton = (Button) rootView.findViewById(R.id.btn_facebook_login);
+            facebookLoginButton = (RelativeLayout) rootView.findViewById(R.id.btn_facebook_login);
             facebookLoginButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
@@ -136,7 +141,7 @@ public class LoginActivity extends Activity {
                 }
             });
 
-            twitterLoginButton = (Button) rootView.findViewById(R.id.btn_twitter_login);
+            twitterLoginButton = (RelativeLayout) rootView.findViewById(R.id.btn_twitter_login);
             twitterLoginButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
