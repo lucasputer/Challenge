@@ -1,11 +1,13 @@
 package com.application.challenge.challenge;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.domain.ChallengeFragment;
+import com.application.challenge.challenge.domain.Tabs;
 
 
 public class MainActivity extends FragmentActivity implements ChallengeFragment.OnFragmentInteractionListener {
@@ -36,31 +40,50 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
         Bundle b = new Bundle();
-        b.putString("key", "home");
-        mTabHost.addTab(mTabHost.newTabSpec("home")
-                .setIndicator(createTabView(R.drawable.btn_home, "Home", false)), HomeFragment.class, b);
+        b.putString("key", Tabs.HOME.toString());
+        mTabHost.addTab(mTabHost.newTabSpec(Tabs.HOME.toString())
+                .setIndicator(createTabView(R.drawable.btn_home, Tabs.HOME.toString())), HomeFragment.class, b);
         b = new Bundle();
 
-        b.putString("key", "challenges");
-        mTabHost.addTab(mTabHost.newTabSpec("challenges")
-                .setIndicator(createTabView(R.drawable.btn_challenges, "Challenges", false)), HomeFragment.class, b);
+        b.putString("key", Tabs.CHALLENGES.toString());
+        mTabHost.addTab(mTabHost.newTabSpec(Tabs.CHALLENGES.toString())
+                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), HomeFragment.class, b);
         b = new Bundle();
 
-        b.putString("key", "Camara");
-        mTabHost.addTab(mTabHost.newTabSpec("camara")
-                .setIndicator(createTabView(R.drawable.btn_camera,"Camara",true)), HomeFragment.class, b);
+        b.putString("key", Tabs.CAMERA.toString());
+        mTabHost.addTab(mTabHost.newTabSpec(Tabs.CAMERA.toString())
+                .setIndicator(createTabView(R.drawable.btn_camera, Tabs.CAMERA.toString())),CameraLoaderFragment.class,b);
 
-        b.putString("key", "search");
-        mTabHost.addTab(mTabHost.newTabSpec("search")
-                .setIndicator(createTabView(R.drawable.btn_search,"search",false)), HomeFragment.class, b);
+        b.putString("key", Tabs.SEARCH.toString());
+        mTabHost.addTab(mTabHost.newTabSpec(Tabs.SEARCH.toString())
+                .setIndicator(createTabView(R.drawable.btn_search,Tabs.SEARCH.toString())), HomeFragment.class, b);
         b = new Bundle();
 
 
-        b.putString("key", "Perfil");
-        mTabHost.addTab(mTabHost.newTabSpec("perfil").setIndicator(createTabView(R.drawable.btn_profile,"Perfil",false)),
+        b.putString("key", Tabs.PROFILE.toString());
+        mTabHost.addTab(mTabHost.newTabSpec(Tabs.PROFILE.toString()).setIndicator(createTabView(R.drawable.btn_profile,Tabs.PROFILE.toString())),
                 ProfileFragment.class, b);
         b = new Bundle();
 
+
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+
+                for(int j = 0; j<5;j++){
+                    if(j!=2){
+                        mTabHost.getTabWidget().getChildTabViewAt(j).setBackgroundColor(Color.parseColor("#25292c"));
+                    }
+                }
+
+                int i = mTabHost.getCurrentTab();
+                if(tabId != Tabs.CAMERA.toString()){
+                    mTabHost.getTabWidget().getChildTabViewAt(i).setBackgroundColor(Color.parseColor("#0a0a0b"));
+                }
+
+            }
+        });
 
     }
 
@@ -106,17 +129,19 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
     public void onFragmentInteraction(Uri uri){
     }
 
-    private View createTabView(final int id, final String text, boolean isCamera) {
+    private View createTabView(final int id, final String text) {
         View view = LayoutInflater.from(this).inflate(R.layout.tab_icon, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
         imageView.setImageDrawable(getResources().getDrawable(id));
 
-
-
-        if(isCamera){
+        if(text == Tabs.CAMERA.toString()){
             view.setBackgroundColor(Color.parseColor("#dc6423"));
+            view.invalidate();
+        }else if(text == Tabs.HOME.toString()){
+            view.setBackgroundColor(Color.parseColor("#0a0a0b"));
             view.invalidate();
         }
         return view;
     }
+
 }
