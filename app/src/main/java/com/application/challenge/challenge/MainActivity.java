@@ -1,22 +1,18 @@
 package com.application.challenge.challenge;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TabHost;
-import android.widget.TextView;
 
 import com.application.challenge.challenge.domain.ChallengeFragment;
 import com.application.challenge.challenge.domain.Tabs;
@@ -24,7 +20,8 @@ import com.application.challenge.challenge.domain.Tabs;
 
 public class MainActivity extends FragmentActivity implements ChallengeFragment.OnFragmentInteractionListener {
 
-    private FragmentTabHost mTabHost;
+    private FragmentTabHost menuTabHost;
+    private static final int CAMERA_INDEX = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,55 +33,7 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
 //                    .commit();
 //        }
 
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-        mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-
-        Bundle b = new Bundle();
-        b.putString("key", Tabs.HOME.toString());
-        mTabHost.addTab(mTabHost.newTabSpec(Tabs.HOME.toString())
-                .setIndicator(createTabView(R.drawable.btn_home, Tabs.HOME.toString())), HomeFragment.class, b);
-        b = new Bundle();
-
-        b.putString("key", Tabs.CHALLENGES.toString());
-        mTabHost.addTab(mTabHost.newTabSpec(Tabs.CHALLENGES.toString())
-                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), HomeFragment.class, b);
-        b = new Bundle();
-
-        b.putString("key", Tabs.CAMERA.toString());
-        mTabHost.addTab(mTabHost.newTabSpec(Tabs.CAMERA.toString())
-                .setIndicator(createTabView(R.drawable.btn_camera, Tabs.CAMERA.toString())),CameraLoaderFragment.class,b);
-
-        b.putString("key", Tabs.SEARCH.toString());
-        mTabHost.addTab(mTabHost.newTabSpec(Tabs.SEARCH.toString())
-                .setIndicator(createTabView(R.drawable.btn_search,Tabs.SEARCH.toString())), HomeFragment.class, b);
-        b = new Bundle();
-
-
-        b.putString("key", Tabs.PROFILE.toString());
-        mTabHost.addTab(mTabHost.newTabSpec(Tabs.PROFILE.toString()).setIndicator(createTabView(R.drawable.btn_profile,Tabs.PROFILE.toString())),
-                ProfileFragment.class, b);
-        b = new Bundle();
-
-
-        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-
-            @Override
-            public void onTabChanged(String tabId) {
-
-                for(int j = 0; j<5;j++){
-                    if(j!=2){
-                        mTabHost.getTabWidget().getChildTabViewAt(j).setBackgroundColor(Color.parseColor("#25292c"));
-                    }
-                }
-
-                int i = mTabHost.getCurrentTab();
-                if(tabId != Tabs.CAMERA.toString()){
-                    mTabHost.getTabWidget().getChildTabViewAt(i).setBackgroundColor(Color.parseColor("#0a0a0b"));
-                }
-
-            }
-        });
-
+        setMenuTabs();
     }
 
 
@@ -130,7 +79,7 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
     }
 
     private View createTabView(final int id, final String text) {
-        View view = LayoutInflater.from(this).inflate(R.layout.tab_icon, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.menu_tab_icon, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
         imageView.setImageDrawable(getResources().getDrawable(id));
 
@@ -142,6 +91,57 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
             view.invalidate();
         }
         return view;
+    }
+
+    private void setMenuTabs(){
+        menuTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        menuTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+
+        Bundle b = new Bundle();
+        b.putString("key", Tabs.HOME.toString());
+        menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.HOME.toString())
+                .setIndicator(createTabView(R.drawable.btn_home, Tabs.HOME.toString())), HomeFragment.class, b);
+        b = new Bundle();
+
+        b.putString("key", Tabs.CHALLENGES.toString());
+        menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.CHALLENGES.toString())
+                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), HomeFragment.class, b);
+        b = new Bundle();
+
+        b.putString("key", Tabs.CAMERA.toString());
+        menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.CAMERA.toString())
+                .setIndicator(createTabView(R.drawable.btn_camera, Tabs.CAMERA.toString())),CameraLoaderFragment.class,b);
+
+        b.putString("key", Tabs.SEARCH.toString());
+        menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.SEARCH.toString())
+                .setIndicator(createTabView(R.drawable.btn_search,Tabs.SEARCH.toString())), HomeFragment.class, b);
+        b = new Bundle();
+
+
+        b.putString("key", Tabs.PROFILE.toString());
+        menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.PROFILE.toString()).setIndicator(createTabView(R.drawable.btn_profile,Tabs.PROFILE.toString())),
+                ProfileFragment.class, b);
+        b = new Bundle();
+
+
+        menuTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+
+                for (int j = 0; j < 5; j++) {
+                    if (j != CAMERA_INDEX) {
+                        menuTabHost.getTabWidget().getChildTabViewAt(j).setBackgroundColor(Color.parseColor("#25292c"));
+                    }
+                }
+
+                int i = menuTabHost.getCurrentTab();
+                if (tabId != Tabs.CAMERA.toString()) {
+                    menuTabHost.getTabWidget().getChildTabViewAt(i).setBackgroundColor(Color.parseColor("#0a0a0b"));
+                }
+
+            }
+        });
     }
 
 }

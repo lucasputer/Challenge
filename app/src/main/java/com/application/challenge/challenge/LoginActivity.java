@@ -44,8 +44,7 @@ public class LoginActivity extends Activity {
        // if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
         if ((currentUser != null)) {
             //TODO
-            //Aca hay que mandar a la proxima activity
-            Toast.makeText(this, "te recuerdo el usuario " + currentUser.getUsername(), Toast.LENGTH_LONG).show();
+            startActivity(new Intent(this, MainActivity.class));
         }
 
         setContentView(R.layout.activity_login);
@@ -131,11 +130,15 @@ public class LoginActivity extends Activity {
                             } else if (user.isNew()) {
 
                                 Toast.makeText(getActivity(), "User signed up and logged in through Facebook!", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+
 
                                 //showUserDetailsActivity();
                             } else {
 
                                 Toast.makeText(getActivity(), "User logged in through Facebook!", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+
 
                                 //showUserDetailsActivity();
                             }
@@ -158,8 +161,12 @@ public class LoginActivity extends Activity {
                                 Toast.makeText(getActivity(), "Uh oh. The user cancelled the Twitter login.", Toast.LENGTH_LONG).show();
                             } else if (user.isNew()) {
                                 Toast.makeText(getActivity(), "User signed up and logged in through Twitter", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+
                             } else {
                                 Toast.makeText(getActivity(), "User logged in through Twitter!", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+
                             }
                         }
                     });
@@ -191,6 +198,8 @@ public class LoginActivity extends Activity {
                             progressDialog.dismiss();
                             if (e == null) {
                                 Toast.makeText(getActivity(), "User signed up", Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+
                             } else {
                                 Toast.makeText(getActivity(), "Sign up failed", Toast.LENGTH_LONG).show();
 

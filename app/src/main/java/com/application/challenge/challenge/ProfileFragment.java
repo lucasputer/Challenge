@@ -1,14 +1,16 @@
 package com.application.challenge.challenge;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.application.challenge.challenge.domain.ChallengeFragment;
+import com.application.challenge.challenge.domain.Tabs;
 
 
 /**
@@ -30,6 +32,8 @@ public class ProfileFragment extends ChallengeFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private FragmentTabHost profileTabHost;
 
     /**
      * Use this factory method to create a new instance of
@@ -66,7 +70,11 @@ public class ProfileFragment extends ChallengeFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        setProfileTabs(v);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -76,6 +84,36 @@ public class ProfileFragment extends ChallengeFragment {
         }
     }
 
+    private void setProfileTabs(View v){
 
+        profileTabHost = (FragmentTabHost) v.findViewById(android.R.id.tabhost);
+        profileTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_profile);
+
+        Bundle b = new Bundle();
+        b.putString("key", Tabs.PROFILE_GRID.toString());
+        profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_GRID.toString())
+                .setIndicator(createTabView(R.drawable.btn_profile_grid, Tabs.PROFILE_GRID.toString())), HomeFragment.class, b);
+
+        b = new Bundle();
+        b.putString("key", Tabs.PROFILE_LIST.toString());
+        profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_LIST.toString())
+                .setIndicator(createTabView(R.drawable.btn_profile_list, Tabs.PROFILE_LIST.toString())), HomeFragment.class, b);
+
+        b = new Bundle();
+        b.putString("key", Tabs.PROFILE_HEART.toString());
+        profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_HEART.toString())
+                .setIndicator(createTabView(R.drawable.btn_profile_heart, Tabs.PROFILE_HEART.toString())), HomeFragment.class, b);
+
+
+    }
+
+
+    private View createTabView(final int id, final String text) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.profile_tab_icon, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.profile_tab_icon);
+        imageView.setImageDrawable(getResources().getDrawable(id));
+
+        return view;
+    }
 
 }
