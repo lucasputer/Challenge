@@ -61,13 +61,15 @@ public class CameraLoaderFragment extends ChallengeFragment {
         }
 
         Intent cameraIntent = new Intent().setClass(getActivity(), CameraActivity.class);
-        startActivity(cameraIntent);        
+        startActivity(cameraIntent);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 

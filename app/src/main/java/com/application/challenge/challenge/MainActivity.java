@@ -1,6 +1,8 @@
 package com.application.challenge.challenge;
 
 import android.app.Fragment;
+import android.app.LocalActivityManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,10 +20,12 @@ import com.application.challenge.challenge.domain.ChallengeFragment;
 import com.application.challenge.challenge.domain.Tabs;
 
 
-public class MainActivity extends FragmentActivity implements ChallengeFragment.OnFragmentInteractionListener {
+public class MainActivity extends FragmentActivity  implements ChallengeFragment.OnFragmentInteractionListener {
 
     private FragmentTabHost menuTabHost;
     private static final int CAMERA_INDEX = 2;
+    private String selectedTab = Tabs.HOME.toString();
+    private TabHost.OnTabChangeListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,12 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
         setMenuTabs();
     }
 
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        listener.onTabChanged(selectedTab);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,6 +94,8 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
         imageView.setImageDrawable(getResources().getDrawable(id));
 
         if(text == Tabs.CAMERA.toString()){
+            View lineView = (View) view.findViewById(R.id.tab_line);
+            lineView.setBackgroundColor(Color.parseColor("#dc6423"));
             view.setBackgroundColor(Color.parseColor("#dc6423"));
             view.invalidate();
         }else if(text == Tabs.HOME.toString()){
@@ -112,9 +124,11 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.CAMERA.toString())
                 .setIndicator(createTabView(R.drawable.btn_camera, Tabs.CAMERA.toString())),CameraLoaderFragment.class,b);
 
-        b.putString("key", Tabs.SEARCH.toString());
+
+
+                b.putString("key", Tabs.SEARCH.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.SEARCH.toString())
-                .setIndicator(createTabView(R.drawable.btn_search,Tabs.SEARCH.toString())), HomeFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_search, Tabs.SEARCH.toString())), HomeFragment.class, b);
         b = new Bundle();
 
 
@@ -123,9 +137,10 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
                 ProfileFragment.class, b);
         b = new Bundle();
 
+        menuTabHost.getTabWidget().setDividerDrawable(R.drawable.empty_tab_divider);
 
-        menuTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
+        listener = new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
 
@@ -135,13 +150,15 @@ public class MainActivity extends FragmentActivity implements ChallengeFragment.
                     }
                 }
 
-                int i = menuTabHost.getCurrentTab();
                 if (tabId != Tabs.CAMERA.toString()) {
-                    menuTabHost.getTabWidget().getChildTabViewAt(i).setBackgroundColor(Color.parseColor("#0a0a0b"));
+                    selectedTab = tabId;
+                    menuTabHost.getTabWidget().getChildTabViewAt(menuTabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#0a0a0b"));
+
                 }
 
             }
-        });
+        };
+        menuTabHost.setOnTabChangedListener(listener);
     }
 
 }

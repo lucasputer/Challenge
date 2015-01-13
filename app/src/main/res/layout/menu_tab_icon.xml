@@ -8,10 +8,24 @@
     android:background="#25292c"
     tools:ignore="contentDescription" >
 
-    <ImageView
-        android:id="@+id/tab_icon"
-        android:layout_width="wrap_content"
-        android:layout_margin="16px"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <ImageView
+            android:id="@+id/tab_icon"
+            android:layout_width="wrap_content"
+            android:layout_margin="12dp"
+            android:paddingTop="4dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+    <View
+        android:id="@+id/tab_line"
+        android:layout_width="fill_parent"
+        android:layout_height="8dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/menu_tab_selector"/>
 
 </LinearLayout>

@@ -35,7 +35,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="80dp">
+        android:layout_height="60dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Challenges"
                     android:textColor="#ffffff"
                     android:id="@+id/textView"
@@ -61,7 +61,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="17"
                     android:id="@+id/txt_challenges_amount_profile"
                     android:textColor="#ffffff"
@@ -88,7 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Siguiendo"
                     android:textColor="#ffffff"
                     android:id="@+id/textView"
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="56"
                     android:id="@+id/txt_following_amount_profile"
                     android:textColor="#ffffff"
@@ -124,7 +124,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Seguidores"
                     android:textColor="#ffffff"
                     android:id="@+id/textView"
@@ -133,7 +133,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="100"
                     android:id="@+id/txt_followers_amount_profile"
                     android:textColor="#ffffff"
