@@ -70,7 +70,7 @@ public class CameraLoaderFragment extends ChallengeFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_blank, container, false);
 
         Intent cameraIntent = new Intent().setClass(getActivity(), CameraActivity.class);
         startActivity(cameraIntent);
