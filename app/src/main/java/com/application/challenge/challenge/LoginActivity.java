@@ -49,11 +49,6 @@ public class LoginActivity extends Activity {
 
         setContentView(R.layout.activity_login);
 
-//        Typeface tf = Typeface.createFromAsset(getAssets(),
-//                "fonts/HarabaraMaisDemo.otf");
-//        TextView title = (TextView) findViewById(R.id.txt_challenge_login);
-//        title.setTypeface(tf);
-
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -112,6 +107,11 @@ public class LoginActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+
+            Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
+                    "fonts/Harabara.ttf");
+            TextView title = (TextView) rootView.findViewById(R.id.txt_challenge_login);
+            title.setTypeface(tf);
 
             facebookLoginButton = (RelativeLayout) rootView.findViewById(R.id.btn_facebook_login);
             facebookLoginButton.setOnClickListener(new View.OnClickListener() {

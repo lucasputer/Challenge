@@ -108,7 +108,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
 
     private void setMenuTabs(){
 
-        //TODO Pasar todos los set tabs a un TabHelper abstracto que tenga createTabView para ser overrideado
+        //TODO Pasar todos los set tabs a un TabHelper que implemente esto y que tenga createTabView para ser overrideado
 
 
         menuTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);

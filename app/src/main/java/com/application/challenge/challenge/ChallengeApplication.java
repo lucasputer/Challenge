@@ -1,6 +1,7 @@
 package com.application.challenge.challenge;
 
 import android.app.Application;
+import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -49,6 +50,7 @@ public class ChallengeApplication extends Application {
         ParseACL.setDefaultACL(defaultACL, true);
 
         ParseTwitterUtils.initialize(TWITTER_KEY, TWITTER_SECRET);
+
     }
 
     public void setSelectedMenuTab(int tab){
