@@ -20,6 +20,8 @@ public class ChallengeApplication extends Application {
 
     private static ChallengeApplication singleton;
 
+    private int selectedMenuTab = 0;
+
 
     public ChallengeApplication getInstance(){
         return this.singleton;
@@ -47,5 +49,13 @@ public class ChallengeApplication extends Application {
         ParseACL.setDefaultACL(defaultACL, true);
 
         ParseTwitterUtils.initialize(TWITTER_KEY, TWITTER_SECRET);
+    }
+
+    public void setSelectedMenuTab(int tab){
+        selectedMenuTab = tab;
+    }
+
+    public int getSelectedMenuTab(){
+        return selectedMenuTab;
     }
 }

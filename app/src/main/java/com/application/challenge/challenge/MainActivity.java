@@ -26,6 +26,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
     private static final int CAMERA_INDEX = 2;
     private String selectedTab = Tabs.HOME.toString();
     private TabHost.OnTabChangeListener listener;
+    private ChallengeApplication challengeApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
 //                    .add(R.id.container, new PlaceholderFragment())
 //                    .commit();
 //        }
-
+        challengeApplication = ((ChallengeApplication)getApplicationContext());
         setMenuTabs();
     }
 
@@ -109,6 +110,8 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
         menuTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         menuTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
+
+
         Bundle b = new Bundle();
         b.putString("key", Tabs.HOME.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.HOME.toString())
@@ -152,6 +155,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
 
                 if (tabId != Tabs.CAMERA.toString()) {
                     selectedTab = tabId;
+                    challengeApplication.setSelectedMenuTab(menuTabHost.getCurrentTab());
                     menuTabHost.getTabWidget().getChildTabViewAt(menuTabHost.getCurrentTab()).setBackgroundColor(Color.parseColor("#0a0a0b"));
 
                 }
@@ -159,6 +163,10 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
             }
         };
         menuTabHost.setOnTabChangedListener(listener);
+    }
+
+    public int getSelectedMenuTab(){
+        return challengeApplication.getSelectedMenuTab();
     }
 
 }

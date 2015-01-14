@@ -16,6 +16,7 @@
             android:id="@+id/btn_camera_close"
             android:layout_margin="16dp"
             android:background="@drawable/btn_cancel"
+            android:onClick="closeCamera"
             />
         </LinearLayout>
 

@@ -3,9 +3,12 @@ package com.application.challenge.challenge;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TabHost;
 
 import com.application.challenge.challenge.domain.ChallengeFragment;
 
@@ -60,17 +63,23 @@ public class CameraLoaderFragment extends ChallengeFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        Intent cameraIntent = new Intent().setClass(getActivity(), CameraActivity.class);
-        startActivity(cameraIntent);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
 
+        Intent cameraIntent = new Intent().setClass(getActivity(), CameraActivity.class);
+        startActivity(cameraIntent);
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        TabHost menuTabHost = (FragmentTabHost) getActivity().findViewById(android.R.id.tabhost);
+        MainActivity mainActivity = (MainActivity)getActivity();
+        menuTabHost.setCurrentTab(mainActivity.getSelectedMenuTab());
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -114,4 +114,8 @@ public class CameraActivity extends Activity implements ChallengeCameraFragment.
         });
 
     }
+
+    public void closeCamera(View v){
+        this.onBackPressed();
+    }
 }
