@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tabsLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    tools:ignore="contentDescription" >
+
+
+        <TextView
+            android:id="@+id/home_tab_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/transparent"
+            android:textColor="@color/selected_tab_color"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="16dp"/>
+
+</LinearLayout>

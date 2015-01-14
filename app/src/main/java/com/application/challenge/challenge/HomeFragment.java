@@ -3,11 +3,15 @@ package com.application.challenge.challenge;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.application.challenge.challenge.domain.ChallengeFragment;
+import com.application.challenge.challenge.domain.Tabs;
 
 
 /**
@@ -29,6 +33,7 @@ public class HomeFragment extends ChallengeFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private FragmentTabHost homeTabHost;
 
     /**
      * Use this factory method to create a new instance of
@@ -65,7 +70,12 @@ public class HomeFragment extends ChallengeFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+       setHomeTabs(v);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -76,7 +86,29 @@ public class HomeFragment extends ChallengeFragment {
     }
 
 
+    private void setHomeTabs(View v){
 
+        homeTabHost = (FragmentTabHost) v.findViewById(android.R.id.tabhost);
+        homeTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_home);
+
+        Bundle b = new Bundle();
+        b.putString("key", Tabs.HOME_POPULAR.toString());
+        homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_POPULAR.toString())
+                .setIndicator(createTabView("POPULARES")), TabFragment.class, b);
+
+        b = new Bundle();
+        b.putString("key", Tabs.HOME_FRIENDS.toString());
+        homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_FRIENDS.toString())
+                .setIndicator(createTabView("AMIGOS")), TabFragment.class, b);
+    }
+
+    private View createTabView(final String text) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_tab_icon, null);
+        TextView textView = (TextView) view.findViewById(R.id.home_tab_text);
+        textView.setText(text);
+
+        return view;
+    }
 
 
 }

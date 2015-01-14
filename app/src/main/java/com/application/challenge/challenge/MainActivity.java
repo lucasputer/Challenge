@@ -107,6 +107,10 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
     }
 
     private void setMenuTabs(){
+
+        //TODO Pasar todos los set tabs a un TabHelper abstracto que tenga createTabView para ser overrideado
+
+
         menuTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         menuTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
@@ -120,7 +124,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
 
         b.putString("key", Tabs.CHALLENGES.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.CHALLENGES.toString())
-                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), HomeFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), TabFragment.class, b);
         b = new Bundle();
 
         b.putString("key", Tabs.CAMERA.toString());
@@ -131,7 +135,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
 
                 b.putString("key", Tabs.SEARCH.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.SEARCH.toString())
-                .setIndicator(createTabView(R.drawable.btn_search, Tabs.SEARCH.toString())), HomeFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_search, Tabs.SEARCH.toString())), TabFragment.class, b);
         b = new Bundle();
 
 

@@ -92,17 +92,17 @@ public class ProfileFragment extends ChallengeFragment {
         Bundle b = new Bundle();
         b.putString("key", Tabs.PROFILE_GRID.toString());
         profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_GRID.toString())
-                .setIndicator(createTabView(R.drawable.btn_profile_grid, Tabs.PROFILE_GRID.toString())), HomeFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_profile_grid, Tabs.PROFILE_GRID.toString())), TabFragment.class, b);
 
         b = new Bundle();
         b.putString("key", Tabs.PROFILE_LIST.toString());
         profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_LIST.toString())
-                .setIndicator(createTabView(R.drawable.btn_profile_list, Tabs.PROFILE_LIST.toString())), HomeFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_profile_list, Tabs.PROFILE_LIST.toString())), TabFragment.class, b);
 
         b = new Bundle();
         b.putString("key", Tabs.PROFILE_HEART.toString());
         profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_HEART.toString())
-                .setIndicator(createTabView(R.drawable.btn_profile_heart, Tabs.PROFILE_HEART.toString())), HomeFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_profile_heart, Tabs.PROFILE_HEART.toString())), TabFragment.class, b);
 
 
     }
