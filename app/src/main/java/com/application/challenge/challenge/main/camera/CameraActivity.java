@@ -1,20 +1,13 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.camera;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
+import com.application.challenge.challenge.R;
 import com.commonsware.cwac.camera.CameraFragment;
-import com.commonsware.cwac.camera.CameraHost;
-import com.commonsware.cwac.camera.SimpleCameraHost;
 
 
 public class CameraActivity extends Activity implements ChallengeCameraFragment.Contract{

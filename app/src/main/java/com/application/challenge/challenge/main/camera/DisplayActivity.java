@@ -1,4 +1,4 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.camera;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.application.challenge.challenge.R;
 
 
 public class DisplayActivity extends Activity {

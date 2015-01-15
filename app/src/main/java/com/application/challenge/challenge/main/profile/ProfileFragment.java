@@ -1,4 +1,4 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.profile;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.application.challenge.challenge.domain.ChallengeFragment;
+import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.Tabs;
+import com.application.challenge.challenge.main.commons.fragment.TabFragment;
 
 
 /**

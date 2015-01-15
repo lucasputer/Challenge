@@ -1,12 +1,9 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main;
 
 import android.app.Fragment;
-import android.app.LocalActivityManager;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,11 +13,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
-import com.application.challenge.challenge.domain.ChallengeFragment;
+import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.main.camera.CameraLoaderFragment;
+import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.Tabs;
+import com.application.challenge.challenge.main.commons.activity.ChallengeActionBarActivity;
+import com.application.challenge.challenge.main.commons.application.ChallengeApplication;
+import com.application.challenge.challenge.main.commons.fragment.TabFragment;
+import com.application.challenge.challenge.main.home.HomeFragment;
+import com.application.challenge.challenge.main.profile.ProfileFragment;
 
 
-public class MainActivity extends ChallengeActionBarActivity  implements ChallengeFragment.OnFragmentInteractionListener {
+public class MainActivity extends ChallengeActionBarActivity implements ChallengeFragment.OnFragmentInteractionListener {
 
     private FragmentTabHost menuTabHost;
     private static final int CAMERA_INDEX = 2;

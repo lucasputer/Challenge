@@ -1,4 +1,4 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.commons.activity;
 
 import android.app.ActionBar;
 import android.content.Context;

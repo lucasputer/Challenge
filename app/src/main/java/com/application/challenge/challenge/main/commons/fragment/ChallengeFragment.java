@@ -1,4 +1,4 @@
-package com.application.challenge.challenge.domain;
+package com.application.challenge.challenge.main.commons.fragment;
 
 import android.app.Activity;
 import android.net.Uri;

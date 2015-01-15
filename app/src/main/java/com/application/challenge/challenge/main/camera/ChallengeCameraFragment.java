@@ -1,4 +1,4 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.camera;
 
 
 import android.annotation.TargetApi;
@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,10 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.application.challenge.challenge.R;
 import com.commonsware.cwac.camera.CameraFragment;
 import com.commonsware.cwac.camera.CameraHost;
 import com.commonsware.cwac.camera.CameraUtils;

@@ -1,7 +1,6 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.commons.application;
 
 import android.app.Application;
-import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseACL;

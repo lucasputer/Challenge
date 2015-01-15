@@ -1,28 +1,25 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.main.commons.fragment;
 
-import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.application.challenge.challenge.domain.ChallengeFragment;
-import com.application.challenge.challenge.domain.Tabs;
+import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.main.home.HomeFragment;
 
 
 /**
- * A simple {@link android.app.Fragment} subclass.
+ * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link com.application.challenge.challenge.HomeFragment.OnFragmentInteractionListener} interface
+ * {@link TabFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link com.application.challenge.challenge.HomeFragment#newInstance} factory method to
+ * Use the {@link TabFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends ChallengeFragment {
+public class TabFragment extends ChallengeFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,8 +30,6 @@ public class HomeFragment extends ChallengeFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private FragmentTabHost homeTabHost;
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -53,7 +48,7 @@ public class HomeFragment extends ChallengeFragment {
         return fragment;
     }
 
-    public HomeFragment() {
+    public TabFragment() {
         // Required empty public constructor
     }
 
@@ -71,9 +66,7 @@ public class HomeFragment extends ChallengeFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
-
-       setHomeTabs(v);
+        View v = inflater.inflate(R.layout.fragment_blank, container, false);
 
         return v;
     }
@@ -85,30 +78,6 @@ public class HomeFragment extends ChallengeFragment {
         }
     }
 
-
-    private void setHomeTabs(View v){
-
-        homeTabHost = (FragmentTabHost) v.findViewById(android.R.id.tabhost);
-        homeTabHost.setup(getActivity(), getChildFragmentManager(), R.layout.fragment_home);
-
-        Bundle b = new Bundle();
-        b.putString("key", Tabs.HOME_POPULAR.toString());
-        homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_POPULAR.toString())
-                .setIndicator(createTabView("POPULARES")), TabFragment.class, b);
-
-        b = new Bundle();
-        b.putString("key", Tabs.HOME_FRIENDS.toString());
-        homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_FRIENDS.toString())
-                .setIndicator(createTabView("AMIGOS")), TabFragment.class, b);
-    }
-
-    private View createTabView(final String text) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_tab_icon, null);
-        TextView textView = (TextView) view.findViewById(R.id.home_tab_text);
-        textView.setText(text);
-
-        return view;
-    }
 
 
 }
