@@ -20,7 +20,7 @@ import com.application.challenge.challenge.domain.ChallengeFragment;
 import com.application.challenge.challenge.domain.Tabs;
 
 
-public class MainActivity extends FragmentActivity  implements ChallengeFragment.OnFragmentInteractionListener {
+public class MainActivity extends ChallengeActionBarActivity  implements ChallengeFragment.OnFragmentInteractionListener {
 
     private FragmentTabHost menuTabHost;
     private static final int CAMERA_INDEX = 2;
@@ -81,6 +81,7 @@ public class MainActivity extends FragmentActivity  implements ChallengeFragment
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
             return rootView;
         }
