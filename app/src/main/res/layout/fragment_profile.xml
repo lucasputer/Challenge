@@ -147,6 +147,6 @@
         </LinearLayout>
 
     <!--Incluye al layout de tabs-->
-    <include layout="@layout/regular_tabs"/>
+    <include layout="@layout/common_partial_regular_tabs"/>
 
 </LinearLayout>

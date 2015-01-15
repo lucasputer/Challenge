@@ -94,7 +94,7 @@ public class HomeFragment extends ChallengeFragment {
         Bundle b = new Bundle();
         b.putString("key", Tabs.HOME_POPULAR.toString());
         homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_POPULAR.toString())
-                .setIndicator(createTabView("POPULARES")), TabFragment.class, b);
+                .setIndicator(createTabView("POPULARES")), HomeGridViewFragment.class, b);
 
         b = new Bundle();
         b.putString("key", Tabs.HOME_FRIENDS.toString());
@@ -103,7 +103,7 @@ public class HomeFragment extends ChallengeFragment {
     }
 
     private View createTabView(final String text) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_tab_icon, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.element_home_tab_icon, null);
         TextView textView = (TextView) view.findViewById(R.id.home_tab_text);
         textView.setText(text);
 

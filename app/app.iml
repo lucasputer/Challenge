@@ -88,7 +88,8 @@
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="circlebutton-1.1" level="project" />
-    <orderEntry type="library" exported="" name="camera-0.6.10" level="project" />
+    <orderEntry type="library" exported="" name="camera-0.6.12" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
     <orderEntry type="module" module-name="facebook" exported="" />
   </component>
 </module>

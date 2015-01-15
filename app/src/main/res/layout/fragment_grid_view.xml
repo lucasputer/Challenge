@@ -1,8 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.challenge.challenge.main.profile.ProfileFragment">
+    tools:context="com.application.challenge.challenge.main.commons.fragment.GridViewFragment">
 
-    <include layout="@layout/common_partial_regular_tabs"/>
+    <!-- Incluye gridView -->
+    <include layout="@layout/common_partial_image_grid_view"/>
 
 </FrameLayout>

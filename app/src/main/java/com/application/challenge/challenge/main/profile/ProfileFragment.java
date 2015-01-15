@@ -111,7 +111,7 @@ public class ProfileFragment extends ChallengeFragment {
 
 
     private View createTabView(final int id, final String text) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.profile_tab_icon, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.element_profile_tab_icon, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.profile_tab_icon);
         imageView.setImageDrawable(getResources().getDrawable(id));
 

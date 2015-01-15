@@ -35,7 +35,7 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bottom_tabs);
+        setContentView(R.layout.common_partial_bottom_tabs);
 //        if (savedInstanceState == null) {
 //            getFragmentManager().beginTransaction()
 //                    .add(R.id.container, new PlaceholderFragment())
@@ -95,7 +95,7 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
     }
 
     private View createTabView(final int id, final String text) {
-        View view = LayoutInflater.from(this).inflate(R.layout.menu_tab_icon, null);
+        View view = LayoutInflater.from(this).inflate(R.layout.element_menu_tab_icon, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
         imageView.setImageDrawable(getResources().getDrawable(id));
 
