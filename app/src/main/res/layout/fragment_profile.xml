@@ -1,152 +1,160 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.application.challenge.challenge.main.MainActivity$PlaceholderFragment">
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/login_backround">
-
-        <com.application.challenge.challenge.domain.CircularImageView
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/login_backround"
-            android:id="@+id/view_user_profile" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Lucas Puterman"
-            android:id="@+id/txt_username_profile"
-            android:layout_below="@+id/view_user_profile"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:layout_centerHorizontal="true"/>
-
-
-    </RelativeLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="60dp">
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/profile_linear_layout"
+        tools:context="com.application.challenge.challenge.main.MainActivity$PlaceholderFragment">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#df7339"
-            >
-            <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/login_backround">
+
+            <com.application.challenge.challenge.domain.CircularImageView
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_backround"
+                android:id="@+id/view_user_profile" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Lucas Puterman"
+                android:id="@+id/txt_username_profile"
+                android:layout_below="@+id/view_user_profile"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"/>
 
-                <TextView
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#df7339"
+                >
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Challenges"
-                    android:textColor="#ffffff"
-                    android:id="@+id/textView"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="17"
-                    android:id="@+id/txt_challenges_amount_profile"
-                    android:textColor="#ffffff"
-                    android:layout_below="@+id/textView"
-                    android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Challenges"
+                        android:textColor="#ffffff"
+                        android:id="@+id/textView"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="17"
+                        android:id="@+id/txt_challenges_amount_profile"
+                        android:textColor="#ffffff"
+                        android:layout_below="@+id/textView"
+                        android:layout_centerHorizontal="true" />
 
                 </RelativeLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#e3834f"
-            >
+            </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#e3834f"
+                >
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Siguiendo"
-                    android:textColor="#ffffff"
-                    android:id="@+id/textView"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="56"
-                    android:id="@+id/txt_following_amount_profile"
-                    android:textColor="#ffffff"
-                    android:layout_below="@+id/textView"
-                    android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Siguiendo"
+                        android:textColor="#ffffff"
+                        android:id="@+id/textView"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="56"
+                        android:id="@+id/txt_following_amount_profile"
+                        android:textColor="#ffffff"
+                        android:layout_below="@+id/textView"
+                        android:layout_centerHorizontal="true" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:background="#edb191"
-            >
-
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true">
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="#edb191"
+                >
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Seguidores"
-                    android:textColor="#ffffff"
-                    android:id="@+id/textView"
-                    android:layout_centerHorizontal="true" />
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="100"
-                    android:id="@+id/txt_followers_amount_profile"
-                    android:textColor="#ffffff"
-                    android:layout_below="@+id/textView"
-                    android:layout_centerHorizontal="true" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Seguidores"
+                        android:textColor="#ffffff"
+                        android:id="@+id/textView"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="100"
+                        android:id="@+id/txt_followers_amount_profile"
+                        android:textColor="#ffffff"
+                        android:layout_below="@+id/textView"
+                        android:layout_centerHorizontal="true" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
-
-        </RelativeLayout>
 
         </LinearLayout>
 
-    <!--Incluye al layout de tabs-->
-    <include layout="@layout/common_partial_regular_tabs"/>
+        <!--Incluye al layout de tabs-->
+        <include layout="@layout/common_partial_regular_tabs"/>
 
-</LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

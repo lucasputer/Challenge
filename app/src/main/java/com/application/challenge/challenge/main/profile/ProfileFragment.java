@@ -75,7 +75,6 @@ public class ProfileFragment extends ChallengeFragment {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         setProfileTabs(v);
-
         return v;
     }
 
@@ -94,7 +93,7 @@ public class ProfileFragment extends ChallengeFragment {
         Bundle b = new Bundle();
         b.putString("key", Tabs.PROFILE_GRID.toString());
         profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_GRID.toString())
-                .setIndicator(createTabView(R.drawable.btn_profile_grid, Tabs.PROFILE_GRID.toString())), TabFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_profile_grid, Tabs.PROFILE_GRID.toString())), ProfileGridViewFragment.class, b);
 
         b = new Bundle();
         b.putString("key", Tabs.PROFILE_LIST.toString());
