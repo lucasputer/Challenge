@@ -15,6 +15,7 @@ import android.widget.TabHost;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.main.camera.CameraLoaderFragment;
+import com.application.challenge.challenge.main.challenges.ChallengesListFragment;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.Tabs;
 import com.application.challenge.challenge.main.commons.activity.ChallengeActionBarActivity;
@@ -129,7 +130,7 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
 
         b.putString("key", Tabs.CHALLENGES.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.CHALLENGES.toString())
-                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), TabFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_challenges, Tabs.CHALLENGES.toString())), ChallengesListFragment.class, b);
         b = new Bundle();
 
         b.putString("key", Tabs.CAMERA.toString());

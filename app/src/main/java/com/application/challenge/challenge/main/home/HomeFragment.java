@@ -99,7 +99,7 @@ public class HomeFragment extends ChallengeFragment {
         b = new Bundle();
         b.putString("key", Tabs.HOME_FRIENDS.toString());
         homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_FRIENDS.toString())
-                .setIndicator(createTabView("AMIGOS")), TabFragment.class, b);
+                .setIndicator(createTabView("AMIGOS")), HomeGridViewFragment.class, b);
     }
 
     private View createTabView(final String text) {
