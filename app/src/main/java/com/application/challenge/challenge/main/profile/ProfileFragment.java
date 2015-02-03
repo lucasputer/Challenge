@@ -98,7 +98,7 @@ public class ProfileFragment extends ChallengeFragment {
         b = new Bundle();
         b.putString("key", Tabs.PROFILE_LIST.toString());
         profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_LIST.toString())
-                .setIndicator(createTabView(R.drawable.btn_profile_list, Tabs.PROFILE_LIST.toString())), TabFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_profile_list, Tabs.PROFILE_LIST.toString())), ProfileListFragment.class, b);
 
         b = new Bundle();
         b.putString("key", Tabs.PROFILE_HEART.toString());

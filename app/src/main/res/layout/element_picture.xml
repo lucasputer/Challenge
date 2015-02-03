@@ -9,27 +9,36 @@
         android:layout_height="match_parent"
         android:layout_margin="16dp">
 
-
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:background="@drawable/btn_discover_follow"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"
+            android:id="@+id/button" />
 
         <TextView
-            android:id="@+id/discover_username"
+            android:id="@+id/picture_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Username"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_gravity="center_horizontal"
-            android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
             android:layout_marginLeft="12dp"
-            android:layout_toRightOf="@+id/circled_discover_profile_image"
-            android:layout_toEndOf="@+id/circled_discover_profile_image" />
+            android:layout_gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/circled_picture_profile_image"
+            android:layout_toEndOf="@+id/circled_picture_profile_image" />
 
         <com.application.challenge.challenge.domain.CircularImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/login_backround"
-            android:id="@+id/circled_discover_profile_image"
+            android:id="@+id/circled_picture_profile_image"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -40,26 +49,15 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
 
         <com.application.challenge.challenge.domain.SquareImageView
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/discover_img1" />
+            android:layout_gravity="center"
+            android:id="@+id/picture_image" />
 
-        <com.application.challenge.challenge.domain.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/discover_img2" />
-
-        <com.application.challenge.challenge.domain.SquareImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/discover_img3" />
 
     </LinearLayout>
 

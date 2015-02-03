@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.ExpandableHeightGridView;
@@ -55,6 +57,16 @@ public class HomeGridViewFragment extends GridViewFragment {
 
         gridView.setAdapter(new SquareImageGridViewAdapter(getActivity(),urls));
         gridView.setOnScrollListener(new ScrollListener(getActivity()));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                
+
+            }
+        });
         return v;
     }
 
