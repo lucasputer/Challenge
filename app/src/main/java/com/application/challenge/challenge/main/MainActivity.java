@@ -21,6 +21,7 @@ import com.application.challenge.challenge.domain.Tabs;
 import com.application.challenge.challenge.main.commons.activity.ChallengeActionBarActivity;
 import com.application.challenge.challenge.main.commons.application.ChallengeApplication;
 import com.application.challenge.challenge.main.commons.fragment.TabFragment;
+import com.application.challenge.challenge.main.discover.DiscoverListFragment;
 import com.application.challenge.challenge.main.home.HomeFragment;
 import com.application.challenge.challenge.main.profile.ProfileFragment;
 
@@ -141,7 +142,7 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
 
                 b.putString("key", Tabs.SEARCH.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.SEARCH.toString())
-                .setIndicator(createTabView(R.drawable.btn_search, Tabs.SEARCH.toString())), TabFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_search, Tabs.SEARCH.toString())), DiscoverListFragment.class, b);
         b = new Bundle();
 
 
