@@ -7,7 +7,8 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
 
 
 
@@ -21,15 +22,16 @@
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:layout_marginRight="12dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="4dp"
             android:layout_toRightOf="@+id/circled_discover_profile_image"
             android:layout_toEndOf="@+id/circled_discover_profile_image" />
 
         <com.application.challenge.challenge.domain.CircularImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/login_backround"
             android:id="@+id/circled_discover_profile_image"
+            android:layout_marginLeft="4dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />

@@ -1,6 +1,7 @@
 package com.application.challenge.challenge.main;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
@@ -20,6 +22,7 @@ import com.application.challenge.challenge.main.commons.fragment.ChallengeFragme
 import com.application.challenge.challenge.domain.Tabs;
 import com.application.challenge.challenge.main.commons.activity.ChallengeActionBarActivity;
 import com.application.challenge.challenge.main.commons.application.ChallengeApplication;
+import com.application.challenge.challenge.main.commons.fragment.PictureFragment;
 import com.application.challenge.challenge.main.commons.fragment.TabFragment;
 import com.application.challenge.challenge.main.discover.DiscoverListFragment;
 import com.application.challenge.challenge.main.home.HomeFragment;
@@ -179,5 +182,25 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
     public int getSelectedMenuTab(){
         return challengeApplication.getSelectedMenuTab();
     }
+
+    public void likePicture(View v){
+        //TODO likear con parse
+        //TODO si esta likeada deslikear tambien
+        Button likeButton = (Button) v.findViewById(R.id.btn_picture_heart);
+        if(likeButton.getBackground() == getResources().getDrawable(R.drawable.btn_picture_heart_liked)){
+            likeButton.setBackground(getResources().getDrawable(R.drawable.btn_picture_heart));
+        }else{
+            likeButton.setBackground(getResources().getDrawable(R.drawable.btn_picture_heart_liked));
+        }
+    }
+
+    public void pictureDetail(View v){
+        Fragment newFragment = new PictureFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.layout.fragment_home, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 
 }

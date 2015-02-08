@@ -7,18 +7,10 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp">
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp">
 
-        <Button
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right"
-            android:background="@drawable/btn_discover_follow"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:visibility="gone"
-            android:id="@+id/button" />
+
 
         <TextView
             android:id="@+id/picture_username"
@@ -28,17 +20,18 @@
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_marginRight="12dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="4dp"
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/circled_picture_profile_image"
             android:layout_toEndOf="@+id/circled_picture_profile_image" />
 
         <com.application.challenge.challenge.domain.CircularImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/login_backround"
             android:id="@+id/circled_picture_profile_image"
+            android:layout_marginLeft="4dp"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
@@ -48,18 +41,34 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:orientation="vertical">
 
 
         <com.application.challenge.challenge.domain.SquareImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
             android:layout_gravity="center"
             android:id="@+id/picture_image" />
 
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/picture_heart_amount"
+        android:layout_margin="8dp"
+        android:textColor="@color/orange"
+        android:textStyle="bold"
+        android:text="♥ 25 Me Gusta"/>
+
+    <Button
+        android:layout_width="28dp"
+        android:layout_height="24dp"
+        android:id="@+id/btn_picture_heart"
+        android:layout_margin="8dp"
+        android:onClick="likePicture"
+        android:background="@drawable/btn_picture_heart"/>
 
 
 </LinearLayout>

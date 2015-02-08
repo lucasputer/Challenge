@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/home_fragment"
-    tools:context="com.application.challenge.challenge.main.profile.ProfileFragment">
+    android:id="@+id/picture_fragment"
+    tools:context="com.application.challenge.challenge.main.commons.fragment.PictureFragment">
 
-    <include layout="@layout/common_partial_regular_tabs"/>
+    <include layout="@layout/element_picture"/>
 
 </FrameLayout>
