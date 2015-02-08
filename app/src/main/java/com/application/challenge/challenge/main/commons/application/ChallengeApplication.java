@@ -2,9 +2,15 @@ package com.application.challenge.challenge.main.commons.application;
 
 import android.app.Application;
 
+import com.application.challenge.challenge.domain.parse.ChallengeObject;
+import com.application.challenge.challenge.domain.parse.FollowActivityObject;
+import com.application.challenge.challenge.domain.parse.LikeObject;
+import com.application.challenge.challenge.domain.parse.PhotoObject;
+import com.application.challenge.challenge.domain.parse.SponsorObject;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
+import com.parse.ParseObject;
 import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
 
@@ -37,6 +43,13 @@ public class ChallengeApplication extends Application {
         ParseCrashReporting.enable(this);
 
         // Add your initialization code here
+
+        ParseObject.registerSubclass(PhotoObject.class);
+        ParseObject.registerSubclass(LikeObject.class);
+        ParseObject.registerSubclass(FollowActivityObject.class);
+        ParseObject.registerSubclass(SponsorObject.class);
+        ParseObject.registerSubclass(ChallengeObject.class);
+
         Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
 
