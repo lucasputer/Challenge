@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="com.application.challenge.challenge.main.camera.DisplayActivity">
 
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -18,25 +18,20 @@
             android:layout_margin="16dp"
             android:background="@drawable/btn_back_arrow"
             />
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent" 
         android:layout_height="120dp"
         android:orientation="horizontal">
 
-        <com.application.challenge.challenge.domain.SquareView
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/sqrv_display">
 
             <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_margin="8dp"
                 android:id="@+id/img_display_preview"/>
 
-        </com.application.challenge.challenge.domain.SquareView>
 
         <EditText
             android:layout_width="wrap_content"
@@ -48,27 +43,35 @@
 
     </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/etxt_display_search"
-        android:hint="Busca un Challenge"/>
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_width="fill_parent"
+        android:layout_height="370dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:id="@+id/etxt_display_search"
+            android:hint="Busca un Challenge"/>
+
+        <include layout="@layout/common_partial_list_view"
+            android:layout_height="328dp" />
+
+
 
         </LinearLayout>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="80dp"
-        android:text="Compartir"
+        android:text="COMPARTIR"
         android:textColor="#ffffff"
         android:textSize="18sp"
+        android:textStyle="bold"
         android:background="#dc6423"
         android:id="@+id/btn_display_share" />
+
 
 
 </LinearLayout>

@@ -30,7 +30,7 @@ public class LikeObject extends ParseObject {
     }
 
     public ParseObject getPhoto(){
-        getParseObject("photo");
+        return getParseObject("photo");
     }
 
     public void setPhoto(ParseObject photo){

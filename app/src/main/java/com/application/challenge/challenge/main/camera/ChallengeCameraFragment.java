@@ -247,6 +247,7 @@ public class ChallengeCameraFragment extends CameraFragment {
 
                DisplayActivity.imageToShow=image;
 
+
                 startActivity(new Intent(getActivity(), DisplayActivity.class));
             }
             else {

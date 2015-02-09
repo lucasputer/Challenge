@@ -195,11 +195,11 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
     }
 
     public void pictureDetail(View v){
-        Fragment newFragment = new PictureFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.layout.fragment_home, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        Fragment newFragment = new PictureFragment();
+//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//        transaction.replace(R.layout.fragment_home, newFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
     }
 
 

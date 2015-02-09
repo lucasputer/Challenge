@@ -78,4 +78,8 @@ public class PhotoObject extends ParseObject {
         put("user", user);
     }
 
+    public String getSubtitle(){ return getString("subtitle");}
+
+    public void setSubtitle(String subtitle){put("subtitle",subtitle);}
+
 }

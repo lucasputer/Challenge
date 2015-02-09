@@ -32,7 +32,7 @@ public class ChallengeObject extends ParseObject {
         return getString("name");
     }
 
-    public String setName(String name){
+    public void setName(String name){
         put("name",name);
     }
 
@@ -40,7 +40,7 @@ public class ChallengeObject extends ParseObject {
         return getParseObject("sponsor");
     }
 
-    public String setSponsor(ParseObject sponsor){
+    public void setSponsor(ParseObject sponsor){
         put("sponsor",sponsor);
     }
 
