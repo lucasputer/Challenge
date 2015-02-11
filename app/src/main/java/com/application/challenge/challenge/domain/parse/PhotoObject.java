@@ -12,7 +12,11 @@ import com.parse.ParseUser;
 @ParseClassName("Photo")
 public class PhotoObject extends ParseObject {
 
-    public PhotoObject(){}
+    public PhotoObject(){
+        put("likes",0);
+        put("dislikes",0);
+        put("overallLikes",0);
+    }
 
     public String getObjectId(){
         return getString("objectId");

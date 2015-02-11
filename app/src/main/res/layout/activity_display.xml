@@ -26,7 +26,7 @@
         android:orientation="horizontal">
 
 
-            <ImageView
+         <com.parse.ParseImageView
                 android:layout_width="96dp"
                 android:layout_height="96dp"
                 android:layout_margin="8dp"
@@ -70,6 +70,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:background="#dc6423"
+        android:onClick="sharePicture"
         android:id="@+id/btn_display_share" />
 
 
