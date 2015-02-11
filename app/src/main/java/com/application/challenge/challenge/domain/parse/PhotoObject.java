@@ -13,9 +13,9 @@ import com.parse.ParseUser;
 public class PhotoObject extends ParseObject {
 
     public PhotoObject(){
-        put("likes",0);
-        put("dislikes",0);
-        put("overallLikes",0);
+//        put("likes",0);
+//        put("dislikes",0);
+//        put("overallLikes",0);
     }
 
     public String getObjectId(){

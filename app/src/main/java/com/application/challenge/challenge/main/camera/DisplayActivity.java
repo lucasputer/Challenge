@@ -79,18 +79,8 @@ public class DisplayActivity extends ListActivity {
 
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            ArrayList<ChallengesItem> challengesList = new ArrayList<ChallengesItem>();
-            challengesList.add(new ChallengesItem("Tu foto en el parque","Subi tu foto en un espacio verde","http://matylda.me/wp-content/uploads/2012/05/tumblr_m2i265QSup1qc1wico1_1280.jpg"));
-            challengesList.add(new ChallengesItem("Coca-Cola con tu nombre","Subi tu foto de coca con tu nombre","https://c1.staticflickr.com/3/2882/9727337820_19ba13600d_z.jpg"));
-            challengesList.add(new ChallengesItem("Tu foto reciclando","Reciclemos en la ciudad!","http://www.beansproutbubba.com.au/blog/wp-content/uploads/2013/06/971275_10151701882558799_1819287792_n.jpg"));
-            challengesList.add(new ChallengesItem("Selfie con amigos","Subi tu mejor foto con amigos","http://i.imgur.com/cSo2ZP2.jpg"));
-            challengesList.add(new ChallengesItem("Tu foto en el parque","Subi tu foto en un espacio verde","http://matylda.me/wp-content/uploads/2012/05/tumblr_m2i265QSup1qc1wico1_1280.jpg"));
-            challengesList.add(new ChallengesItem("Coca-Cola con tu nombre","Subi tu foto de coca con tu nombre","https://c1.staticflickr.com/3/2882/9727337820_19ba13600d_z.jpg"));
-            challengesList.add(new ChallengesItem("Tu foto reciclando","Reciclemos en la ciudad!","http://www.beansproutbubba.com.au/blog/wp-content/uploads/2013/06/971275_10151701882558799_1819287792_n.jpg"));
-            challengesList.add(new ChallengesItem("Selfie con amigos","Subi tu mejor foto con amigos","http://i.imgur.com/cSo2ZP2.jpg"));
 
-
-            setListAdapter(new ChallengesListViewAdapter(this,challengesList));
+            setListAdapter(new ChallengesListViewAdapter(this));
 
         }
     }
@@ -168,6 +158,7 @@ public class DisplayActivity extends ListActivity {
         {
             dimension = bitmap.getWidth();
         }
+
         return dimension;
     }
 }

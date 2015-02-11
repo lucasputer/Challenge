@@ -9,6 +9,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.parse.ChallengeObject;
+import com.application.challenge.challenge.domain.parse.PhotoObject;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,39 +25,49 @@ import java.util.ArrayList;
 /**
  * Created by lucas on 16/1/15.
  */
-public class ChallengesListViewAdapter extends ArrayAdapter<ChallengesItem> {
+public class ChallengesListViewAdapter extends ParseQueryAdapter<ChallengeObject> {
 
-    private final Context context;
-    private ArrayList<ChallengesItem> challengesList;
+    public ChallengesListViewAdapter(Context context){
 
-    public ChallengesListViewAdapter(Context context, ArrayList<ChallengesItem> challengesList){
-        super(context, R.layout.element_challenge_row,challengesList);
-        this.context = context;
-        this.challengesList = new ArrayList<ChallengesItem>();
-        this.challengesList.addAll(challengesList);
+        super(context,new ParseQueryAdapter.QueryFactory<ChallengeObject>(){
+            public ParseQuery<ChallengeObject> create(){
+                ParseQuery query = new ParseQuery("Challenge");
+                query.include("firstPhoto");
+
+                return query;
+            }
+        });
+
+
     }
 
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.element_challenge_row, parent, false);
-        TextView title = (TextView) rowView.findViewById(R.id.challenge_title);
-        TextView subtitle = (TextView) rowView.findViewById(R.id.challenge_subtitle);
-        CircularImageView imageView = (CircularImageView) rowView.findViewById(R.id.circled_challenge_image);
+    public View getItemView(ChallengeObject challenge, View v, ViewGroup parent) {
 
-        imageView.setBorderWidth(0);
+        if (v == null) {
+            v = View.inflate(getContext(), R.layout.element_challenge_row, null);
+        }
 
-        title.setText(challengesList.get(position).getTitle());
-        subtitle.setText(challengesList.get(position).getSubtitle());
+        super.getItemView(challenge, v, parent);
 
-        Picasso.with(context) //
-                .load(challengesList.get(position).getUrl()) //
-                .fit() //
-                .tag(context) //
-                .into(imageView);
+        ParseImageView challengeImage = (ParseImageView) v.findViewById(R.id.circled_challenge_image);
+        ParseFile photoFile = challenge.getFirstPhoto().getParseFile("thumbnail");
+        if (photoFile != null) {
+            challengeImage.setParseFile(photoFile);
+            challengeImage.loadInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    // nothing to do
+                }
+            });
+        }
 
-        return rowView;
+        TextView titleTextView = (TextView) v.findViewById(R.id.challenge_title);
+        titleTextView.setText(challenge.getName());
+        TextView subtitleTextView = (TextView) v.findViewById(R.id.challenge_subtitle);
+        subtitleTextView.setText(challenge.getDescription());
+        return v;
     }
 
 

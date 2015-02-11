@@ -36,6 +36,14 @@ public class ChallengeObject extends ParseObject {
         put("name",name);
     }
 
+    public String getDescription(){
+        return getString("description");
+    }
+
+    public void setDescription(String desc){
+        put("description",desc);
+    }
+
     public ParseObject getSponsor(){
         return getParseObject("sponsor");
     }

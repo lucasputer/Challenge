@@ -14,8 +14,9 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.application.challenge.challenge.R;
+import com.parse.ParseImageView;
 
-public class CircularImageView extends ImageView {
+public class CircularImageView extends ParseImageView {
     private int borderWidth;
     private int canvasSize;
     private Bitmap image;
