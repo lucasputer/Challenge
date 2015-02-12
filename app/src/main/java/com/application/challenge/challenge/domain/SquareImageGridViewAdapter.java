@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.parse.PhotoObject;
 import com.squareup.picasso.Picasso;
 
 import java.net.URI;
@@ -22,18 +23,12 @@ import java.util.List;
  */
 public class SquareImageGridViewAdapter extends BaseAdapter {
     private final Context context;
-    private List<String> urls = new ArrayList<String>();
+    private ArrayList<PhotoObject> photos = new ArrayList<PhotoObject>();
 
-    public SquareImageGridViewAdapter(Context context,  ArrayList<String> urls) {
+    public SquareImageGridViewAdapter(Context context,  ArrayList<PhotoObject> photos) {
         this.context = context;
-        this.urls.addAll(urls);
+        this.photos.addAll(photos);
 
-
-
-        // Triple up the list.
-//        ArrayList<String> copy = new ArrayList<String>(urls);
-//        urls.addAll(copy);
-//        urls.addAll(copy);
     }
 
     @Override public View getView(int position, View convertView, ViewGroup parent) {
@@ -44,26 +39,23 @@ public class SquareImageGridViewAdapter extends BaseAdapter {
         }
 
         // Get the image URL for the current position.
-        String url = getItem(position);
+        PhotoObject ph = getItem(position);
 
-        // Trigger the download of the URL asynchronously into the image view.
-        Picasso.with(context) //
-                .load(url) //
-                .fit() //
-                .tag(context) //
-                .into(view);
-        //TODO settear drawable para error
-        //.error(R.drawable.error) //
+        view.setParseFile(ph.getPhoto());
+        view.loadInBackground();
 
         return view;
     }
 
+
+
+
     @Override public int getCount() {
-        return urls.size();
+        return photos.size();
     }
 
-    @Override public String getItem(int position) {
-        return urls.get(position);
+    @Override public PhotoObject getItem(int position) {
+        return photos.get(position);
     }
 
     @Override public long getItemId(int position) {
