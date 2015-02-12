@@ -7,10 +7,12 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.parse.ParseImageView;
+
 /**
  * Created by lucas on 22/12/14.
  */
-public class SquareImageView extends ImageView {
+public class SquareImageView extends ParseImageView {
     public SquareImageView(Context context) {
         super(context);
     }

@@ -9,6 +9,16 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.parse.ChallengeObject;
+import com.application.challenge.challenge.domain.parse.PhotoObject;
+import com.parse.GetDataCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -17,47 +27,72 @@ import java.util.List;
 /**
  * Created by lucas on 16/1/15.
  */
-public class PictureListViewAdapter extends ArrayAdapter<String> {
+public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
 
-    private final Context context;
-    private List<String> urls = new ArrayList<String>();
-    private String username;
-    private String thumbnail;
+    private Context cntxt;
 
-    public PictureListViewAdapter(Context context, ArrayList<String> urls,String username, String thumbnail){
-        super(context, R.layout.element_picture,urls);
-        this.context = context;
-        this.urls.addAll(urls);
-        this.username = username;
-        this.thumbnail = thumbnail;
+
+    public PictureListViewAdapter(Context context, final ParseUser user){
+
+
+        super(context,new ParseQueryAdapter.QueryFactory<PhotoObject>(){
+            public ParseQuery<PhotoObject> create(){
+                ParseQuery query = new ParseQuery("Photo");
+                query.include("user");
+                query.whereEqualTo("user",user);
+                query.orderByDescending("createdAt");
+
+                return query;
+            }
+        });
+
+        cntxt = context;
+
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.element_picture, parent, false);
-        TextView user = (TextView) rowView.findViewById(R.id.picture_username);
-        CircularImageView profilePictureThumbnail = (CircularImageView) rowView.findViewById(R.id.circled_picture_profile_image);
-        SquareImageView picture = (SquareImageView) rowView.findViewById(R.id.picture_image);
+    public View getItemView(PhotoObject photoObj, View v, ViewGroup parent) {
 
-        profilePictureThumbnail.setBorderWidth(0);
+        if (v == null) {
+            v = View.inflate(getContext(), R.layout.element_picture, null);
+        }
 
-        user.setText(username);
+        super.getItemView(photoObj, v, parent);
 
-        Picasso.with(context) //
-                .load(thumbnail) //
-                .fit() //
-                .tag(context) //
-                .into(profilePictureThumbnail);
+        ParseImageView photoImageView = (ParseImageView) v.findViewById(R.id.picture_image);
+        ParseImageView thumbnailImageView = (ParseImageView) v.findViewById(R.id.circled_picture_profile_image);
+        ParseFile thumbnailFile = photoObj.getUser().getParseFile("displayPictureThumbnail");
 
-        Picasso.with(context) //
-                .load(urls.get(position)) //
-                .tag(context) //
-                .into(picture);
+        photoImageView.setParseFile(photoObj.getParseFile("photo"));
+        photoImageView.loadInBackground(new GetDataCallback() {
+            @Override
+            public void done(byte[] data, ParseException e) {
+                // nothing to do
+            }
+        });
 
-        return rowView;
+        if(thumbnailFile != null) {
+            thumbnailImageView.setParseFile(thumbnailFile);
+            thumbnailImageView.loadInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    // nothing to do
+                }
+            });
+
+        }
+
+
+
+        TextView usernameTextView = (TextView) v.findViewById(R.id.picture_username);
+        usernameTextView.setText(photoObj.getUser().getUsername());
+
+
+        TextView pictureLikesAmount = (TextView) v.findViewById(R.id.picture_heart_amount);
+        pictureLikesAmount.setText(cntxt.getString(R.string.likes_amount,photoObj.getLikes()));
+
+
+        return v;
     }
-
 
 }

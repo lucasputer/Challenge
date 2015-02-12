@@ -13,6 +13,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="200dp"
+            android:id="@+id/relative_user_profile"
             android:background="@drawable/login_backround">
 
             <com.application.challenge.challenge.domain.CircularImageView
@@ -27,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Lucas Puterman"
+                android:text="Natalia Natalia"
                 android:id="@+id/txt_username_profile"
                 android:layout_below="@+id/view_user_profile"
                 android:textColor="#FFFFFF"

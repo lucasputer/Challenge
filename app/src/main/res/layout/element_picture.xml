@@ -60,7 +60,7 @@
         android:layout_margin="8dp"
         android:textColor="@color/orange"
         android:textStyle="bold"
-        android:text="♥ 25 Me Gusta"/>
+        android:text="♥ 0 Me Gusta"/>
 
     <Button
         android:layout_width="28dp"
