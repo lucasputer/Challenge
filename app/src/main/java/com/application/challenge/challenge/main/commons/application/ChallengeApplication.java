@@ -2,11 +2,11 @@ package com.application.challenge.challenge.main.commons.application;
 
 import android.app.Application;
 
-import com.application.challenge.challenge.domain.parse.ChallengeObject;
-import com.application.challenge.challenge.domain.parse.FollowActivityObject;
-import com.application.challenge.challenge.domain.parse.LikeObject;
-import com.application.challenge.challenge.domain.parse.PhotoObject;
-import com.application.challenge.challenge.domain.parse.SponsorObject;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
+import com.application.challenge.challenge.domain.model.FollowActivityObject;
+import com.application.challenge.challenge.domain.model.LikeObject;
+import com.application.challenge.challenge.domain.model.PhotoObject;
+import com.application.challenge.challenge.domain.model.SponsorObject;
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;

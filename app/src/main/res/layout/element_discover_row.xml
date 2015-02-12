@@ -26,7 +26,7 @@
             android:layout_toRightOf="@+id/circled_discover_profile_image"
             android:layout_toEndOf="@+id/circled_discover_profile_image" />
 
-        <com.application.challenge.challenge.domain.CircularImageView
+        <com.application.challenge.challenge.domain.custom.CircularImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/login_backround"
@@ -45,19 +45,19 @@
         android:orientation="horizontal">
 
 
-        <com.application.challenge.challenge.domain.SquareImageView
+        <com.application.challenge.challenge.domain.custom.SquareImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/discover_img1" />
 
-        <com.application.challenge.challenge.domain.SquareImageView
+        <com.application.challenge.challenge.domain.custom.SquareImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/discover_img2" />
 
-        <com.application.challenge.challenge.domain.SquareImageView
+        <com.application.challenge.challenge.domain.custom.SquareImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

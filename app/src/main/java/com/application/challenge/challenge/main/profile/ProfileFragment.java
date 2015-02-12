@@ -1,8 +1,6 @@
 package com.application.challenge.challenge.main.profile;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -19,13 +17,11 @@ import android.widget.TextView;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.BlurHelper;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
-import com.application.challenge.challenge.domain.Tabs;
+import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.main.commons.fragment.TabFragment;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseUser;
-
-import java.text.ParseException;
 
 
 /**
@@ -159,7 +155,7 @@ public class ProfileFragment extends ChallengeFragment {
         try {
             ParseFile p = currentUser.getParseFile("displayPicture");
             BlurHelper blurHelper = new BlurHelper();
-            Drawable image = new BitmapDrawable(blurHelper.fastblur(BitmapFactory.decodeByteArray(p.getData(), 0, p.getData().length),5));
+            Drawable image = new BitmapDrawable(blurHelper.fastblur(BitmapFactory.decodeByteArray(p.getData(), 0, p.getData().length), 5));
             relativeLayout.setBackground(image);
         }catch(Exception e){
             e.printStackTrace();

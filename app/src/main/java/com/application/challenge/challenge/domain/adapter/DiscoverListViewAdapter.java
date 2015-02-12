@@ -1,4 +1,4 @@
-package com.application.challenge.challenge;
+package com.application.challenge.challenge.domain.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.application.challenge.challenge.domain.ChallengesItem;
-import com.application.challenge.challenge.domain.CircularImageView;
+import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.custom.CircularImageView;
 import com.application.challenge.challenge.domain.DiscoverItem;
 import com.squareup.picasso.Picasso;
 

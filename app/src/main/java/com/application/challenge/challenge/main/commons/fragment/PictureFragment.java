@@ -2,16 +2,11 @@ package com.application.challenge.challenge.main.commons.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.Tabs;
-import com.application.challenge.challenge.main.profile.ProfileGridViewFragment;
-import com.application.challenge.challenge.main.profile.ProfileListFragment;
 
 
 /**

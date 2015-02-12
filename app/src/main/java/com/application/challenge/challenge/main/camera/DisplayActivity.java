@@ -1,6 +1,5 @@
 package com.application.challenge.challenge.main.camera;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,11 +15,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.ChallengesItem;
-import com.application.challenge.challenge.domain.ChallengesListViewAdapter;
-import com.application.challenge.challenge.domain.parse.PhotoObject;
+import com.application.challenge.challenge.domain.adapter.ChallengesListViewAdapter;
+import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.MainActivity;
-import com.application.challenge.challenge.main.commons.application.ChallengeApplication;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -28,7 +25,6 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 
 public class DisplayActivity extends ListActivity {

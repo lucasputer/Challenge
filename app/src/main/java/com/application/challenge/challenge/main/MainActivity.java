@@ -1,7 +1,6 @@
 package com.application.challenge.challenge.main;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,11 +18,9 @@ import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.main.camera.CameraLoaderFragment;
 import com.application.challenge.challenge.main.challenges.ChallengesListFragment;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
-import com.application.challenge.challenge.domain.Tabs;
+import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.main.commons.activity.ChallengeActionBarActivity;
 import com.application.challenge.challenge.main.commons.application.ChallengeApplication;
-import com.application.challenge.challenge.main.commons.fragment.PictureFragment;
-import com.application.challenge.challenge.main.commons.fragment.TabFragment;
 import com.application.challenge.challenge.main.discover.DiscoverListFragment;
 import com.application.challenge.challenge.main.home.HomeFragment;
 import com.application.challenge.challenge.main.profile.ProfileFragment;

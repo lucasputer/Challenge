@@ -1,6 +1,5 @@
-package com.application.challenge.challenge.domain.parse;
+package com.application.challenge.challenge.domain.model;
 
-import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;

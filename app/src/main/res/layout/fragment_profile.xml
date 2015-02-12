@@ -16,7 +16,7 @@
             android:id="@+id/relative_user_profile"
             android:background="@drawable/login_backround">
 
-            <com.application.challenge.challenge.domain.CircularImageView
+            <com.application.challenge.challenge.domain.custom.CircularImageView
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_centerHorizontal="true"

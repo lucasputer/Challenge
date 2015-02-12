@@ -2,19 +2,15 @@ package com.application.challenge.challenge.main.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.application.challenge.challenge.DiscoverListViewAdapter;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.DiscoverItem;
-import com.application.challenge.challenge.domain.PictureListViewAdapter;
+import com.application.challenge.challenge.domain.adapter.PictureListViewAdapter;
 import com.parse.ParseUser;
-
-import java.util.ArrayList;
 
 /**
  * Created by lucas on 16/1/15.

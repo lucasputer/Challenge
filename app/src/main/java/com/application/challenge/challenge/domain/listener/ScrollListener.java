@@ -1,4 +1,4 @@
-package com.application.challenge.challenge.domain;
+package com.application.challenge.challenge.domain.listener;
 
 import android.content.Context;
 import android.widget.AbsListView;

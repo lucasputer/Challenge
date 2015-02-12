@@ -1,4 +1,4 @@
-package com.application.challenge.challenge.domain;
+package com.application.challenge.challenge.domain.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;

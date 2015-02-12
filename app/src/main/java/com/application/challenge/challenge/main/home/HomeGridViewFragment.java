@@ -1,28 +1,21 @@
 package com.application.challenge.challenge.main.home;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.ExpandableHeightGridView;
-import com.application.challenge.challenge.domain.ScrollListener;
-import com.application.challenge.challenge.domain.SquareImageGridViewAdapter;
-import com.application.challenge.challenge.domain.parse.PhotoObject;
-import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
+import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
+import com.application.challenge.challenge.domain.listener.ScrollListener;
+import com.application.challenge.challenge.domain.adapter.SquareImageGridViewAdapter;
+import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.commons.fragment.GridViewFragment;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class HomeGridViewFragment extends GridViewFragment {

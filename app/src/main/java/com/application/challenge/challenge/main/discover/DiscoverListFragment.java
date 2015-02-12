@@ -5,10 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.application.challenge.challenge.DiscoverListViewAdapter;
+import com.application.challenge.challenge.domain.adapter.DiscoverListViewAdapter;
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.ChallengesItem;
-import com.application.challenge.challenge.domain.ChallengesListViewAdapter;
 import com.application.challenge.challenge.domain.DiscoverItem;
 
 import java.util.ArrayList;

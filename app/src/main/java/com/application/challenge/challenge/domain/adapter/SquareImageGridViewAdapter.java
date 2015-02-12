@@ -1,22 +1,15 @@
-package com.application.challenge.challenge.domain;
+package com.application.challenge.challenge.domain.adapter;
 
 import android.content.Context;
-import android.net.Uri;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.parse.PhotoObject;
-import com.squareup.picasso.Picasso;
+import com.application.challenge.challenge.domain.custom.SquareImageView;
+import com.application.challenge.challenge.domain.model.PhotoObject;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by lucas on 15/1/15.

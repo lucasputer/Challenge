@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
-import com.application.challenge.challenge.domain.Tabs;
-import com.application.challenge.challenge.main.commons.fragment.TabFragment;
+import com.application.challenge.challenge.domain.custom.Tabs;
 
 
 /**

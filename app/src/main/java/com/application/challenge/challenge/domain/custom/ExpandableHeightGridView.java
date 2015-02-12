@@ -1,4 +1,4 @@
-package com.application.challenge.challenge.domain;
+package com.application.challenge.challenge.domain.custom;
 
 /**
  * Created by lucas on 15/1/15.
