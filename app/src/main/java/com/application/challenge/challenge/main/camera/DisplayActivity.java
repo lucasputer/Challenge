@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.adapter.ChallengesListViewAdapter;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.MainActivity;
 import com.parse.ParseException;
@@ -76,7 +77,7 @@ public class DisplayActivity extends ListActivity {
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
-            setListAdapter(new ChallengesListViewAdapter(this));
+            setListAdapter(new ChallengesListViewAdapter(this, new ParseHelper().getChallengeListQuery()));
 
         }
     }

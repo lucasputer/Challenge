@@ -19,18 +19,8 @@ import com.parse.ParseQueryAdapter;
  */
 public class ChallengesListViewAdapter extends ParseQueryAdapter<ChallengeObject> {
 
-    public ChallengesListViewAdapter(Context context){
-
-        super(context,new ParseQueryAdapter.QueryFactory<ChallengeObject>(){
-            public ParseQuery<ChallengeObject> create(){
-                ParseQuery query = new ParseQuery("Challenge");
-                query.include("firstPhoto");
-
-                return query;
-            }
-        });
-
-
+    public ChallengesListViewAdapter(Context context,ParseQueryAdapter.QueryFactory<ChallengeObject>  queryFactory){
+        super(context,queryFactory);
     }
 
 

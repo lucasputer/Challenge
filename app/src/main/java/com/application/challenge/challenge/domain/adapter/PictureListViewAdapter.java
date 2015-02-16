@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -23,19 +24,9 @@ public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
     private Context cntxt;
 
 
-    public PictureListViewAdapter(Context context, final ParseUser user){
+    public PictureListViewAdapter(Context context, ParseQueryAdapter.QueryFactory<PhotoObject>  queryFactory){
 
-
-        super(context,new ParseQueryAdapter.QueryFactory<PhotoObject>(){
-            public ParseQuery<PhotoObject> create(){
-                ParseQuery query = new ParseQuery("Photo");
-                query.include("user");
-                query.whereEqualTo("user",user);
-                query.orderByDescending("createdAt");
-
-                return query;
-            }
-        });
+        super(context,queryFactory);
 
         cntxt = context;
 

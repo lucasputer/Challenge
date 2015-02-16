@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.adapter.ChallengesListViewAdapter;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 
 /**
  * Created by lucas on 16/1/15.
@@ -19,7 +20,7 @@ public class ChallengesListFragment extends android.support.v4.app.ListFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        challengeListAdapter = new ChallengesListViewAdapter(getActivity());
+        challengeListAdapter = new ChallengesListViewAdapter(getActivity(), new ParseHelper().getChallengeListQuery());
 
     }
 

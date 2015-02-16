@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.listener.ScrollListener;
 import com.application.challenge.challenge.domain.adapter.SquareImageGridViewAdapter;
 import com.application.challenge.challenge.domain.model.PhotoObject;
@@ -46,9 +47,7 @@ public class HomeGridViewFragment extends GridViewFragment {
         ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
         try {
-            ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
-            query.setLimit(20);
-            query.orderByDescending("createdAt");
+            ParseQuery<PhotoObject> query = new ParseHelper().getPopularPictures();
             photoArray.addAll(query.find());
         }catch (ParseException e){
             e.printStackTrace();

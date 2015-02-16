@@ -2,6 +2,7 @@ package com.application.challenge.challenge.main.commons.application;
 
 import android.app.Application;
 
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.FollowActivityObject;
 import com.application.challenge.challenge.domain.model.LikeObject;

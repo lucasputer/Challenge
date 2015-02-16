@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.DiscoverItem;
 import com.application.challenge.challenge.domain.adapter.PictureListViewAdapter;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.parse.ParseUser;
 
 /**
@@ -23,7 +24,7 @@ public class ProfileListFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        pictureListViewAdapter = new PictureListViewAdapter(getActivity(), ParseUser.getCurrentUser());
+        pictureListViewAdapter = new PictureListViewAdapter(getActivity(), new ParseHelper().getPicturesFromUser(ParseUser.getCurrentUser()));
     }
 
     @Override
