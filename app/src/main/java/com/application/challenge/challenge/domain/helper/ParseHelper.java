@@ -4,6 +4,7 @@ import android.content.Context;
 import android.provider.SyncStateContract;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.CircularImageView;
@@ -75,7 +76,7 @@ public class ParseHelper {
     public ParseQueryAdapter.QueryFactory<ParseUser> getDiscoverUsers(){
         ParseQueryAdapter.QueryFactory<ParseUser>  factory = new ParseQueryAdapter.QueryFactory<ParseUser>(){
             public ParseQuery<ParseUser> create(){
-                ParseQuery query = new ParseQuery("User");
+                ParseQuery query = ParseUser.getQuery();
                 query.orderByDescending("followerCount");
                 query.setLimit(20);
                 return query;
@@ -83,6 +84,7 @@ public class ParseHelper {
         };
         return factory;
     }
+
 
     public ParseQuery<PhotoObject> getDiscoverUserPictures(ParseUser user){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");

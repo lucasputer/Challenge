@@ -10,6 +10,7 @@ import com.application.challenge.challenge.domain.adapter.DiscoverListViewAdapte
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.adapter.PictureListViewAdapter;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class DiscoverListFragment extends android.support.v4.app.ListFragment{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        discoverListViewAdapter = new DiscoverListViewAdapter(getActivity(), new ParseHelper().getDiscoverUsers());
+        ParseQueryAdapter.QueryFactory<ParseUser> p = new ParseHelper().getDiscoverUsers();
+        discoverListViewAdapter = new DiscoverListViewAdapter(getActivity(), p);
     }
 
     @Override
