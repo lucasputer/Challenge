@@ -11,5 +11,6 @@
     <string name="no_image">No hay imagen para mostrar</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="likes_amount">♥ %1$s Me Gusta</string>
+    <string name="title_activity_picture">PictureActivity</string>
 
 </resources>

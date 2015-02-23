@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.custom.CircularImageView;
+import com.application.challenge.challenge.domain.custom.SquareImageView;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.parse.GetDataCallback;
@@ -41,38 +44,12 @@ public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
 
         super.getItemView(photoObj, v, parent);
 
-        ParseImageView photoImageView = (ParseImageView) v.findViewById(R.id.picture_image);
-        ParseImageView thumbnailImageView = (ParseImageView) v.findViewById(R.id.circled_picture_profile_image);
-        ParseFile thumbnailFile = photoObj.getUser().getParseFile("displayPictureThumbnail");
-
-        photoImageView.setParseFile(photoObj.getParseFile("photo"));
-        photoImageView.loadInBackground(new GetDataCallback() {
-            @Override
-            public void done(byte[] data, ParseException e) {
-                // nothing to do
-            }
-        });
-
-        if(thumbnailFile != null) {
-            thumbnailImageView.setParseFile(thumbnailFile);
-            thumbnailImageView.loadInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    // nothing to do
-                }
-            });
-
-        }
-
-
-
+        SquareImageView photoImageView = (SquareImageView) v.findViewById(R.id.picture_image);
+        CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_picture_profile_image);
         TextView usernameTextView = (TextView) v.findViewById(R.id.picture_username);
-        usernameTextView.setText(photoObj.getUser().getUsername());
-
-
         TextView pictureLikesAmount = (TextView) v.findViewById(R.id.picture_heart_amount);
-        pictureLikesAmount.setText(cntxt.getString(R.string.likes_amount,photoObj.getLikes()));
 
+        new ParseHelper().loadPicture(cntxt, usernameTextView, thumbnailImageView, photoImageView, pictureLikesAmount, photoObj);
 
         return v;
     }

@@ -1,5 +1,8 @@
 package com.application.challenge.challenge.domain.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -9,12 +12,9 @@ import com.parse.ParseUser;
  * Created by lucas on 8/2/15.
  */
 @ParseClassName("Photo")
-public class PhotoObject extends ParseObject {
+public class PhotoObject extends ParseObject{
 
     public PhotoObject(){
-//        put("likes",0);
-//        put("dislikes",0);
-//        put("overallLikes",0);
     }
 
     public String getObjectId(){
@@ -38,7 +38,7 @@ public class PhotoObject extends ParseObject {
     }
 
     public void dislikePicture(){
-        put("dislikes",getDislikes() + 1);
+        increment("dislikes");
         put("overallLikes",getOverallLikes() -1);
 
     }
@@ -48,8 +48,8 @@ public class PhotoObject extends ParseObject {
     }
 
     public void likePicture(){
-        put("likes",getDislikes() + 1);
-        put("overallLikes",getOverallLikes() +1);
+        increment("likes");
+        increment("overallLikes");
 
     }
 

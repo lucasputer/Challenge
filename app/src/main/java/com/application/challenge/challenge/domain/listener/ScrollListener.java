@@ -3,8 +3,6 @@ package com.application.challenge.challenge.domain.listener;
 import android.content.Context;
 import android.widget.AbsListView;
 
-import com.squareup.picasso.Picasso;
-
 /**
  * Created by lucas on 15/1/15.
  */
@@ -17,12 +15,12 @@ public class ScrollListener implements AbsListView.OnScrollListener {
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        final Picasso picasso = Picasso.with(context);
-        if (scrollState == SCROLL_STATE_IDLE || scrollState == SCROLL_STATE_TOUCH_SCROLL) {
-            picasso.resumeTag(context);
-        } else {
-            picasso.pauseTag(context);
-        }
+//        final Picasso picasso = Picasso.with(context);
+//        if (scrollState == SCROLL_STATE_IDLE || scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+//            picasso.resumeTag(context);
+//        } else {
+//            picasso.pauseTag(context);
+//        }
     }
 
     @Override

@@ -10,65 +10,87 @@ import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.CircularImageView;
-import com.application.challenge.challenge.domain.DiscoverItem;
-import com.squareup.picasso.Picasso;
+import com.application.challenge.challenge.domain.custom.SquareImageView;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
+import com.application.challenge.challenge.domain.model.PhotoObject;
+import com.parse.GetDataCallback;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseImageView;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
 /**
  * Created by lucas on 16/1/15.
  */
-public class DiscoverListViewAdapter extends ArrayAdapter<DiscoverItem> {
+public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
-    private final Context context;
-    private ArrayList<DiscoverItem> discoverList;
 
-    public DiscoverListViewAdapter(Context context, ArrayList<DiscoverItem> discoverList){
-        super(context, R.layout.element_discover_row,discoverList);
-        this.context = context;
-        this.discoverList = new ArrayList<DiscoverItem>();
-        this.discoverList.addAll(discoverList);
+    public DiscoverListViewAdapter(Context context, ParseQueryAdapter.QueryFactory<ParseUser>  queryFactory){
+        super(context, queryFactory);
     }
 
+
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.element_discover_row, parent, false);
-        TextView username = (TextView) rowView.findViewById(R.id.discover_username);
-        CircularImageView imageView = (CircularImageView) rowView.findViewById(R.id.circled_discover_profile_image);
+    public View getItemView(ParseUser user, View v, ViewGroup parent) {
 
-        ImageView img1 = (ImageView) rowView.findViewById(R.id.discover_img1);
-        ImageView img2 = (ImageView) rowView.findViewById(R.id.discover_img2);
-        ImageView img3 = (ImageView) rowView.findViewById(R.id.discover_img3);
+        if (v == null) {
+            v = View.inflate(getContext(), R.layout.element_discover_row, null);
+        }
 
+        super.getItemView(user, v, parent);
 
-        imageView.setBorderWidth(0);
+        TextView username = (TextView) v.findViewById(R.id.discover_username);
+        CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_discover_profile_image);
 
-        username.setText(discoverList.get(position).getUsername());
+        ArrayList<SquareImageView> imageList = new ArrayList<SquareImageView>();
+        SquareImageView img1 = (SquareImageView) v.findViewById(R.id.discover_img1);
+        SquareImageView img2 = (SquareImageView) v.findViewById(R.id.discover_img2);
+        SquareImageView img3 = (SquareImageView) v.findViewById(R.id.discover_img3);
+        imageList.add(img1);
+        imageList.add(img2);
+        imageList.add(img3);
 
-        Picasso.with(context) //
-                .load(discoverList.get(position).getProfilePicture()) //
-                .fit() //
-                .tag(context) //
-                .into(imageView);
+        username.setText(user.getUsername());
 
-        Picasso.with(context) //
-                .load(discoverList.get(position).getImg1()) ////
-                .tag(context) //
-                .into(img1);
+        ParseFile thumbnailFile = user.getParseFile("displayPictureThumbnail");
+        if(thumbnailFile != null) {
+            thumbnailImageView.setParseFile(thumbnailFile);
+            thumbnailImageView.loadInBackground(new GetDataCallback() {
+                @Override
+                public void done(byte[] data, ParseException e) {
+                    // nothing to do
+                }
+            });
+        }
 
-        Picasso.with(context) //
-                .load(discoverList.get(position).getImg2()) //
-                .tag(context) //
-                .into(img2);
+            ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
-        Picasso.with(context) //
-                .load(discoverList.get(position).getImg3()) //
-                .tag(context) //
-                .into(img3);
+            try {
+                ParseQuery<PhotoObject> query = new ParseHelper().getDiscoverUserPictures(user);
+                photoArray.addAll(query.find());
+            }catch (ParseException e){
+                e.printStackTrace();
+            }
+        if(photoArray.size() > 0){
+            int i = 0;
+            while(i < photoArray.size()){
+                imageList.get(i).setParseFile(photoArray.get(i).getParseFile("photo"));
+                imageList.get(i).loadInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] data, ParseException e) {
+                        // nothing to do
+                    }
+                });
+            }
+        }
 
-        return rowView;
+        return v;
     }
 
 

@@ -86,12 +86,12 @@
     <orderEntry type="jdk" jdkName="Android API 21 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="ParseCrashReporting-1.8.0" level="project" />
+    <orderEntry type="library" exported="" name="eventbus-2.4.0" level="project" />
     <orderEntry type="library" exported="" name="Parse-1.8.0" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
     <orderEntry type="library" exported="" name="circlebutton-1.1" level="project" />
     <orderEntry type="library" exported="" name="camera-0.6.12" level="project" />
-    <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
     <orderEntry type="module" module-name="facebook" exported="" />
   </component>
 </module>

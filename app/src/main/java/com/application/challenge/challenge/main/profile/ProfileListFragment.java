@@ -8,7 +8,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.DiscoverItem;
 import com.application.challenge.challenge.domain.adapter.PictureListViewAdapter;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.parse.ParseUser;

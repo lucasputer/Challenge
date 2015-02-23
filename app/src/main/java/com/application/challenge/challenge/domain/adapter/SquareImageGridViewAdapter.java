@@ -21,7 +21,6 @@ public class SquareImageGridViewAdapter extends BaseAdapter {
     public SquareImageGridViewAdapter(Context context,  ArrayList<PhotoObject> photos) {
         this.context = context;
         this.photos.addAll(photos);
-
     }
 
     @Override public View getView(int position, View convertView, ViewGroup parent) {
