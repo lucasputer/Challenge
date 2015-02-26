@@ -16,11 +16,16 @@ import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.BlurHelper;
+import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.main.commons.fragment.TabFragment;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 
@@ -81,9 +86,18 @@ public class ProfileFragment extends ChallengeFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        final View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
 
         setProfileInformation(v);
+
+        ParseUser.getCurrentUser().fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                setProfileInformation(v);
+            }
+        });
+
 
         setProfileTabs(v);
         return v;
@@ -131,9 +145,17 @@ public class ProfileFragment extends ChallengeFragment {
     private void setProfileInformation(View v){
         ParseUser currentUser = ParseUser.getCurrentUser();
 
+
         String name = "";
         try{
-            name = currentUser.get("firstName") + " " + currentUser.get("lastName");
+            String firstName = currentUser.get("firstName").toString();
+            String lastName = currentUser.get("lastName").toString();
+
+            if(firstName != null && lastName != null){
+                name = firstName + " " + lastName;
+            }else{
+                name = currentUser.getUsername();
+            }
         }catch (Exception e){
             name = currentUser.getUsername();
         }
@@ -144,10 +166,14 @@ public class ProfileFragment extends ChallengeFragment {
 
         ParseImageView profilePicture = (ParseImageView) v.findViewById(R.id.view_user_profile);
         try{
-            profilePicture.setParseFile(currentUser.getParseFile("displayPictureThumbnail"));
-            profilePicture.loadInBackground();
+            ParseFile displayPictureThumbnail = currentUser.getParseFile("displayPictureThumbnail");
+            if(displayPictureThumbnail != null){
+                profilePicture.setParseFile(displayPictureThumbnail);
+                profilePicture.loadInBackground();
+            }
         }catch(Exception e){
             e.printStackTrace();
+            profilePicture.setBackground(getResources().getDrawable(R.drawable.login_backround));
         }
 
         RelativeLayout relativeLayout = (RelativeLayout) v.findViewById(R.id.relative_user_profile);
@@ -159,6 +185,19 @@ public class ProfileFragment extends ChallengeFragment {
             relativeLayout.setBackground(image);
         }catch(Exception e){
             e.printStackTrace();
+        }
+
+        TextView challenges = (TextView) v.findViewById(R.id.txt_challenges_amount_profile);
+        new ParseHelper().setPhotosAmountForCurrentUser(challenges);
+
+        TextView following = (TextView) v.findViewById(R.id.txt_following_amount_profile);
+        if(ParseUser.getCurrentUser().get("followingCount") != null){
+            following.setText(ParseUser.getCurrentUser().get("followingCount").toString());
+        }
+
+        TextView followers = (TextView) v.findViewById(R.id.txt_followers_amount_profile);
+        if(ParseUser.getCurrentUser().get("followerCount") != null){
+            following.setText(ParseUser.getCurrentUser().get("followerCount").toString());
         }
 
     }

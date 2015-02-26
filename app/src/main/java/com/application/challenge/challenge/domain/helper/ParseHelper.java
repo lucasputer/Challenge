@@ -13,6 +13,7 @@ import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.FollowActivityObject;
 import com.application.challenge.challenge.domain.model.LikeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
+import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -267,6 +268,22 @@ public class ParseHelper {
            ret = false;
         }
         return ret;
+    }
+
+
+    public void setPhotosAmountForCurrentUser(final TextView challenges){
+        ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
+        query.whereEqualTo("user",ParseUser.getCurrentUser());
+
+            query.countInBackground(new CountCallback() {
+                @Override
+                public void done(int i, ParseException e) {
+                    if(e == null) {
+                        challenges.setText(Integer.toString(i));
+                    }
+                }
+            });
+
     }
 
 
