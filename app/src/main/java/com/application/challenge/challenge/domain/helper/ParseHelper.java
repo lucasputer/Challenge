@@ -10,6 +10,7 @@ import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.CircularImageView;
 import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
+import com.application.challenge.challenge.domain.model.FollowActivityObject;
 import com.application.challenge.challenge.domain.model.LikeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.parse.GetCallback;
@@ -78,6 +79,7 @@ public class ParseHelper {
             public ParseQuery<ParseUser> create(){
                 ParseQuery query = ParseUser.getQuery();
                 query.orderByDescending("followerCount");
+                query.whereNotEqualTo("objectId",ParseUser.getCurrentUser().getObjectId());
                 query.setLimit(20);
                 return query;
             }
@@ -250,6 +252,21 @@ public class ParseHelper {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public boolean isFollowing(ParseUser user){
+        ParseQuery<FollowActivityObject> query = new ParseQuery<FollowActivityObject>("FollowActivity");
+        query.whereEqualTo("fromUser",ParseUser.getCurrentUser());
+        query.whereEqualTo("toUser",user);
+
+        boolean ret = false;
+        try{
+           FollowActivityObject fao = query.getFirst();
+           ret = true;
+        }catch(Exception e){
+           ret = false;
+        }
+        return ret;
     }
 
 

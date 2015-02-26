@@ -36,6 +36,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="36dp"
+            android:background="@drawable/btn_discover_follow"
+            android:id="@+id/btn_discover_follow"
+            android:layout_alignBottom="@+id/circled_discover_profile_image"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="followUser"
+            android:layout_marginRight="16dp"/>
+
     </RelativeLayout>
 
     <LinearLayout

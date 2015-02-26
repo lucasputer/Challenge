@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,8 +48,11 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
         super.getItemView(user, v, parent);
 
+        ParseHelper parseHelper = new ParseHelper();
+
         TextView username = (TextView) v.findViewById(R.id.discover_username);
-        CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_discover_profile_image);
+        final CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_discover_profile_image);
+        thumbnailImageView.setParseFile(null);
 
         final ArrayList<SquareImageView> imageList = new ArrayList<SquareImageView>();
         SquareImageView img1 = (SquareImageView) v.findViewById(R.id.discover_img1);
@@ -65,25 +69,25 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
         username.setText(user.getUsername());
 
-        ParseFile thumbnailFile = user.getParseFile("displayPictureThumbnail");
+        final ParseFile thumbnailFile = user.getParseFile("displayPictureThumbnail");
         if(thumbnailFile != null) {
             thumbnailImageView.setParseFile(thumbnailFile);
-            thumbnailImageView.loadInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    // nothing to do
-                }
-            });
+            thumbnailImageView.loadInBackground();
         }
 
-            ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
+        Button follow = (Button) v.findViewById(R.id.btn_discover_follow);
+        if(parseHelper.isFollowing(user)){
+            follow.setVisibility(View.GONE);
+        }
 
-            try {
-                ParseQuery<PhotoObject> query = new ParseHelper().getDiscoverUserPictures(user);
-                photoArray.addAll(query.find());
-            }catch (ParseException e){
-                e.printStackTrace();
-            }
+        ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
+
+        try {
+            ParseQuery<PhotoObject> query = parseHelper.getDiscoverUserPictures(user);
+            photoArray.addAll(query.find());
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
 
 
         if(photoArray.size() > 0){
@@ -96,26 +100,6 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
                         i++;
             }
         }
-
-
-//        ParseQuery<PhotoObject> query = new ParseHelper().getDiscoverUserPictures(user);
-//        query.findInBackground(new FindCallback<PhotoObject>() {
-//            @Override
-//            public void done(List<PhotoObject> photoObjects, ParseException e) {
-//                if(photoObjects.size() > 0){
-//                    int i = 0;
-//                    while(i < photoObjects.size()){
-//                        if(photoObjects.get(i).getUser().getObjectId().equals(user.getObjectId())) {
-//                            imageList.get(i).setParseFile(photoObjects.get(i).getParseFile("photo"));
-//                            imageList.get(i).loadInBackground();
-//                        }
-//                        i++;
-//                    }
-//
-//                }
-//
-//            }
-//        });
 
         return v;
     }
