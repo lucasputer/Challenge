@@ -94,7 +94,9 @@ public class ProfileFragment extends ChallengeFragment {
         ParseUser.getCurrentUser().fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
-                setProfileInformation(v);
+                if(e == null) {
+                    setProfileInformation(v);
+                }
             }
         });
 
@@ -197,7 +199,7 @@ public class ProfileFragment extends ChallengeFragment {
 
         TextView followers = (TextView) v.findViewById(R.id.txt_followers_amount_profile);
         if(ParseUser.getCurrentUser().get("followerCount") != null){
-            following.setText(ParseUser.getCurrentUser().get("followerCount").toString());
+            followers.setText(ParseUser.getCurrentUser().get("followerCount").toString());
         }
 
     }

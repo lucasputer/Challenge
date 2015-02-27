@@ -137,7 +137,8 @@ public class ParseHelper {
 
     public PhotoObject getPhotoObjectFromPF( PhotoObject ph){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
-        query.whereEqualTo("photo",ph.getPhoto());
+        ParseFile pdfd = ph.getPhoto();
+        query.whereEqualTo("objectId",ph.getObjectId());
         try {
             return query.getFirst();
         }catch(Exception e){
@@ -157,18 +158,22 @@ public class ParseHelper {
 
     public void loadPicture(Context context, TextView username, CircularImageView thumbnail,
                             SquareImageView picture, TextView likes, PhotoObject phObj) {
-
-        username.setText(phObj.getUser().getUsername());
-        ParseFile thumbnailFile = phObj.getUser().getParseFile("displayPictureThumbnail");
-        if (thumbnailFile != null) {
-            thumbnail.setParseFile(thumbnailFile);
-            thumbnail.loadInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    // nothing to do
-                }
-            });
+        try {
+            username.setText(phObj.getUser().fetchIfNeeded().getUsername());
+            ParseFile thumbnailFile = phObj.getUser().getParseFile("displayPictureThumbnail");
+            if (thumbnailFile != null) {
+                thumbnail.setParseFile(thumbnailFile);
+                thumbnail.loadInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] data, ParseException e) {
+                        // nothing to do
+                    }
+                });
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
+
 
             picture.setParseFile(phObj.getPhoto());
             picture.loadInBackground(new GetDataCallback() {

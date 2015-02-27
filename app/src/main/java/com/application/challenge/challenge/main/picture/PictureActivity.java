@@ -92,7 +92,7 @@ public class PictureActivity extends Activity {
     }
 
     private void loadPicture(){
-        parseHelper.loadPicture(this, username, thumbnail, picture, likes, parseHelper.getPhotoObjectFromPF(phObj));
+        parseHelper.loadPicture(this, username, thumbnail, picture, likes, phObj);
     }
 
     public void likePicture(View v){

@@ -1,23 +1,33 @@
 package com.application.challenge.challenge.main.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
 import com.application.challenge.challenge.domain.adapter.SquareImageGridViewAdapter;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.commons.fragment.GridViewFragment;
+import com.application.challenge.challenge.main.picture.PictureActivity;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 
 public class ProfileGridViewFragment extends GridViewFragment {
+
+    SquareImageGridViewAdapter adapter;
+    ExpandableHeightGridView gridView;
 
     public static ProfileGridViewFragment newInstance() {
         ProfileGridViewFragment fragment = new ProfileGridViewFragment();
@@ -40,28 +50,48 @@ public class ProfileGridViewFragment extends GridViewFragment {
         // Inflate the layout for this fragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        ExpandableHeightGridView gridView = (ExpandableHeightGridView)v.findViewById(R.id.gridview);
+        gridView = (ExpandableHeightGridView)v.findViewById(R.id.gridview);
 
 
-        ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
+        final ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
-        try {
-            ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
-            query.whereEqualTo("user", ParseUser.getCurrentUser());
-            query.orderByDescending("createdAt");
-            photoArray.addAll(query.find());
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
+        ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.orderByDescending("createdAt");
+        query.findInBackground(new FindCallback<PhotoObject>() {
+            @Override
+            public void done(List<PhotoObject> photoObjects, ParseException e) {
+                photoArray.addAll(photoObjects);
+                adapter = new SquareImageGridViewAdapter(getActivity(), photoArray);
+                configureGridView(photoArray);
+            }
+        });
 
 
-        gridView.setNumColumns(3);
-        gridView.setExpanded(true);
-        gridView.setAdapter(new SquareImageGridViewAdapter(getActivity(), photoArray));
+
         //gridView.setOnScrollListener(new ScrollListener(getActivity()));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                Intent intent = new Intent(getActivity(), PictureActivity.class);
+                EventBus.getDefault().postSticky(adapter.getItem(position));
+
+                startActivity(intent);
+
+            }
+        });
 
         return v;
     }
 
-
+    private void configureGridView(final ArrayList<PhotoObject> photoArray){
+        adapter = new SquareImageGridViewAdapter(getActivity(), photoArray);
+        gridView.setNumColumns(3);
+        gridView.setExpanded(true);
+        gridView.setAdapter(adapter);
+    }
 }
