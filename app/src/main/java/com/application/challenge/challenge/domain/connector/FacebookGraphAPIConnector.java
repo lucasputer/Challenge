@@ -1,0 +1,85 @@
+package com.application.challenge.challenge.domain.connector;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
+
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.model.GraphUser;
+import com.parse.ParseFacebookUtils;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+/**
+ * Created by lucas on 27/2/15.
+ */
+public class FacebookGraphAPIConnector {
+
+    private static final String FACEBOOK_GRAPH_BASE_URL = "http://graph.facebook.com/";
+    private static final String PROFILE_PICTURE_LARGE = "/picture?type=large";
+    private static final String DISPLAY_PICTURE = "displayPicture";
+    private static final String THUMBNAIL_PICTURE = "displayPictureThumbnail";
+    private static final String PROFILE_PICTURE_SQUARE = "/picture?type=square";
+
+
+    public FacebookGraphAPIConnector(){
+
+    }
+
+    public void setProfilePicture(){
+        requestPicture(PROFILE_PICTURE_LARGE,DISPLAY_PICTURE);
+    }
+
+    public void setThumbnailPicture(){
+        requestPicture(PROFILE_PICTURE_SQUARE,THUMBNAIL_PICTURE);
+    }
+
+    private void requestPicture(final String url, final String field){
+        Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
+                new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(final GraphUser user, Response response) {
+                        if (user != null) {
+                            AsyncTask<Void, Void, Bitmap> t = new AsyncTask<Void, Void, Bitmap>() {
+                                protected Bitmap doInBackground(Void... p) {
+                                    Bitmap bm = null;
+                                    try {
+                                        URL aURL = new URL(FACEBOOK_GRAPH_BASE_URL + user.getId() + url);
+                                        bm  = BitmapFactory.decodeStream(aURL.openConnection().getInputStream());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    return bm;
+                                }
+
+                                protected void onPostExecute(Bitmap bm) {
+                                    if(bm != null){
+                                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                                        bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                                        byte[] scaledData = bos.toByteArray();
+                                        ParseUser.getCurrentUser().put(field,new ParseFile(field+"_"+ParseUser.getCurrentUser().getUsername()+".jpg",scaledData));
+                                    }
+                                }
+                            };
+                            t.execute();
+
+
+                        } else if (response.getError() != null) {
+                            // handle error
+                        }
+                    }
+                });
+        request.executeAsync();
+    }
+}

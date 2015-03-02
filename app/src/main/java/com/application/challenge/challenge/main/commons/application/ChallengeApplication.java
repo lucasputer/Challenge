@@ -2,7 +2,9 @@ package com.application.challenge.challenge.main.commons.application;
 
 import android.app.Application;
 
+import com.application.challenge.challenge.domain.helper.FacebookLoginHelper;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.helper.TwitterLoginHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.FollowActivityObject;
 import com.application.challenge.challenge.domain.model.LikeObject;
@@ -63,6 +65,8 @@ public class ChallengeApplication extends Application {
         ParseACL.setDefaultACL(defaultACL, true);
 
         ParseTwitterUtils.initialize(TWITTER_KEY, TWITTER_SECRET);
+        FacebookLoginHelper.initialize();
+        TwitterLoginHelper.initialize();
 
     }
 

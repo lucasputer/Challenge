@@ -200,27 +200,22 @@ public class ParseHelper {
 
 
         if(list.size() == 0){
-            final LikeObject like = new LikeObject();
-            like.setLiked(true);
-            like.setUser(ParseUser.getCurrentUser());
-            //like.setPhoto(photo);
-            photo.fetchIfNeededInBackground(new GetCallback<PhotoObject>() {
-                @Override
-                public void done(PhotoObject o, ParseException e) {
-                    if (e == null) {
-                        PhotoObject p = savePhoto(o);
-                        like.setPhoto(p);
-                        like.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
+            try {
+                final LikeObject like = new LikeObject();
+                like.setLiked(true);
+                like.setUser(ParseUser.getCurrentUser());
+                like.setPhoto(photo.fetchIfNeeded());
+                like.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if(e == null){
+                            Toast.makeText(context,"holj",Toast.LENGTH_LONG).show();
+                        }
                     }
-                }
-            });
+                });
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
 
         }else{

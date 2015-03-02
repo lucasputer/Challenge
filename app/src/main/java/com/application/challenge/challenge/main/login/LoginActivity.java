@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.helper.FacebookLoginHelper;
+import com.application.challenge.challenge.domain.helper.TwitterLoginHelper;
 import com.application.challenge.challenge.main.MainActivity;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -123,23 +125,13 @@ public class LoginActivity extends Activity {
                         @Override
                         public void done(ParseUser user, ParseException err) {
                             progressDialog.dismiss();
-                            if (user == null) {
-                                Toast.makeText(getActivity(), "Uh oh. The user cancelled the Facebook login.", Toast.LENGTH_LONG).show();
+                            if (user != null) {
 
-                            } else if (user.isNew()) {
+                                FacebookLoginHelper.setMissingData();
 
-                                Toast.makeText(getActivity(), "User signed up and logged in through Facebook!", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getActivity(), MainActivity.class));
-
-
-                                //showUserDetailsActivity();
-                            } else {
-
-                                Toast.makeText(getActivity(), "User logged in through Facebook!", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
-
-
-                                //showUserDetailsActivity();
+                            }else{
+                                Toast.makeText(getActivity(),"Hubo un error. Por favor, intentelo nuevamente",Toast.LENGTH_LONG).show();
                             }
                         }
                     });
@@ -156,16 +148,13 @@ public class LoginActivity extends Activity {
                         @Override
                         public void done(ParseUser user, ParseException err) {
                             progressDialog.dismiss();
-                            if (user == null) {
-                                Toast.makeText(getActivity(), "Uh oh. The user cancelled the Twitter login.", Toast.LENGTH_LONG).show();
-                            } else if (user.isNew()) {
-                                Toast.makeText(getActivity(), "User signed up and logged in through Twitter", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
+                            if (user != null) {
 
-                            } else {
-                                Toast.makeText(getActivity(), "User logged in through Twitter!", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                TwitterLoginHelper.setMissingData();
 
+                                startActivity(new Intent(getActivity(), MainActivity.class));
+                            }else{
+                                Toast.makeText(getActivity(),"Hubo un error. Por favor, intentelo nuevamente",Toast.LENGTH_LONG).show();
                             }
                         }
                     });
