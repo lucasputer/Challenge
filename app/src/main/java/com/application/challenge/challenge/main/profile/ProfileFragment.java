@@ -159,7 +159,11 @@ public class ProfileFragment extends ChallengeFragment {
                 name = currentUser.getUsername();
             }
         }catch (Exception e){
-            name = currentUser.getUsername();
+            if(currentUser.get("displayName") != null){
+                name = currentUser.get("displayName").toString();
+            }else{
+                name = "";
+            }
         }
 
         TextView usernameTextView = (TextView) v.findViewById(R.id.txt_username_profile);

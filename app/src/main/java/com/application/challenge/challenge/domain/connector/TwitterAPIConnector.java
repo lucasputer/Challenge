@@ -43,76 +43,81 @@ public class TwitterAPIConnector {
     }
 
 
-    public void setInformation(final boolean picture,final boolean thumbnail,final boolean name){
+    public void setInformation(final boolean picture,final boolean thumbnail,final boolean name, final boolean displayName){
+
+        if(displayName){
+            ParseUser.getCurrentUser().put("displayName",ParseTwitterUtils.getTwitter().getScreenName());
+        }
 
 
+        if(picture || thumbnail || name){
+            AsyncTask<Void, Void, JSONObject> t = new AsyncTask<Void, Void, JSONObject>() {
+                protected JSONObject doInBackground(Void... p) {
+                        JSONObject json = null;
+                        try {
+                            HttpClient client = new DefaultHttpClient();
+                            HttpGet verifyGet = new HttpGet(
+                                    TWITTER_URL + ParseTwitterUtils.getTwitter().getScreenName());
+                            ParseTwitterUtils.getTwitter().signRequest(verifyGet);
+                            HttpResponse response = client.execute(verifyGet);
+                            HttpEntity entity = response.getEntity();
+                            InputStream is = entity.getContent();
+                            BufferedReader streamReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                            StringBuilder responseStrBuilder = new StringBuilder();
 
-        AsyncTask<Void, Void, JSONObject> t = new AsyncTask<Void, Void, JSONObject>() {
-            protected JSONObject doInBackground(Void... p) {
-                    JSONObject json = null;
-                    try {
-                        HttpClient client = new DefaultHttpClient();
-                        HttpGet verifyGet = new HttpGet(
-                                TWITTER_URL + ParseTwitterUtils.getTwitter().getScreenName());
-                        ParseTwitterUtils.getTwitter().signRequest(verifyGet);
-                        HttpResponse response = client.execute(verifyGet);
-                        HttpEntity entity = response.getEntity();
-                        InputStream is = entity.getContent();
-                        BufferedReader streamReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                        StringBuilder responseStrBuilder = new StringBuilder();
+                            String inputStr;
+                            while ((inputStr = streamReader.readLine()) != null)
+                                responseStrBuilder.append(inputStr);
+                            json = new JSONObject(responseStrBuilder.toString());
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                         }
+                        return json;
+                    }
 
-                        String inputStr;
-                        while ((inputStr = streamReader.readLine()) != null)
-                            responseStrBuilder.append(inputStr);
-                        json = new JSONObject(responseStrBuilder.toString());
-                    }catch (Exception e) {
-                        e.printStackTrace();
-                     }
-                    return json;
-                }
-
-            protected void onPostExecute(JSONObject json){
-                                    if(json != null){
-                                        if(name){
-                                            try {
-                                                String username = json.getString("name");
-                                                if(username != null){
-                                                    String splitUsername[] = username.split(" ");
-                                                    if(splitUsername.length > 1){
-                                                        ParseUser.getCurrentUser().put("firstName",splitUsername[0]);
-                                                        ParseUser.getCurrentUser().put("lastName",splitUsername[1]);
-                                                    }else{
-                                                        ParseUser.getCurrentUser().put("firstName",username);
-                                                        ParseUser.getCurrentUser().put("lastName","");
+                protected void onPostExecute(JSONObject json){
+                                        if(json != null){
+                                            if(name){
+                                                try {
+                                                    String username = json.getString("name");
+                                                    if(username != null){
+                                                        String splitUsername[] = username.split(" ");
+                                                        if(splitUsername.length > 1){
+                                                            ParseUser.getCurrentUser().put("firstName",splitUsername[0]);
+                                                            ParseUser.getCurrentUser().put("lastName",splitUsername[1]);
+                                                        }else{
+                                                            ParseUser.getCurrentUser().put("firstName",username);
+                                                            ParseUser.getCurrentUser().put("lastName","");
+                                                        }
                                                     }
+
+                                                    ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
+                                                        @Override
+                                                        public void done(ParseException e) {
+
+                                                        }
+                                                    });
+
+                                                }catch (Exception e){
+                                                    e.printStackTrace();
                                                 }
-
-                                                ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-                                                    @Override
-                                                    public void done(ParseException e) {
-
-                                                    }
-                                                });
-
-                                            }catch (Exception e){
-                                                e.printStackTrace();
                                             }
-                                        }
 
-                                        if(picture || thumbnail){
-                                            try {
-                                                setPictures(json.getString("profile_image_url"),picture, thumbnail);
-                                            }catch (Exception e){
-                                                e.printStackTrace();
+                                            if(picture || thumbnail){
+                                                try {
+                                                    setPictures(json.getString("profile_image_url"),picture, thumbnail);
+                                                }catch (Exception e){
+                                                    e.printStackTrace();
+                                                }
                                             }
-                                        }
 
+                                        }
                                     }
-                                }
 
 
-        };
-        t.execute();
+            };
+            t.execute();
+        }
     }
 
 

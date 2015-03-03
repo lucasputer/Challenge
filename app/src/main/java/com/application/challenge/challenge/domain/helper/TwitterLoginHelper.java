@@ -38,7 +38,7 @@ public class TwitterLoginHelper{
     private static boolean hasAllTheDataNeeded(ParseUser user){
         boolean res = true;
         if(user.get("displayPicture") == null || user.get("displayPictureThumbnail") == null ||
-                user.get("firstName") == null || user.get("lastName") == null){
+                user.get("firstName") == null || user.get("lastName") == null || user.get("displayName") == null){
             res = false;
         }
         return res;
@@ -46,7 +46,7 @@ public class TwitterLoginHelper{
 
     public static void setMissingData(){
         if(!hasAllTheDataNeeded(ParseUser.getCurrentUser())){
-            boolean profile = false, thumbnail = false, name = false;
+            boolean profile = false, thumbnail = false, name = false, displayName = false;
 
             if(ParseUser.getCurrentUser().get("displayPicture") == null){
                 profile = true;
@@ -58,7 +58,11 @@ public class TwitterLoginHelper{
                 name = true;
             }
 
-            twitterAPIConnector.setInformation(profile,thumbnail,name);
+            if(ParseUser.getCurrentUser().get("displayName") == null){
+                displayName = true;
+            }
+
+            twitterAPIConnector.setInformation(profile,thumbnail,name,displayName);
 
             ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                 @Override

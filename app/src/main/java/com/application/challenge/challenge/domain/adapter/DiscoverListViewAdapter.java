@@ -32,6 +32,8 @@ import java.util.List;
  */
 public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
+    ArrayList<SquareImageView> imageList = new ArrayList<SquareImageView>();
+
 
     public DiscoverListViewAdapter(Context context, QueryFactory<ParseUser>  queryFactory){
         super(context, queryFactory);
@@ -54,7 +56,7 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
         final CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_discover_profile_image);
         thumbnailImageView.setParseFile(null);
 
-        final ArrayList<SquareImageView> imageList = new ArrayList<SquareImageView>();
+        imageList = new ArrayList<SquareImageView>();
         SquareImageView img1 = (SquareImageView) v.findViewById(R.id.discover_img1);
         SquareImageView img2 = (SquareImageView) v.findViewById(R.id.discover_img2);
         SquareImageView img3 = (SquareImageView) v.findViewById(R.id.discover_img3);
@@ -67,7 +69,12 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
         imageList.add(img2);
         imageList.add(img3);
 
-        username.setText(user.getUsername());
+        if(user.get("displayName") != null){
+            username.setText(user.get("displayName").toString());
+        }else{
+            username.setText(user.getUsername());
+        }
+
 
         final ParseFile thumbnailFile = user.getParseFile("displayPictureThumbnail");
         if(thumbnailFile != null) {
@@ -80,29 +87,38 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
             follow.setVisibility(View.GONE);
         }
 
-        ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
-        try {
+
+
             ParseQuery<PhotoObject> query = parseHelper.getDiscoverUserPictures(user);
-            photoArray.addAll(query.find());
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
+            query.findInBackground(new FindCallback<PhotoObject>() {
+                @Override
+                public void done(List<PhotoObject> photoObjects, ParseException e) {
+                    addAll(photoObjects, user);
+                }
+            });
 
 
-        if(photoArray.size() > 0){
-            int i = 0;
-            while(i < photoArray.size()){
-                if(photoArray.get(i).getUser().getObjectId().equals(user.getObjectId())) {
-                            imageList.get(i).setParseFile(photoArray.get(i).getParseFile("photo"));
-                            imageList.get(i).loadInBackground();
-                        }
-                        i++;
-            }
-        }
+
+
 
         return v;
     }
 
+
+    private void addAll(List<PhotoObject> photoObjects,ParseUser user){
+        ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
+        if(photoArray.size() > 0){
+            int i = 0;
+            while(i < photoArray.size()){
+                if(photoArray.get(i).getUser().getObjectId().equals(user.getObjectId())) {
+                    imageList.get(i).setParseFile(photoArray.get(i).getParseFile("photo"));
+                    imageList.get(i).loadInBackground();
+                }
+                i++;
+            }
+        }
+
+    }
 
 }

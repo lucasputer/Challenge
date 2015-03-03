@@ -159,7 +159,11 @@ public class ParseHelper {
     public void loadPicture(Context context, TextView username, CircularImageView thumbnail,
                             SquareImageView picture, TextView likes, PhotoObject phObj) {
         try {
-            username.setText(phObj.getUser().fetchIfNeeded().getUsername());
+            if(phObj.getUser().fetchIfNeeded().get("displayName") != null){
+                username.setText(phObj.getUser().fetchIfNeeded().get("displayName").toString());
+            }else{
+                username.setText(phObj.getUser().fetchIfNeeded().getUsername());
+            }
             ParseFile thumbnailFile = phObj.getUser().getParseFile("displayPictureThumbnail");
             if (thumbnailFile != null) {
                 thumbnail.setParseFile(thumbnailFile);

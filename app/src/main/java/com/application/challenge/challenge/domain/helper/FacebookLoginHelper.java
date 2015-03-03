@@ -1,6 +1,7 @@
 package com.application.challenge.challenge.domain.helper;
 
 import com.application.challenge.challenge.domain.connector.FacebookGraphAPIConnector;
+import com.facebook.android.Facebook;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -29,43 +30,36 @@ public class FacebookLoginHelper{
     private static boolean hasAllTheDataNeeded(ParseUser user){
         boolean res = true;
         if(user.get("displayPicture") == null || user.get("displayPictureThumbnail") == null ||
-                user.get("firstName") == null || user.get("lastName") == null){
+                user.get("firstName") == null || user.get("lastName") == null || user.get("displayName") == null){
             res = false;
         }
         return res;
     }
 
 
-    public static void setMissingData(){
-        if(!hasAllTheDataNeeded(ParseUser.getCurrentUser())){
-            if(ParseUser.getCurrentUser().get("displayPicture") == null){
-                setProfilePicture();
+    public static void setMissingData() {
+        if (!hasAllTheDataNeeded(ParseUser.getCurrentUser())) {
+            boolean firstAndLastName = false, profilePicture = false, thumbnail = false, displayName = false;
+            if (ParseUser.getCurrentUser().get("displayPicture") == null) {
+                profilePicture = true;
             }
-            if(ParseUser.getCurrentUser().get("displayPictureThumbnail") == null){
-                setThumbnail();
-            }
-            if(ParseUser.getCurrentUser().get("firstName") == null || ParseUser.getCurrentUser().get("lastName") == null){
-                setFirstAndLastName();
+            if (ParseUser.getCurrentUser().get("displayPictureThumbnail") == null) {
+               thumbnail = true;
             }
 
-            ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
+            if (ParseUser.getCurrentUser().get("firstName") == null || ParseUser.getCurrentUser().get("lastName") == null) {
+                firstAndLastName = true;
+            }
 
-                }
-            });
+            if (ParseUser.getCurrentUser().get("displayName") == null) {
+                displayName = true;
+            }
+
+            if(displayName || firstAndLastName || profilePicture || thumbnail){
+                facebookGraphAPIConnector.setInformation(firstAndLastName,displayName,profilePicture,thumbnail);
+            }
+
         }
     }
 
-    private static void setProfilePicture(){
-        facebookGraphAPIConnector.setProfilePicture();
-    }
-
-    private static void setThumbnail(){
-        facebookGraphAPIConnector.setThumbnailPicture();
-    }
-
-    private static void setFirstAndLastName(){
-
-    }
 }
