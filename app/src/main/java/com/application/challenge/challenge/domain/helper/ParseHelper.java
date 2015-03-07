@@ -31,9 +31,17 @@ import java.util.List;
  */
 public class ParseHelper {
 
-    public ParseHelper(){}
+    public static ParseHelper instance;
 
-    public ParseQueryAdapter.QueryFactory<ChallengeObject> getChallengeListQuery(){
+    private ParseHelper(){}
+
+    public static void initialize(){
+        if(instance == null){
+            instance = new ParseHelper();
+        }
+    }
+
+    public static ParseQueryAdapter.QueryFactory<ChallengeObject> getChallengeListQuery(){
 
 
         ParseQueryAdapter.QueryFactory<ChallengeObject>  factory = new ParseQueryAdapter.QueryFactory<ChallengeObject>(){
@@ -47,7 +55,7 @@ public class ParseHelper {
         return factory;
     }
 
-    public ParseQueryAdapter.QueryFactory<PhotoObject> getPicturesFromUser(final ParseUser user){
+    public static  ParseQueryAdapter.QueryFactory<PhotoObject> getPicturesFromUser(final ParseUser user){
         ParseQueryAdapter.QueryFactory<PhotoObject>  factory = new ParseQueryAdapter.QueryFactory<PhotoObject>(){
             public ParseQuery<PhotoObject> create(){
                 ParseQuery query = new ParseQuery("Photo");
@@ -61,7 +69,7 @@ public class ParseHelper {
         return factory;
     }
 
-    public ParseQuery<PhotoObject> getPopularPictures(){
+    public static ParseQuery<PhotoObject> getPopularPictures(){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
         query.setLimit(20);
         query.include("user");
@@ -71,11 +79,11 @@ public class ParseHelper {
         return query;
     }
 
-    public ParseQuery<PhotoObject> getFriendsPictures(final ParseUser user){
+    public static ParseQuery<PhotoObject> getFriendsPictures(final ParseUser user){
         return null;
     }
 
-    public ParseQueryAdapter.QueryFactory<ParseUser> getDiscoverUsers(){
+    public static ParseQueryAdapter.QueryFactory<ParseUser> getDiscoverUsers(){
         ParseQueryAdapter.QueryFactory<ParseUser>  factory = new ParseQueryAdapter.QueryFactory<ParseUser>(){
             public ParseQuery<ParseUser> create(){
                 ParseQuery query = ParseUser.getQuery();
@@ -89,7 +97,7 @@ public class ParseHelper {
     }
 
 
-    public ParseQuery<PhotoObject> getDiscoverUserPictures(ParseUser user){
+    public static ParseQuery<PhotoObject> getDiscoverUserPictures(ParseUser user){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
         query.include("user");
         query.whereEqualTo("user",user);
@@ -99,7 +107,7 @@ public class ParseHelper {
         return query;
     }
 
-    public ParseQuery<PhotoObject> getPicture(String objectId){
+    public static ParseQuery<PhotoObject> getPicture(String objectId){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
         query.include("user");
 
@@ -109,7 +117,7 @@ public class ParseHelper {
         return query;
     }
 
-    private ParseQuery<LikeObject> getLikeObjectQueryForCurrentUser(PhotoObject photo){
+    private static ParseQuery<LikeObject> getLikeObjectQueryForCurrentUser(PhotoObject photo){
 
         ParseQuery<LikeObject> query = new ParseQuery<LikeObject>("Like");
         query.include("user");
@@ -120,8 +128,8 @@ public class ParseHelper {
         return query;
     }
 
-    public boolean getLikedState(PhotoObject photo){
-        ParseQuery<LikeObject> query = this.getLikeObjectQueryForCurrentUser(photo);
+    public static boolean getLikedState(PhotoObject photo){
+        ParseQuery<LikeObject> query = getLikeObjectQueryForCurrentUser(photo);
         LikeObject obj = null;
         boolean state = false;
         try {
@@ -135,7 +143,7 @@ public class ParseHelper {
         return state;
     }
 
-    public PhotoObject getPhotoObjectFromPF( PhotoObject ph){
+    public static PhotoObject getPhotoObjectFromPF( PhotoObject ph){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
         ParseFile pdfd = ph.getPhoto();
         query.whereEqualTo("objectId",ph.getObjectId());
@@ -147,7 +155,7 @@ public class ParseHelper {
         return ph;
     }
 
-    public PhotoObject savePhoto(PhotoObject photo){
+    public static PhotoObject savePhoto(PhotoObject photo){
         try{
             photo.save();
         }catch(Exception e){
@@ -156,7 +164,7 @@ public class ParseHelper {
         return photo;
     }
 
-    public void loadPicture(Context context, TextView username, CircularImageView thumbnail,
+    public static void loadPicture(Context context, TextView username, CircularImageView thumbnail,
                             SquareImageView picture, TextView likes, PhotoObject phObj) {
         try {
             if(phObj.getUser().fetchIfNeeded().get("displayName") != null){
@@ -190,9 +198,9 @@ public class ParseHelper {
             likes.setText(context.getString(R.string.likes_amount, phObj.getLikes()));
     }
 
-    public void likePicture(final Context context,final  PhotoObject photo,final TextView likes, final Button likeButton){
+    public static void likePicture(final Context context,final  PhotoObject photo,final TextView likes, final Button likeButton){
 
-       ParseQuery<LikeObject> query = this.getLikeObjectQueryForCurrentUser(photo);
+       ParseQuery<LikeObject> query = getLikeObjectQueryForCurrentUser(photo);
 
         ArrayList<LikeObject> list = new ArrayList<>();
 
@@ -259,7 +267,7 @@ public class ParseHelper {
         }
     }
 
-    public boolean isFollowing(ParseUser user){
+    public static boolean isFollowing(ParseUser user){
         ParseQuery<FollowActivityObject> query = new ParseQuery<FollowActivityObject>("FollowActivity");
         query.whereEqualTo("fromUser",ParseUser.getCurrentUser());
         query.whereEqualTo("toUser",user);
@@ -275,7 +283,7 @@ public class ParseHelper {
     }
 
 
-    public void setPhotosAmountForCurrentUser(final TextView challenges){
+    public static void setPhotosAmountForCurrentUser(final TextView challenges){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
         query.whereEqualTo("user",ParseUser.getCurrentUser());
 

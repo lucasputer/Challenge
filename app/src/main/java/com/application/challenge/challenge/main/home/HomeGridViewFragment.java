@@ -56,7 +56,7 @@ public class HomeGridViewFragment extends GridViewFragment {
 
         final ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
-            ParseQuery<PhotoObject> query = new ParseHelper().getPopularPictures();
+            ParseQuery<PhotoObject> query = ParseHelper.getPopularPictures();
             query.findInBackground(new FindCallback<PhotoObject>() {
                 @Override
                 public void done(List<PhotoObject> photoObjects, ParseException e) {

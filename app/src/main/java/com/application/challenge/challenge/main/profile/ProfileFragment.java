@@ -194,7 +194,7 @@ public class ProfileFragment extends ChallengeFragment {
         }
 
         TextView challenges = (TextView) v.findViewById(R.id.txt_challenges_amount_profile);
-        new ParseHelper().setPhotosAmountForCurrentUser(challenges);
+        ParseHelper.setPhotosAmountForCurrentUser(challenges);
 
         TextView following = (TextView) v.findViewById(R.id.txt_following_amount_profile);
         if(ParseUser.getCurrentUser().get("followingCount") != null){

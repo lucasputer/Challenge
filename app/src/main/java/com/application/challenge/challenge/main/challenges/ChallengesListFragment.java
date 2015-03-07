@@ -20,7 +20,7 @@ public class ChallengesListFragment extends android.support.v4.app.ListFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        challengeListAdapter = new ChallengesListViewAdapter(getActivity(), new ParseHelper().getChallengeListQuery());
+        challengeListAdapter = new ChallengesListViewAdapter(getActivity(), ParseHelper.getChallengeListQuery());
 
     }
 

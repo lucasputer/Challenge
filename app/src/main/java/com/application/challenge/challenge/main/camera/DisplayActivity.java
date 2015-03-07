@@ -77,7 +77,7 @@ public class DisplayActivity extends ListActivity {
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
-            setListAdapter(new ChallengesListViewAdapter(this, new ParseHelper().getChallengeListQuery()));
+            setListAdapter(new ChallengesListViewAdapter(this, ParseHelper.getChallengeListQuery()));
 
         }
     }

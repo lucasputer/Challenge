@@ -50,7 +50,6 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
         super.getItemView(user, v, parent);
 
-        ParseHelper parseHelper = new ParseHelper();
 
         TextView username = (TextView) v.findViewById(R.id.discover_username);
         final CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_discover_profile_image);
@@ -83,14 +82,14 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
         }
 
         Button follow = (Button) v.findViewById(R.id.btn_discover_follow);
-        if(parseHelper.isFollowing(user)){
+        if(ParseHelper.isFollowing(user)){
             follow.setVisibility(View.GONE);
         }
 
 
 
 
-            ParseQuery<PhotoObject> query = parseHelper.getDiscoverUserPictures(user);
+            ParseQuery<PhotoObject> query = ParseHelper.getDiscoverUserPictures(user);
             query.findInBackground(new FindCallback<PhotoObject>() {
                 @Override
                 public void done(List<PhotoObject> photoObjects, ParseException e) {

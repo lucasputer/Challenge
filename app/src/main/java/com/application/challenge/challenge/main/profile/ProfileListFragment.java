@@ -23,7 +23,7 @@ public class ProfileListFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        pictureListViewAdapter = new PictureListViewAdapter(getActivity(), new ParseHelper().getPicturesFromUser(ParseUser.getCurrentUser()));
+        pictureListViewAdapter = new PictureListViewAdapter(getActivity(), ParseHelper.getPicturesFromUser(ParseUser.getCurrentUser()));
     }
 
     @Override

@@ -26,7 +26,7 @@ public class PictureActivity extends Activity {
 
     private String objectId;
     private PhotoObject phObj;
-    private ParseHelper parseHelper;
+
 
     TextView username;
     CircularImageView thumbnail;
@@ -40,7 +40,6 @@ public class PictureActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         phObj = EventBus.getDefault().getStickyEvent(PhotoObject.class);
-        parseHelper = new ParseHelper();
 
         setContentView(R.layout.activity_picture);
 
@@ -58,7 +57,7 @@ public class PictureActivity extends Activity {
         likes = (TextView) this.findViewById(R.id.picture_heart_amount);
         likeButton = (Button) this.findViewById(R.id.btn_picture_heart);
 
-        if(parseHelper.getLikedState(phObj)){
+        if(ParseHelper.getLikedState(phObj)){
             likeButton.setBackground(getResources().getDrawable(R.drawable.btn_picture_heart_liked));
         }
 
@@ -92,11 +91,11 @@ public class PictureActivity extends Activity {
     }
 
     private void loadPicture(){
-        parseHelper.loadPicture(this, username, thumbnail, picture, likes, phObj);
+        ParseHelper.loadPicture(this, username, thumbnail, picture, likes, phObj);
     }
 
     public void likePicture(View v){
-        parseHelper.likePicture(this, phObj, likes,likeButton );
+        ParseHelper.likePicture(this, phObj, likes,likeButton );
     }
 
     public void returnToMain(View v){

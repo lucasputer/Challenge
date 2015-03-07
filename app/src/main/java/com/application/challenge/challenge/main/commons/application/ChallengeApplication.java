@@ -65,6 +65,8 @@ public class ChallengeApplication extends Application {
         ParseACL.setDefaultACL(defaultACL, true);
 
         ParseTwitterUtils.initialize(TWITTER_KEY, TWITTER_SECRET);
+
+        ParseHelper.initialize();
         FacebookLoginHelper.initialize();
         TwitterLoginHelper.initialize();
 

@@ -25,7 +25,7 @@ public class DiscoverListFragment extends android.support.v4.app.ListFragment{
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParseQueryAdapter.QueryFactory<ParseUser> p = new ParseHelper().getDiscoverUsers();
+        ParseQueryAdapter.QueryFactory<ParseUser> p = ParseHelper.getDiscoverUsers();
         discoverListViewAdapter = new DiscoverListViewAdapter(getActivity(), p);
     }
 

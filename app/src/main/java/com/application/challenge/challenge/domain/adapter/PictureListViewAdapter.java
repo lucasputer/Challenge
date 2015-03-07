@@ -49,7 +49,7 @@ public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
         TextView usernameTextView = (TextView) v.findViewById(R.id.picture_username);
         TextView pictureLikesAmount = (TextView) v.findViewById(R.id.picture_heart_amount);
 
-        new ParseHelper().loadPicture(cntxt, usernameTextView, thumbnailImageView, photoImageView, pictureLikesAmount, photoObj);
+        ParseHelper.loadPicture(cntxt, usernameTextView, thumbnailImageView, photoImageView, pictureLikesAmount, photoObj);
 
         return v;
     }
