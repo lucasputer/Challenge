@@ -81,7 +81,7 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
             thumbnailImageView.loadInBackground();
         }
 
-        Button follow = (Button) v.findViewById(R.id.btn_discover_follow);
+        final Button follow = (Button) v.findViewById(R.id.btn_discover_follow);
         if(ParseHelper.isFollowing(user)){
             follow.setVisibility(View.GONE);
         }
@@ -99,6 +99,12 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
 
 
+        follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseHelper.followUser(user,follow);
+            }
+        });
 
 
         return v;

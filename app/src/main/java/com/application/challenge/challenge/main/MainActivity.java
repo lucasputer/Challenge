@@ -199,9 +199,5 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
 //        transaction.commit();
     }
 
-    public void followUser(View v){
-
-    }
-
 
 }

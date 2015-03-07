@@ -2,6 +2,7 @@ package com.application.challenge.challenge.domain.helper;
 
 import android.content.Context;
 import android.provider.SyncStateContract;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -282,6 +283,32 @@ public class ParseHelper {
         return ret;
     }
 
+
+    public static void followUser(final ParseUser userToFollow, final Button followButton){
+        FollowActivityObject followActivityObject = new FollowActivityObject();
+
+        followActivityObject.setFromUser(ParseUser.getCurrentUser());
+        followActivityObject.setToUser(userToFollow);
+
+        followActivityObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null){
+                    followButton.setVisibility(View.GONE);
+
+                    //userToFollow.put("followerCount",Integer.parseInt(userToFollow.get("followerCount").toString()) + 1);
+                    ParseUser.getCurrentUser().put("followingCount",Integer.parseInt(ParseUser.getCurrentUser().get("followingCount").toString()) + 1);
+                    ParseUser.getCurrentUser().saveEventually(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+
+                        }
+                    });
+
+                }
+            }
+        });
+    }
 
     public static void setPhotosAmountForCurrentUser(final TextView challenges){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
