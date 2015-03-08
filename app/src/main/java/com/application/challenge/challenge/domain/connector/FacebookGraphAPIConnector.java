@@ -83,7 +83,7 @@ public class FacebookGraphAPIConnector {
                                 ParseUser.getCurrentUser().put("lastName",user.getLastName());
                             }
                             if(displayName){
-                                ParseUser.getCurrentUser().put("displayName",user.getFirstName()  + user.getLastName());
+                                ParseUser.getCurrentUser().put("displayName",user.getFirstName().toLowerCase()  + user.getLastName().toLowerCase());
                             }
                             if(profilePicture){
                                 requestPicture(PROFILE_PICTURE_LARGE,DISPLAY_PICTURE,user);

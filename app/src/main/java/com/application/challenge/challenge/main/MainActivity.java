@@ -1,10 +1,13 @@
 package com.application.challenge.challenge.main;
 
 import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.main.camera.CameraLoaderFragment;
@@ -24,9 +30,10 @@ import com.application.challenge.challenge.main.commons.application.ChallengeApp
 import com.application.challenge.challenge.main.discover.DiscoverListFragment;
 import com.application.challenge.challenge.main.home.HomeFragment;
 import com.application.challenge.challenge.main.profile.ProfileFragment;
+import com.parse.ParseUser;
 
 
-public class MainActivity extends ChallengeActionBarActivity implements ChallengeFragment.OnFragmentInteractionListener {
+public class MainActivity extends ChallengeActionBarActivity implements ChallengeFragment.OnFragmentInteractionListener{
 
     private FragmentTabHost menuTabHost;
     private static final int CAMERA_INDEX = 2;
@@ -55,10 +62,23 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
     }
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_profile, menu);
-        return true;
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setQueryHint(Html.fromHtml("<font color = #ffffff>" + getResources().getString(R.string.action_search_user) + "</font>"));
+
+
+
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -73,12 +93,14 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
             return true;
         }
 
+        if( id == R.id.action_logout){
+            ParseUser.logOut();
+            finish();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
@@ -137,7 +159,7 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
         b.putString("key", Tabs.CAMERA.toString());
         menuTabHost.addTab(menuTabHost.newTabSpec(Tabs.CAMERA.toString())
                 .setIndicator(createTabView(R.drawable.btn_camera, Tabs.CAMERA.toString())),CameraLoaderFragment.class,b);
-
+        //Aca tengo que poner un fragment que lo unico que hace es empezar CameraActivity ya que necesito un fragment si o si
 
 
                 b.putString("key", Tabs.SEARCH.toString());
@@ -180,24 +202,6 @@ public class MainActivity extends ChallengeActionBarActivity implements Challeng
         return challengeApplication.getSelectedMenuTab();
     }
 
-    public void likePicture(View v){
-        //TODO likear con parse
-        //TODO si esta likeada deslikear tambien
-        Button likeButton = (Button) v.findViewById(R.id.btn_picture_heart);
-        if(likeButton.getBackground() == getResources().getDrawable(R.drawable.btn_picture_heart_liked)){
-            likeButton.setBackground(getResources().getDrawable(R.drawable.btn_picture_heart));
-        }else{
-            likeButton.setBackground(getResources().getDrawable(R.drawable.btn_picture_heart_liked));
-        }
-    }
-
-    public void pictureDetail(View v){
-//        Fragment newFragment = new PictureFragment();
-//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//        transaction.replace(R.layout.fragment_home, newFragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-    }
 
 
 }

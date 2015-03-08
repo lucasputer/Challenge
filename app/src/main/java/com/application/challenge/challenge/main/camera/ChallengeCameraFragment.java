@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.commonsware.cwac.camera.CameraFragment;
 import com.commonsware.cwac.camera.CameraHost;
 import com.commonsware.cwac.camera.CameraUtils;
@@ -246,6 +247,8 @@ public class ChallengeCameraFragment extends CameraFragment {
                 singleShotProcessing=false;
 
                DisplayActivity.imageToShow=image;
+
+
 
 
                 startActivity(new Intent(getActivity(), DisplayActivity.class));

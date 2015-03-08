@@ -97,6 +97,18 @@ public class ParseHelper {
         return factory;
     }
 
+    public static ParseQueryAdapter.QueryFactory<ParseUser> getUsersFromSearch(final String searchedText){
+        ParseQueryAdapter.QueryFactory<ParseUser>  factory = new ParseQueryAdapter.QueryFactory<ParseUser>(){
+            public ParseQuery<ParseUser> create(){
+                ParseQuery query = ParseUser.getQuery();
+                query.whereContains("displayName",searchedText);
+                query.setLimit(20);
+                return query;
+            }
+        };
+        return factory;
+    }
+
 
     public static ParseQuery<PhotoObject> getDiscoverUserPictures(ParseUser user){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
@@ -203,51 +215,54 @@ public class ParseHelper {
 
        ParseQuery<LikeObject> query = getLikeObjectQueryForCurrentUser(photo);
 
-        ArrayList<LikeObject> list = new ArrayList<>();
+        final ArrayList<LikeObject> list = new ArrayList<>();
 
         try {
-           list.add(query.getFirst());
+           query.getFirstInBackground(new GetCallback<LikeObject>() {
+               @Override
+               public void done(LikeObject likeObject, ParseException e) {
+                   if (e == null) {
+                       final boolean state = likeObject.getLiked();
+                       likeObject.setLiked(!state);
+                       likeObject.saveInBackground(new SaveCallback() {
+                           @Override
+                           public void done(ParseException e) {
+                               if (e == null) {
+                                   if (!state) {
+                                       likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart_liked));
+                                   } else {
+                                       likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart));
+                                   }
+                               }
+                           }
+                       });
+                   } else {
+                       try {
+                           final LikeObject like = new LikeObject();
+                           like.setLiked(true);
+                           like.setUser(ParseUser.getCurrentUser());
+                           like.setPhoto(photo.fetchIfNeeded());
+                           like.saveInBackground(new SaveCallback() {
+                               @Override
+                               public void done(ParseException e) {
+                                   if (e == null) {
+                                       Toast.makeText(context, "holj", Toast.LENGTH_LONG).show();
+                                   }
+                               }
+                           });
+                       } catch (Exception ex) {
+                           ex.printStackTrace();
+                       }
+                   }
+               }
+           });
+
         }catch(Exception e){
             e.printStackTrace();
         }
 
 
-        if(list.size() == 0){
-            try {
-                final LikeObject like = new LikeObject();
-                like.setLiked(true);
-                like.setUser(ParseUser.getCurrentUser());
-                like.setPhoto(photo.fetchIfNeeded());
-                like.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            Toast.makeText(context,"holj",Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }catch (Exception e){
-                e.printStackTrace();
-            }
 
-
-        }else{
-            LikeObject obj = list.get(0);
-            final boolean state = obj.getLiked();
-            obj.setLiked(!state);
-            obj.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e == null){
-                        if(!state){
-                            likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart_liked));
-                        }else{
-                            likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart));
-                        }
-                    }
-                }
-            });
-        }
 
 
 
@@ -310,9 +325,9 @@ public class ParseHelper {
         });
     }
 
-    public static void setPhotosAmountForCurrentUser(final TextView challenges){
+    public static void setPhotosCountForUser(final TextView challenges, final ParseUser user){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
-        query.whereEqualTo("user",ParseUser.getCurrentUser());
+        query.whereEqualTo("user",user);
 
             query.countInBackground(new CountCallback() {
                 @Override
@@ -325,7 +340,18 @@ public class ParseHelper {
 
     }
 
+    public static void setFollowersCountForUser(final TextView followers, final ParseUser user){
+        ParseQuery<FollowActivityObject> query = new ParseQuery<FollowActivityObject>("FollowActivity");
+        query.whereEqualTo("toUser",user);
 
-
+        query.countInBackground(new CountCallback() {
+            @Override
+            public void done(int i, ParseException e) {
+                if(e == null){
+                    followers.setText(Integer.toString(i));
+                }
+            }
+        });
+    }
 
 }

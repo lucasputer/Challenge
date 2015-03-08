@@ -46,7 +46,7 @@ public class TwitterAPIConnector {
     public void setInformation(final boolean picture,final boolean thumbnail,final boolean name, final boolean displayName){
 
         if(displayName){
-            ParseUser.getCurrentUser().put("displayName",ParseTwitterUtils.getTwitter().getScreenName());
+            ParseUser.getCurrentUser().put("displayName",ParseTwitterUtils.getTwitter().getScreenName().toLowerCase());
         }
 
 

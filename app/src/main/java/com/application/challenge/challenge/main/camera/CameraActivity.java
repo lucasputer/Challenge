@@ -7,7 +7,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
+import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.commonsware.cwac.camera.CameraFragment;
+
+import de.greenrobot.event.EventBus;
 
 
 public class CameraActivity extends Activity implements ChallengeCameraFragment.Contract{
@@ -35,6 +39,7 @@ public class CameraActivity extends Activity implements ChallengeCameraFragment.
 
         current=ChallengeCameraFragment.newInstance(usingFFC);
         std = current;
+
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, current).commit();

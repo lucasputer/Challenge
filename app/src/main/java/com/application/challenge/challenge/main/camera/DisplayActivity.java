@@ -6,19 +6,25 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.adapter.ChallengesListViewAdapter;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.MainActivity;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
@@ -26,6 +32,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+
+import de.greenrobot.event.EventBus;
 
 
 public class DisplayActivity extends ListActivity {
@@ -38,6 +46,8 @@ public class DisplayActivity extends ListActivity {
 
     private PhotoObject photo;
 
+    private ChallengeObject settedChallenge = null;
+    private ChallengesListViewAdapter challengesListViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,13 @@ public class DisplayActivity extends ListActivity {
         }
         else {
             setContentView(R.layout.activity_display);
+
+
+            try{
+                settedChallenge = EventBus.getDefault().getStickyEvent(ChallengeObject.class);
+            }catch(Exception e){
+                e.printStackTrace();
+            }
 
             subtitleText = (EditText)findViewById(R.id.etxt_display_comment);
             shareButton = (Button)findViewById(R.id.btn_display_share);
@@ -77,11 +94,34 @@ public class DisplayActivity extends ListActivity {
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 
-            setListAdapter(new ChallengesListViewAdapter(this, ParseHelper.getChallengeListQuery()));
+            getListView().setSelector(R.color.grey);
+
+
+            if(settedChallenge == null){
+                challengesListViewAdapter = new ChallengesListViewAdapter(this, ParseHelper.getChallengeListQuery());
+                setListAdapter(challengesListViewAdapter);
+
+                getListView().setSelector(R.color.lightGrey);
+            }
+
+
+            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    settedChallenge = challengesListViewAdapter.getItem(position);
+
+                }
+            });
 
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,6 +152,16 @@ public class DisplayActivity extends ListActivity {
         PhotoObject phObj = new PhotoObject();
         phObj.setUser(ParseUser.getCurrentUser());
 
+        if(settedChallenge != null){
+            phObj.setChallenge(settedChallenge);
+            try{
+                phObj.setChallenge(settedChallenge.fetch());
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         thumbnailBitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
         byte[] scaledData = bos.toByteArray();
@@ -126,6 +176,11 @@ public class DisplayActivity extends ListActivity {
             phObj.setSubtitle(subtitleText.getText().toString());
         }
 
+        ParseACL acl = new ParseACL();
+        acl.setPublicWriteAccess(true);
+        acl.setPublicReadAccess(true);
+        phObj.setACL(acl);
+
         phObj.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -133,7 +188,7 @@ public class DisplayActivity extends ListActivity {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 }else{
-                    Toast.makeText(getApplicationContext(), "La foto no pudo ser subida. Por favor, intentelo nuevamente",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "La foto no pudo ser subida. Por favor, intentelo nuevamente más tarde",Toast.LENGTH_LONG).show();
                     shareButton.setEnabled(true);
                 }
             }

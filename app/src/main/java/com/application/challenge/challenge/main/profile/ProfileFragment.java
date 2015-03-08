@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -105,6 +108,8 @@ public class ProfileFragment extends ChallengeFragment {
         return v;
     }
 
+
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -194,7 +199,7 @@ public class ProfileFragment extends ChallengeFragment {
         }
 
         TextView challenges = (TextView) v.findViewById(R.id.txt_challenges_amount_profile);
-        ParseHelper.setPhotosAmountForCurrentUser(challenges);
+        ParseHelper.setPhotosCountForUser(challenges,ParseUser.getCurrentUser());
 
         TextView following = (TextView) v.findViewById(R.id.txt_following_amount_profile);
         if(ParseUser.getCurrentUser().get("followingCount") != null){
@@ -202,9 +207,7 @@ public class ProfileFragment extends ChallengeFragment {
         }
 
         TextView followers = (TextView) v.findViewById(R.id.txt_followers_amount_profile);
-        if(ParseUser.getCurrentUser().get("followerCount") != null){
-            followers.setText(ParseUser.getCurrentUser().get("followerCount").toString());
-        }
+        ParseHelper.setFollowersCountForUser(followers,ParseUser.getCurrentUser());
 
     }
 

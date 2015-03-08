@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 
+import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.main.MainActivity;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -72,6 +75,11 @@ public class CameraLoaderFragment extends ChallengeFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_blank, container, false);
+
+        //Remuevo el challenge guardado como challenge para la proxima foto, ya que estoy accediendo a la camara por otro lado
+        if(EventBus.getDefault().getStickyEvent(ChallengeObject.class) != null){
+            EventBus.getDefault().removeStickyEvent(ChallengeObject.class);
+        }
 
         Intent cameraIntent = new Intent().setClass(getActivity(), CameraActivity.class);
         startActivity(cameraIntent);

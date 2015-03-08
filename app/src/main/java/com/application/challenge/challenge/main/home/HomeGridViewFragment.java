@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
@@ -17,7 +18,9 @@ import com.application.challenge.challenge.main.MainActivity;
 import com.application.challenge.challenge.main.commons.fragment.GridViewFragment;
 import com.application.challenge.challenge.main.picture.PictureActivity;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -29,7 +32,6 @@ import de.greenrobot.event.EventBus;
 public class HomeGridViewFragment extends GridViewFragment {
 
     SquareImageGridViewAdapter adapter;
-    ArrayList<String> objIdArray;
 
     public static HomeGridViewFragment newInstance() {
         HomeGridViewFragment fragment = new HomeGridViewFragment();
@@ -60,14 +62,12 @@ public class HomeGridViewFragment extends GridViewFragment {
             query.findInBackground(new FindCallback<PhotoObject>() {
                 @Override
                 public void done(List<PhotoObject> photoObjects, ParseException e) {
-                    photoArray.addAll(photoObjects);
-                    objIdArray = new ArrayList<String>();
-                    for(PhotoObject obj: photoArray){
-                        objIdArray.add(obj.getObjectId());
+                    if (e == null){
+                        photoArray.addAll(photoObjects);
+                        adapter = new SquareImageGridViewAdapter(getActivity(),photoArray);
+                        gridView.setAdapter(adapter);
+                        gridView.setOnScrollListener(new ScrollListener(getActivity()));
                     }
-                    adapter = new SquareImageGridViewAdapter(getActivity(),photoArray);
-                    gridView.setAdapter(adapter);
-                    gridView.setOnScrollListener(new ScrollListener(getActivity()));
                 }
             });
 
@@ -79,6 +79,8 @@ public class HomeGridViewFragment extends GridViewFragment {
                                     int position, long id) {
 
                 Intent intent = new Intent(getActivity(), PictureActivity.class);
+                PhotoObject ph = adapter.getItem(position);
+
                 EventBus.getDefault().postSticky(adapter.getItem(position));
 
                 startActivity(intent);
