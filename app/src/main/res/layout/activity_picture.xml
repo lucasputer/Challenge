@@ -7,22 +7,9 @@
     tools:context="com.application.challenge.challenge.main.picture.PictureActivity">
 
 
+        <!-- Incluye barra -->
+        <include layout="@layout/element_bar_return"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:orientation="horizontal"
-            android:background="@color/orange">
-
-            <Button
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:id="@+id/btn_camera_close"
-                android:layout_margin="16dp"
-                android:background="@drawable/btn_back_arrow"
-                android:onClick="returnToMain"
-                />
-        </LinearLayout>
 
         <!-- Incluye picture -->
         <include layout="@layout/element_picture"/>

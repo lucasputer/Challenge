@@ -87,6 +87,10 @@ public class HomeGridViewFragment extends GridViewFragment {
 
             }
         });
+
+        v.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+
         return v;
     }
 

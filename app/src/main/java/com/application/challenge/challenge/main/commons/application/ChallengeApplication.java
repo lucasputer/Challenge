@@ -55,12 +55,12 @@ public class ChallengeApplication extends Application {
 
         Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 
-
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
 
         // If you would like all objects to be private by default, remove this line.
         defaultACL.setPublicReadAccess(true);
+        defaultACL.setPublicWriteAccess(true);
 
         ParseACL.setDefaultACL(defaultACL, true);
 

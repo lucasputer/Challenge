@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,8 +29,11 @@ public class SearchActivity extends ListActivity {
         ActionBar actionBar = getActionBar();
 
         // Enabling Back navigation on Action Bar icon
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(R.string.title_activity_search);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setTitle(R.string.title_activity_search);
+
+
 
         handleIntent(getIntent());
     }
@@ -53,5 +57,6 @@ public class SearchActivity extends ListActivity {
         }
 
     }
+
 
 }

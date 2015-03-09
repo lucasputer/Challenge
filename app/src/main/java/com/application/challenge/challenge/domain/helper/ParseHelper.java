@@ -238,15 +238,15 @@ public class ParseHelper {
                        });
                    } else {
                        try {
-                           final LikeObject like = new LikeObject();
+                           LikeObject like = new LikeObject();
                            like.setLiked(true);
                            like.setUser(ParseUser.getCurrentUser());
-                           like.setPhoto(photo.fetchIfNeeded());
+                           like.setPhoto(photo);
                            like.saveInBackground(new SaveCallback() {
                                @Override
                                public void done(ParseException e) {
                                    if (e == null) {
-                                       Toast.makeText(context, "holj", Toast.LENGTH_LONG).show();
+                                       e.printStackTrace();
                                    }
                                }
                            });

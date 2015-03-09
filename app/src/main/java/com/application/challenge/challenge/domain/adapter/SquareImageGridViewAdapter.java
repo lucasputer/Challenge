@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.application.challenge.challenge.domain.cache.ImageLoader;
 import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 
@@ -17,10 +18,12 @@ import java.util.ArrayList;
 public class SquareImageGridViewAdapter extends BaseAdapter {
     private final Context context;
     private ArrayList<PhotoObject> photos = new ArrayList<PhotoObject>();
+    private ImageLoader imageLoader;
 
     public SquareImageGridViewAdapter(Context context,  ArrayList<PhotoObject> photos) {
         this.context = context;
         this.photos.addAll(photos);
+        this.imageLoader = new ImageLoader(context);
     }
 
     @Override public View getView(int position, View convertView, ViewGroup parent) {
@@ -30,11 +33,12 @@ public class SquareImageGridViewAdapter extends BaseAdapter {
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
-        // Get the image URL for the current position.
         PhotoObject ph = getItem(position);
 
-        view.setParseFile(ph.getPhoto());
-        view.loadInBackground();
+        imageLoader.DisplayImage(ph.getPhoto().getUrl(),view);
+
+//        view.setParseFile(ph.getPhoto());
+//        view.loadInBackground();
 
         return view;
     }
