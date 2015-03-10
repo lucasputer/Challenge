@@ -45,6 +45,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:onClick="followUser"
+            android:visibility="gone"
             android:layout_marginRight="16dp"/>
 
     </RelativeLayout>

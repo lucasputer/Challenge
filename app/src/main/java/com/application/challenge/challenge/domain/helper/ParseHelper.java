@@ -294,7 +294,7 @@ public class ParseHelper {
                @Override
                public void done(FollowActivityObject followActivityObject, ParseException e) {
                    if(e!=null){
-                       
+
                        button.setVisibility(View.VISIBLE);
                    }
                }
