@@ -2,6 +2,7 @@ package com.application.challenge.challenge.main.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -36,15 +37,18 @@ public class ProfileListFragment extends android.support.v4.app.ListFragment {
         ListView lv = (ListView) v.findViewById(android.R.id.list);
 
         lv.setAdapter(pictureListViewAdapter);
-        pictureListViewAdapter.loadObjects();
 
 
-        //TODO: arreglar esto para que ande bien
-        setListViewHeightBasedOnChildren(lv);
+            pictureListViewAdapter.loadObjects();
 
-        return v;
 
-    }
+            //TODO: arreglar esto para que ande bien
+            //setListViewHeightBasedOnChildren(lv);
+
+            return v;
+
+        }
+
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();

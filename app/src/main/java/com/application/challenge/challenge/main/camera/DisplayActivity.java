@@ -158,6 +158,7 @@ public class DisplayActivity extends ListActivity {
                 phObj.setChallenge(settedChallenge.fetch());
             }catch(Exception e){
                 e.printStackTrace();
+                phObj.setChallenge(null);
             }
         }
 

@@ -91,7 +91,6 @@ public class ProfileFragment extends ChallengeFragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
         setProfileInformation(v);
 
         ParseUser.getCurrentUser().fetchInBackground(new GetCallback<ParseObject>() {
@@ -135,7 +134,7 @@ public class ProfileFragment extends ChallengeFragment {
         b = new Bundle();
         b.putString("key", Tabs.PROFILE_HEART.toString());
         profileTabHost.addTab(profileTabHost.newTabSpec(Tabs.PROFILE_HEART.toString())
-                .setIndicator(createTabView(R.drawable.btn_profile_heart, Tabs.PROFILE_HEART.toString())), TabFragment.class, b);
+                .setIndicator(createTabView(R.drawable.btn_profile_heart, Tabs.PROFILE_HEART.toString())), ProfileGridViewLikedFragment.class, b);
 
 
     }

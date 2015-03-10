@@ -1,4 +1,4 @@
-package com.application.challenge.challenge.main.home;
+package com.application.challenge.challenge.main.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,22 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
-import com.application.challenge.challenge.domain.helper.ParseHelper;
-import com.application.challenge.challenge.domain.listener.ScrollListener;
 import com.application.challenge.challenge.domain.adapter.SquareImageGridViewAdapter;
+import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
+import com.application.challenge.challenge.domain.model.LikeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
-import com.application.challenge.challenge.main.MainActivity;
 import com.application.challenge.challenge.main.commons.fragment.GridViewFragment;
 import com.application.challenge.challenge.main.picture.PictureActivity;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +26,17 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 
-public class HomeGridViewFragment extends GridViewFragment {
+public class ProfileGridViewLikedFragment extends GridViewFragment {
 
     SquareImageGridViewAdapter adapter;
+    ExpandableHeightGridView gridView;
 
-    public static HomeGridViewFragment newInstance() {
-        HomeGridViewFragment fragment = new HomeGridViewFragment();
+    public static ProfileGridViewLikedFragment newInstance() {
+        ProfileGridViewLikedFragment fragment = new ProfileGridViewLikedFragment();
         return fragment;
     }
 
-    public HomeGridViewFragment() {
+    public ProfileGridViewLikedFragment() {
         // Required empty public constructor
     }
 
@@ -54,24 +52,32 @@ public class HomeGridViewFragment extends GridViewFragment {
         // Inflate the layout for this fragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
 
-        final ExpandableHeightGridView gridView = (ExpandableHeightGridView)v.findViewById(R.id.gridview);
+        gridView = (ExpandableHeightGridView)v.findViewById(R.id.gridview);
+
 
         final ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
-            ParseQuery<PhotoObject> query = ParseHelper.getPopularPictures();
-            query.findInBackground(new FindCallback<PhotoObject>() {
-                @Override
-                public void done(List<PhotoObject> photoObjects, ParseException e) {
-                    if (e == null){
-
-                        photoArray.addAll(photoObjects);
-                        adapter = new SquareImageGridViewAdapter(getActivity(),photoArray);
-                        gridView.setAdapter(adapter);
-                        gridView.setOnScrollListener(new ScrollListener(getActivity()));
+        ParseQuery<LikeObject> query = new ParseQuery<LikeObject>("Like");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.orderByDescending("createdAt");
+        query.include("photo");
+        query.findInBackground(new FindCallback<LikeObject>() {
+            @Override
+            public void done(List<LikeObject> likeObjects, ParseException e) {
+                if(e==null){
+                    for(LikeObject lo:likeObjects){
+                        photoArray.add((PhotoObject)lo.getPhoto());
                     }
+                    adapter = new SquareImageGridViewAdapter(getActivity(), photoArray);
+                    configureGridView(photoArray);
                 }
-            });
 
+            }
+        });
+
+
+
+        //gridView.setOnScrollListener(new ScrollListener(getActivity()));
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -80,8 +86,6 @@ public class HomeGridViewFragment extends GridViewFragment {
                                     int position, long id) {
 
                 Intent intent = new Intent(getActivity(), PictureActivity.class);
-                PhotoObject ph = adapter.getItem(position);
-
                 EventBus.getDefault().postSticky(adapter.getItem(position));
 
                 startActivity(intent);
@@ -89,11 +93,13 @@ public class HomeGridViewFragment extends GridViewFragment {
             }
         });
 
-        v.setOverScrollMode(View.OVER_SCROLL_NEVER);
-
-
         return v;
     }
 
-
+    private void configureGridView(final ArrayList<PhotoObject> photoArray){
+        adapter = new SquareImageGridViewAdapter(getActivity(), photoArray);
+        gridView.setNumColumns(3);
+        gridView.setExpanded(true);
+        gridView.setAdapter(adapter);
+    }
 }
