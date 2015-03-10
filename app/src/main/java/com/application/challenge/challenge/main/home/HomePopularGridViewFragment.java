@@ -16,6 +16,7 @@ import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.commons.fragment.GridViewFragment;
 import com.application.challenge.challenge.main.picture.PictureActivity;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 

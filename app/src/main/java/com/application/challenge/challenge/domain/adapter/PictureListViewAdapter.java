@@ -3,6 +3,7 @@ package com.application.challenge.challenge.domain.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
@@ -36,7 +37,7 @@ public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
     }
 
     @Override
-    public View getItemView(PhotoObject photoObj, View v, ViewGroup parent) {
+    public View getItemView(final PhotoObject photoObj, View v, ViewGroup parent) {
 
         if (v == null) {
             v = View.inflate(getContext(), R.layout.element_picture, null);
@@ -47,13 +48,22 @@ public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
         SquareImageView photoImageView = (SquareImageView) v.findViewById(R.id.picture_image);
         CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_picture_profile_image);
         TextView usernameTextView = (TextView) v.findViewById(R.id.picture_username);
-        TextView pictureLikesAmount = (TextView) v.findViewById(R.id.picture_heart_amount);
+        final TextView pictureLikesAmount = (TextView) v.findViewById(R.id.picture_heart_amount);
 
         ParseHelper.loadPicture(cntxt, usernameTextView, thumbnailImageView, photoImageView, pictureLikesAmount, photoObj);
 
         v.measure(View.MeasureSpec.makeMeasureSpec(
                         View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
+
+        final Button like = (Button) v.findViewById(R.id.btn_picture_heart);
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseHelper.likePicture(getContext(),photoObj,pictureLikesAmount,like);
+            }
+        });
 
         return v;
     }

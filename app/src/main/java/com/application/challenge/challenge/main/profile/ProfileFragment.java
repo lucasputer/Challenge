@@ -203,6 +203,8 @@ public class ProfileFragment extends ChallengeFragment {
         TextView following = (TextView) v.findViewById(R.id.txt_following_amount_profile);
         if(ParseUser.getCurrentUser().get("followingCount") != null){
             following.setText(ParseUser.getCurrentUser().get("followingCount").toString());
+        }else{
+            following.setText("0");
         }
 
         TextView followers = (TextView) v.findViewById(R.id.txt_followers_amount_profile);

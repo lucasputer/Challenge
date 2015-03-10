@@ -61,9 +61,11 @@ public class ProfileGridViewFragment extends GridViewFragment {
         query.findInBackground(new FindCallback<PhotoObject>() {
             @Override
             public void done(List<PhotoObject> photoObjects, ParseException e) {
-                photoArray.addAll(photoObjects);
-                adapter = new SquareImageGridViewAdapter(getActivity(), photoArray);
-                configureGridView(photoArray);
+                if(e==null){
+                    photoArray.addAll(photoObjects);
+                    adapter = new SquareImageGridViewAdapter(getActivity(), photoArray);
+                    configureGridView(photoArray);
+                }
             }
         });
 
