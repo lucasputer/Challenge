@@ -93,12 +93,12 @@ public class HomeFragment extends ChallengeFragment {
         Bundle b = new Bundle();
         b.putString("key", Tabs.HOME_POPULAR.toString());
         homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_POPULAR.toString())
-                .setIndicator(createTabView("POPULARES")), HomeGridViewFragment.class, b);
+                .setIndicator(createTabView("POPULARES")), HomePopularGridViewFragment.class, b);
 
         b = new Bundle();
         b.putString("key", Tabs.HOME_FRIENDS.toString());
         homeTabHost.addTab(homeTabHost.newTabSpec(Tabs.HOME_FRIENDS.toString())
-                .setIndicator(createTabView("AMIGOS")), HomeGridViewFragment.class, b);
+                .setIndicator(createTabView("AMIGOS")), HomeFriendsGridViewFragment.class, b);
     }
 
     private View createTabView(final String text) {

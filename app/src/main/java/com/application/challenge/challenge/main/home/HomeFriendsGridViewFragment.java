@@ -6,21 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.adapter.SquareImageGridViewAdapter;
 import com.application.challenge.challenge.domain.custom.ExpandableHeightGridView;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.listener.ScrollListener;
-import com.application.challenge.challenge.domain.adapter.SquareImageGridViewAdapter;
 import com.application.challenge.challenge.domain.model.PhotoObject;
-import com.application.challenge.challenge.main.MainActivity;
 import com.application.challenge.challenge.main.commons.fragment.GridViewFragment;
 import com.application.challenge.challenge.main.picture.PictureActivity;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -29,16 +25,16 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 
-public class HomeGridViewFragment extends GridViewFragment {
+public class HomeFriendsGridViewFragment extends GridViewFragment {
 
     SquareImageGridViewAdapter adapter;
 
-    public static HomeGridViewFragment newInstance() {
-        HomeGridViewFragment fragment = new HomeGridViewFragment();
+    public static HomeFriendsGridViewFragment newInstance() {
+        HomeFriendsGridViewFragment fragment = new HomeFriendsGridViewFragment();
         return fragment;
     }
 
-    public HomeGridViewFragment() {
+    public HomeFriendsGridViewFragment() {
         // Required empty public constructor
     }
 
@@ -58,7 +54,7 @@ public class HomeGridViewFragment extends GridViewFragment {
 
         final ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
-            ParseQuery<PhotoObject> query = ParseHelper.getPopularPictures();
+            ParseQuery<PhotoObject> query = ParseHelper.getFriendsPictures();
             query.findInBackground(new FindCallback<PhotoObject>() {
                 @Override
                 public void done(List<PhotoObject> photoObjects, ParseException e) {

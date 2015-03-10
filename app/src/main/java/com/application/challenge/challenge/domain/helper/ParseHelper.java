@@ -15,6 +15,7 @@ import com.application.challenge.challenge.domain.model.FollowActivityObject;
 import com.application.challenge.challenge.domain.model.LikeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.parse.CountCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -80,8 +81,29 @@ public class ParseHelper {
         return query;
     }
 
-    public static ParseQuery<PhotoObject> getFriendsPictures(final ParseUser user){
-        return null;
+    public static ParseQuery<PhotoObject> getFriendsPictures(){
+
+        final ArrayList<FollowActivityObject> followActivityObjs = new ArrayList<>();
+        final ArrayList<ParseUser> userObjs = new ArrayList<>();
+
+        ParseQuery<FollowActivityObject> query = new ParseQuery<FollowActivityObject>("FollowActivity");
+        query.include("toUser");
+        query.whereEqualTo("fromUser",ParseUser.getCurrentUser());
+        try {
+            followActivityObjs.addAll(query.find());
+            for(FollowActivityObject fao: followActivityObjs){
+                userObjs.add(fao.getToUser());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        ParseQuery<PhotoObject> query2 = new ParseQuery<PhotoObject>("Photo");
+        query2.setLimit(20);
+        query2.include("user");
+        query2.whereContainedIn("user",userObjs);
+        query2.orderByDescending("createdAt");
+
+        return query2;
     }
 
     public static ParseQueryAdapter.QueryFactory<ParseUser> getDiscoverUsers(){
