@@ -14,6 +14,6 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="likes_amount">♥ %1$s Me Gusta</string>
     <string name="title_activity_picture">PictureActivity</string>
-    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_search">Buscar usuario</string>
 
 </resources>

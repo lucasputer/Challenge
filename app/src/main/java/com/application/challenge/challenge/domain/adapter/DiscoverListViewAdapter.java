@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.cache.ImageLoader;
 import com.application.challenge.challenge.domain.custom.CircularImageView;
 import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
@@ -34,9 +35,12 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
     ArrayList<SquareImageView> imageList = new ArrayList<SquareImageView>();
 
+    ImageLoader imageLoader;
+
 
     public DiscoverListViewAdapter(Context context, QueryFactory<ParseUser>  queryFactory){
         super(context, queryFactory);
+        imageLoader = new ImageLoader(context);
     }
 
 
@@ -82,18 +86,16 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
         }
 
         final Button follow = (Button) v.findViewById(R.id.btn_discover_follow);
-        if(ParseHelper.isFollowing(user)){
-            follow.setVisibility(View.GONE);
-        }
-
-
+        ParseHelper.enableButtonIfIsNotFollowing(user,follow);
 
 
             ParseQuery<PhotoObject> query = ParseHelper.getDiscoverUserPictures(user);
             query.findInBackground(new FindCallback<PhotoObject>() {
                 @Override
                 public void done(List<PhotoObject> photoObjects, ParseException e) {
-                    addAll(photoObjects, user);
+                    if(e == null){
+                        addAll(photoObjects, user);
+                    }
                 }
             });
 
@@ -113,17 +115,18 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
     private void addAll(List<PhotoObject> photoObjects,ParseUser user){
         ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
+        photoArray.addAll(photoObjects);
         if(photoArray.size() > 0){
             int i = 0;
             while(i < photoArray.size()){
                 if(photoArray.get(i).getUser().getObjectId().equals(user.getObjectId())) {
-                    imageList.get(i).setParseFile(photoArray.get(i).getParseFile("photo"));
-                    imageList.get(i).loadInBackground();
+//                    imageList.get(i).setParseFile(photoArray.get(i).getParseFile("photo"));
+//                    imageList.get(i).loadInBackground();
+                    imageLoader.DisplayImage(photoArray.get(i).getParseFile("photo").getUrl(),imageList.get(i));
                 }
                 i++;
             }
         }
-
     }
 
 }

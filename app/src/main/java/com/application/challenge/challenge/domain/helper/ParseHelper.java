@@ -102,6 +102,7 @@ public class ParseHelper {
             public ParseQuery<ParseUser> create(){
                 ParseQuery query = ParseUser.getQuery();
                 query.whereContains("displayName",searchedText);
+                query.whereNotEqualTo("objectId",ParseUser.getCurrentUser().getObjectId());
                 query.setLimit(20);
                 return query;
             }
@@ -283,19 +284,22 @@ public class ParseHelper {
         }
     }
 
-    public static boolean isFollowing(ParseUser user){
+    public static void enableButtonIfIsNotFollowing(ParseUser user, final Button button){
         ParseQuery<FollowActivityObject> query = new ParseQuery<FollowActivityObject>("FollowActivity");
         query.whereEqualTo("fromUser",ParseUser.getCurrentUser());
         query.whereEqualTo("toUser",user);
 
-        boolean ret = false;
-        try{
-           FollowActivityObject fao = query.getFirst();
-           ret = true;
-        }catch(Exception e){
-           ret = false;
-        }
-        return ret;
+
+           query.getFirstInBackground(new GetCallback<FollowActivityObject>() {
+               @Override
+               public void done(FollowActivityObject followActivityObject, ParseException e) {
+                   if(e!=null){
+                       
+                       button.setVisibility(View.VISIBLE);
+                   }
+               }
+           });
+
     }
 
 
