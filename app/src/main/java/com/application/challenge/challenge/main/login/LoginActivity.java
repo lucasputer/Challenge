@@ -43,8 +43,7 @@ public class LoginActivity extends Activity {
 
         ParseUser currentUser = ParseUser.getCurrentUser();
        // if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-        if ((currentUser != null)) {
-            //TODO
+        if ((currentUser != null) && currentUser.getObjectId()!=null) {
             startActivity(new Intent(this, MainActivity.class));
         }
 
