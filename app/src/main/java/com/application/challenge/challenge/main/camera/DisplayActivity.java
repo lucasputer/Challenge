@@ -98,7 +98,7 @@ public class DisplayActivity extends ListActivity {
 
 
             if(settedChallenge == null){
-                challengesListViewAdapter = new ChallengesListViewAdapter(this, ParseHelper.getChallengeListQuery());
+                challengesListViewAdapter = new ChallengesListViewAdapter(this, ParseHelper.getChallengeListQueryFactory());
                 setListAdapter(challengesListViewAdapter);
 
                 getListView().setSelector(R.color.lightGrey);

@@ -43,7 +43,7 @@ public class ParseHelper {
         }
     }
 
-    public static ParseQueryAdapter.QueryFactory<ChallengeObject> getChallengeListQuery(){
+    public static ParseQueryAdapter.QueryFactory<ChallengeObject> getChallengeListQueryFactory(){
 
 
         ParseQueryAdapter.QueryFactory<ChallengeObject>  factory = new ParseQueryAdapter.QueryFactory<ChallengeObject>(){
@@ -55,6 +55,14 @@ public class ParseHelper {
             }
         };
         return factory;
+    }
+
+    public static ParseQuery<ChallengeObject> getChallengeListQuery(){
+
+                ParseQuery query = new ParseQuery("Challenge");
+                query.include("firstPhoto");
+
+                return query;
     }
 
     public static  ParseQueryAdapter.QueryFactory<PhotoObject> getPicturesFromUser(final ParseUser user){
