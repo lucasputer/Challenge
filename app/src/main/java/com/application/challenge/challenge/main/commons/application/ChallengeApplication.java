@@ -21,8 +21,8 @@ import com.parse.ParseUser;
  * Created by lucas on 10/12/14.
  */
 public class ChallengeApplication extends Application {
-    public static final String APPLICATION_ID = "vRnNnV9R81Q0gcux3bvpFGKuE1fDwNzmPvtFZCpv";
-    public static final String CLIENT_KEY = "LC687dOvsPdaeWqiCeW9HduOxVoir2jCBlPk4dZ6";
+    public static final String APPLICATION_ID = "RLuEgcfAZKP1D8bcXSVogeejtQlKMUiC0yNtkvBN";
+    public static final String CLIENT_KEY = "3cHXi41O8ipNKRK8TbBtaHy16kHp1LMJTSmIGRIu";
 
     private static final String TWITTER_KEY = "ceugZujHm6d1jFjXQHiLs2Zro";
     private static final String TWITTER_SECRET = "kfN5IgyIkyapjeaPvZWeCNhdAIAcV9zoS3mgTazucMwqipAQFb";
