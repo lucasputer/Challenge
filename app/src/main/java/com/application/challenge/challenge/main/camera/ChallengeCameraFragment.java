@@ -4,10 +4,15 @@ package com.application.challenge.challenge.main.camera;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,10 +30,13 @@ import com.commonsware.cwac.camera.CameraUtils;
 import com.commonsware.cwac.camera.SimpleCameraHost;
 import com.commonsware.cwac.camera.PictureTransaction;
 
+import java.io.ByteArrayOutputStream;
+
 import at.markushi.ui.CircleButton;
 
 public class ChallengeCameraFragment extends CameraFragment {
     private static final String KEY_USE_FFC= "com.commonsware.cwac.camera.demo.USE_FFC";
+    private static final int  RESULT_LOAD_IMAGE = 1;
     private MenuItem singleShotItem=null;
     private MenuItem autoFocusItem=null;
     private MenuItem takePictureItem=null;
@@ -39,6 +47,7 @@ public class ChallengeCameraFragment extends CameraFragment {
     private boolean singleShotProcessing=false;
     private CircleButton shutterButton=null;
     private Button changeCameraButton=null;
+    private Button selectFromGalleryButton=null;
     private long lastFaceToast=0L;
     String flashMode=null;
     private View cameraView;
@@ -80,12 +89,55 @@ public class ChallengeCameraFragment extends CameraFragment {
 
         shutterButton=(CircleButton)results.findViewById(R.id.btn_camera_shutter);
         changeCameraButton=(Button)results.findViewById(R.id.btn_camera_change);
+        selectFromGalleryButton=(Button)results.findViewById(R.id.btn_camera_select_from_gallery);
         shutterButton.setColor(Color.parseColor("#ed5800"));
 
         setRecordingItemVisibility();
 
+        selectFromGalleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(
+                        Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
+
         return(results);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE  && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            Bitmap bm = BitmapFactory.decodeFile(picturePath);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            DisplayActivity.imageToShow= byteArray;
+
+
+
+
+            startActivity(new Intent(getActivity(), DisplayActivity.class));
+        }
+
+            // String picturePath contains the path of selected Image
+        }
 
     @Override
     public void onPause() {
