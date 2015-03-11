@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
+import com.application.challenge.challenge.main.camera.CameraActivity;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -26,6 +27,8 @@ import com.parse.ParseQueryAdapter;
 import com.parse.codec.binary.StringUtils;
 
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by lucas on 16/1/15.
@@ -68,8 +71,8 @@ public class ChallengesListViewCustomAdapter extends BaseAdapter {
             holder.titleTextView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
             holder.subtitleTextView = (TextView) convertView.findViewById(R.id.challenge_subtitle);
             holder.challengeImage = (ParseImageView) convertView.findViewById(R.id.circled_challenge_image);
-//            holder.bAction1 = (Button) convertView.findViewById(R.id.btn_challenge_heart);
-//            holder.bAction2 = (Button) convertView.findViewById(R.id.btn_challenge_participate);
+            holder.heartButton = (Button) convertView.findViewById(R.id.btn_challenge_heart);
+            holder.cupButton = (Button) convertView.findViewById(R.id.btn_challenge_participate);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -95,20 +98,22 @@ public class ChallengesListViewCustomAdapter extends BaseAdapter {
 
 
 
-//        holder.bAction1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context,"hola",Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        holder.bAction2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context,"chau",Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
+        holder.cupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CameraActivity.class);
+                EventBus.getDefault().postSticky(item);
+                context.startActivity(intent);
+            }
+        });
+
+        holder.heartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,"corazon",Toast.LENGTH_LONG).show();
+            }
+        });
+
         return convertView;
     }
 
@@ -116,8 +121,8 @@ public class ChallengesListViewCustomAdapter extends BaseAdapter {
         TextView titleTextView;
         TextView subtitleTextView;
         ParseImageView challengeImage;
-        Button bAction1;
-        Button bAction2;
+        Button cupButton;
+        Button heartButton;
     }
 
 }

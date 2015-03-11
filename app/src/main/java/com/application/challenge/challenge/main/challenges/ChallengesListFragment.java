@@ -68,7 +68,7 @@ public class ChallengesListFragment extends ChallengeFragment{
             public void done(List<ChallengeObject> challengeObjects, ParseException e) {
                 if(e==null){
                     //challengeList.addAll(challengeObjects);
-                    challengeListAdapter = new ChallengesListViewCustomAdapter(getActivity().getApplicationContext(),challengeObjects);
+                    challengeListAdapter = new ChallengesListViewCustomAdapter(getActivity(),challengeObjects);
 
                     swipeListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 

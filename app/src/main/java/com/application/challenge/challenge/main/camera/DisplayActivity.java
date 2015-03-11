@@ -148,6 +148,7 @@ public class DisplayActivity extends ListActivity {
     public void sharePicture(View v){
 
         shareButton.setEnabled(false);
+        shareButton.setBackgroundColor(getResources().getColor(R.color.grey));
 
         PhotoObject phObj = new PhotoObject();
         phObj.setUser(ParseUser.getCurrentUser());
@@ -189,8 +190,9 @@ public class DisplayActivity extends ListActivity {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 }else{
-                    Toast.makeText(getApplicationContext(), "La foto no pudo ser subida. Por favor, intentelo nuevamente más tarde",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "La foto no pudo ser subida. Por favor, intentelo nuevamente más tarde.",Toast.LENGTH_LONG).show();
                     shareButton.setEnabled(true);
+                    shareButton.setBackgroundColor(getResources().getColor(R.color.orange));
                 }
             }
         });
