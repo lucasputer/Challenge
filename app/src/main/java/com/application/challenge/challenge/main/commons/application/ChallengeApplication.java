@@ -2,6 +2,7 @@ package com.application.challenge.challenge.main.commons.application;
 
 import android.app.Application;
 
+import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.FacebookLoginHelper;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.helper.TwitterLoginHelper;
@@ -21,11 +22,7 @@ import com.parse.ParseUser;
  * Created by lucas on 10/12/14.
  */
 public class ChallengeApplication extends Application {
-    public static final String APPLICATION_ID = "vRnNnV9R81Q0gcux3bvpFGKuE1fDwNzmPvtFZCpv";
-    public static final String CLIENT_KEY = "LC687dOvsPdaeWqiCeW9HduOxVoir2jCBlPk4dZ6";
 
-    private static final String TWITTER_KEY = "ceugZujHm6d1jFjXQHiLs2Zro";
-    private static final String TWITTER_SECRET = "kfN5IgyIkyapjeaPvZWeCNhdAIAcV9zoS3mgTazucMwqipAQFb";
 
     private static ChallengeApplication singleton;
 
@@ -53,7 +50,7 @@ public class ChallengeApplication extends Application {
         ParseObject.registerSubclass(SponsorObject.class);
         ParseObject.registerSubclass(ChallengeObject.class);
 
-        Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+        Parse.initialize(this, getResources().getString(R.string.parse_application_id), getResources().getString(R.string.parse_client_key));
 
         ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
@@ -64,7 +61,7 @@ public class ChallengeApplication extends Application {
 
         ParseACL.setDefaultACL(defaultACL, true);
 
-        ParseTwitterUtils.initialize(TWITTER_KEY, TWITTER_SECRET);
+        ParseTwitterUtils.initialize(getResources().getString(R.string.twitter_key),getResources().getString(R.string.twitter_secret));
 
         ParseHelper.initialize();
         FacebookLoginHelper.initialize();
