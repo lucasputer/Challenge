@@ -30,6 +30,7 @@ import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public class ChallengesListFragment extends ChallengeFragment{
             @Override
             public void done(List<ChallengeObject> challengeObjects, ParseException e) {
                 if(e==null){
+
+
                     //challengeList.addAll(challengeObjects);
                     challengeListAdapter = new ChallengesListViewCustomAdapter(getActivity(),challengeObjects);
 

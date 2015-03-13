@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.main.camera.CameraActivity;
+import com.application.challenge.challenge.main.challenges.ChallengesListActivity;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -96,8 +97,6 @@ public class ChallengesListViewCustomAdapter extends BaseAdapter {
         holder.titleTextView.setText(item.getName());
         holder.subtitleTextView.setText(item.getDescription());
 
-
-
         holder.cupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +109,9 @@ public class ChallengesListViewCustomAdapter extends BaseAdapter {
         holder.heartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"corazon",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(context, ChallengesListActivity.class);
+                EventBus.getDefault().postSticky(item);
+                context.startActivity(intent);
             }
         });
 
