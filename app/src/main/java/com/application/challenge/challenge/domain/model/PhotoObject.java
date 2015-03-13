@@ -14,16 +14,7 @@ import com.parse.ParseUser;
 @ParseClassName("Photo")
 public class PhotoObject extends ParseObject{
 
-    public PhotoObject(){
-    }
-
-    public String getObjectId(){
-        return getString("objectId");
-    }
-
-    public void setObjectId(String objectId){
-        put("objectId",objectId);
-    }
+    public PhotoObject(){}
 
     public ParseObject getChallenge(){
         return getParseObject("challenge");
@@ -38,7 +29,7 @@ public class PhotoObject extends ParseObject{
     }
 
     public void dislikePicture(){
-        increment("dislikes");
+        put("likes",getLikes()-1);
         put("overallLikes",getOverallLikes() -1);
 
     }
@@ -46,6 +37,7 @@ public class PhotoObject extends ParseObject{
     public int getLikes(){
         return getInt("likes");
     }
+
 
     public void likePicture(){
         increment("likes");

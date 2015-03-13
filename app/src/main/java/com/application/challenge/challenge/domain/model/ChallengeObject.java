@@ -12,14 +12,6 @@ public class ChallengeObject extends ParseObject {
 
     public ChallengeObject(){}
 
-    public String getObjectId(){
-        return getString("objectId");
-    }
-
-    public void setObjectId(String objectId){
-        put("objectId",objectId);
-    }
-
     public ParseObject getFirstPhoto(){
         return getParseObject("firstPhoto");
     }

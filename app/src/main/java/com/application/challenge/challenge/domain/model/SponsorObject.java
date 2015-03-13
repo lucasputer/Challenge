@@ -11,12 +11,4 @@ public class SponsorObject extends ParseObject {
 
     public SponsorObject(){}
 
-    public String getObjectId(){
-        return getString("objectId");
-    }
-
-    public void setObjectId(String objectId){
-        put("objectId",objectId);
-    }
-
 }

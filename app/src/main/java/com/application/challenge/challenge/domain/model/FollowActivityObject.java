@@ -12,15 +12,6 @@ public class FollowActivityObject extends ParseObject {
 
     public FollowActivityObject(){}
 
-    public String getObjectId(){
-        return getString("objectId");
-    }
-
-    public void setObjectId(String objectId){
-        put("objectId",objectId);
-    }
-
-
     public ParseUser getFromUser(){
         return getParseUser("fromUser");
     }

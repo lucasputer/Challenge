@@ -12,14 +12,6 @@ public class LikeObject extends ParseObject {
 
     public LikeObject(){}
 
-    public String getObjectId(){
-        return getString("objectId");
-    }
-
-    public void setObjectId(String objectId){
-        put("objectId",objectId);
-    }
-
     public boolean getLiked(){
         return getBoolean("liked");
     }

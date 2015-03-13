@@ -59,8 +59,10 @@ public class ParseHelper {
 
     public static ParseQuery<ChallengeObject> getChallengeListQuery(){
 
-                ParseQuery query = new ParseQuery("Challenge");
+                ParseQuery<ChallengeObject> query = ParseQuery.getQuery(ChallengeObject.class);
                 query.include("firstPhoto");
+                query.include("objectId");
+                query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
 
                 return query;
     }
@@ -78,6 +80,22 @@ public class ParseHelper {
         };
         return factory;
     }
+
+    public static  ParseQueryAdapter.QueryFactory<PhotoObject> getPicturesFromChallengeFactory(final ChallengeObject challengeObject){
+        ParseQueryAdapter.QueryFactory<PhotoObject>  factory = new ParseQueryAdapter.QueryFactory<PhotoObject>(){
+            public ParseQuery<PhotoObject> create(){
+                ParseQuery query = new ParseQuery("Photo");
+                query.include("user");
+                query.include("challenge");
+                query.whereEqualTo("challenge",challengeObject);
+                query.orderByDescending("createdAt");
+
+                return query;
+            }
+        };
+        return factory;
+    }
+
 
     public static ParseQuery<PhotoObject> getPopularPictures(){
         ParseQuery<PhotoObject> query = new ParseQuery<PhotoObject>("Photo");
@@ -261,9 +279,17 @@ public class ParseHelper {
                                if (e == null) {
                                    if (!state) {
                                        likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart_liked));
+                                       photo.likePicture();
                                    } else {
                                        likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart));
+                                       photo.dislikePicture();
                                    }
+                                   photo.saveInBackground(new SaveCallback() {
+                                       @Override
+                                       public void done(ParseException e) {
+                                           likes.setText(context.getString(R.string.likes_amount, photo.getLikes()));
+                                       }
+                                   });
                                }
                            }
                        });
@@ -277,7 +303,14 @@ public class ParseHelper {
                                @Override
                                public void done(ParseException e) {
                                    if (e == null) {
-                                       e.printStackTrace();
+                                       likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart_liked));
+                                       photo.likePicture();
+                                       photo.saveInBackground(new SaveCallback() {
+                                           @Override
+                                           public void done(ParseException e) {
+                                               likes.setText(context.getString(R.string.likes_amount, photo.getLikes()));
+                                           }
+                                       });
                                    }
                                }
                            });
@@ -292,26 +325,6 @@ public class ParseHelper {
             e.printStackTrace();
         }
 
-
-
-
-
-
-        try {
-            photo.likePicture();
-            photo.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(ParseException e) {
-                    if(e == null){
-                        likes.setText(context.getString(R.string.likes_amount, photo.getLikes()));
-                        likeButton.setBackground(context.getResources().getDrawable(R.drawable.btn_picture_heart_liked));
-                    }
-
-                }
-            });
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     public static void enableButtonIfIsNotFollowing(ParseUser user, final Button button){
