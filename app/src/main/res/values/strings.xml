@@ -9,11 +9,11 @@
     <string name="facebook_app_id">770936766313089</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_camera">CameraActivity</string>
-    <string name="title_activity_display">DisplayActivity</string>
+    <string name="title_activity_display">Compartir</string>
     <string name="no_image">No hay imagen para mostrar</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="likes_amount">♥ %1$s Me Gusta</string>
-    <string name="title_activity_picture">PictureActivity</string>
+    <string name="title_activity_picture">Foto</string>
     <string name="title_activity_search">Buscar usuario</string>
 
 </resources>

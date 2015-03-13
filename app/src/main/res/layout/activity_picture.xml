@@ -8,10 +8,10 @@
 
 
         <!-- Incluye barra -->
-        <include layout="@layout/element_bar_return"/>
+    <!--  <include layout="@layout/element_bar_return"/> -->
 
 
-        <!-- Incluye picture -->
+     <!-- Incluye picture -->
         <include layout="@layout/element_picture"/>
 
 </LinearLayout>

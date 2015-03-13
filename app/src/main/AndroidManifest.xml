@@ -60,8 +60,8 @@
 
         <activity
             android:name=".main.camera.DisplayActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
-            android:label="@string/app_name" >
+            android:parentActivityName=".main.camera.CameraActivity"
+            android:label="@string/title_activity_display" >
         </activity>
         <activity
             android:name=".main.MainActivity"
@@ -74,13 +74,13 @@
         </activity>
         <activity
             android:name=".main.picture.PictureActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
+            android:parentActivityName=".main.MainActivity"
             android:label="@string/title_activity_picture" >
         </activity>
         <activity
             android:name=".main.commons.activity.SearchActivity"
             android:label="@string/action_search_user"
-            android:parentActivityName=".main.MainActivity" >>
+            android:parentActivityName=".main.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
