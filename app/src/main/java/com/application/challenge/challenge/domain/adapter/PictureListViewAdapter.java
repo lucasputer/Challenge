@@ -49,8 +49,9 @@ public class PictureListViewAdapter extends ParseQueryAdapter<PhotoObject> {
         CircularImageView thumbnailImageView = (CircularImageView) v.findViewById(R.id.circled_picture_profile_image);
         TextView usernameTextView = (TextView) v.findViewById(R.id.picture_username);
         final TextView pictureLikesAmount = (TextView) v.findViewById(R.id.picture_heart_amount);
+        TextView subtitle = (TextView) v.findViewById(R.id.picture_subtitle);
 
-        ParseHelper.loadPicture(cntxt, usernameTextView, thumbnailImageView, photoImageView, pictureLikesAmount, photoObj);
+        ParseHelper.loadPicture(cntxt, usernameTextView, thumbnailImageView, photoImageView, pictureLikesAmount,subtitle, photoObj);
 
         v.measure(View.MeasureSpec.makeMeasureSpec(
                         View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED),

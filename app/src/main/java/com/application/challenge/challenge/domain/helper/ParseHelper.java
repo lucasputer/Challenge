@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.cache.ImageLoader;
 import com.application.challenge.challenge.domain.custom.CircularImageView;
 import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
@@ -227,7 +228,9 @@ public class ParseHelper {
     }
 
     public static void loadPicture(Context context, TextView username, CircularImageView thumbnail,
-                            SquareImageView picture, TextView likes, PhotoObject phObj) {
+                            SquareImageView picture, TextView likes, TextView subtitle, PhotoObject phObj) {
+
+        ImageLoader imageLoader = new ImageLoader(context);
         try {
             if(phObj.getUser().fetchIfNeeded().get("displayName") != null){
                 username.setText(phObj.getUser().fetchIfNeeded().get("displayName").toString());
@@ -236,28 +239,19 @@ public class ParseHelper {
             }
             ParseFile thumbnailFile = phObj.getUser().getParseFile("displayPictureThumbnail");
             if (thumbnailFile != null) {
-                thumbnail.setParseFile(thumbnailFile);
-                thumbnail.loadInBackground(new GetDataCallback() {
-                    @Override
-                    public void done(byte[] data, ParseException e) {
-                        // nothing to do
-                    }
-                });
+                imageLoader.DisplayImage(phObj.getUser().getParseFile("displayPictureThumbnail").getUrl(),thumbnail);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
 
+            imageLoader.DisplayImage(phObj.getPhoto().getUrl(),picture);
 
-            picture.setParseFile(phObj.getPhoto());
-            picture.loadInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    // nothing to do
-                }
-            });
 
             likes.setText(context.getString(R.string.likes_amount, phObj.getLikes()));
+            if(phObj.getSubtitle() != null){
+                subtitle.setText(phObj.getSubtitle());
+            }
     }
 
     public static void likePicture(final Context context,final  PhotoObject photo,final TextView likes, final Button likeButton){

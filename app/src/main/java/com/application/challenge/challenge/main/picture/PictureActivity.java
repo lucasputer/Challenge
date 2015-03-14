@@ -33,6 +33,7 @@ public class PictureActivity extends Activity {
     SquareImageView picture;
     TextView likes;
     Button likeButton;
+    TextView subtitle;
 
 
     @Override
@@ -59,6 +60,7 @@ public class PictureActivity extends Activity {
         picture = (SquareImageView) this.findViewById(R.id.picture_image);
         likes = (TextView) this.findViewById(R.id.picture_heart_amount);
         likeButton = (Button) this.findViewById(R.id.btn_picture_heart);
+        subtitle = (TextView) this.findViewById(R.id.picture_subtitle);
 
         if(ParseHelper.getLikedState(phObj)){
             likeButton.setBackground(getResources().getDrawable(R.drawable.btn_picture_heart_liked));
@@ -92,7 +94,7 @@ public class PictureActivity extends Activity {
     }
 
     private void loadPicture(){
-        ParseHelper.loadPicture(this, username, thumbnail, picture, likes, phObj);
+        ParseHelper.loadPicture(this, username, thumbnail, picture, likes, subtitle, phObj);
     }
 
     public void likePicture(View v){

@@ -63,6 +63,15 @@
         android:textStyle="bold"
         android:text="♥ 0 Me Gusta"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/picture_subtitle"
+        android:layout_marginLeft="8dp"
+        android:textStyle="bold"
+        android:textColor="@color/darkGrey"
+        android:text=""/>
+
     <Button
         android:layout_width="28dp"
         android:layout_height="24dp"
