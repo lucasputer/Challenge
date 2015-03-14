@@ -129,6 +129,12 @@ public class ChallengesListFragment extends ChallengeFragment{
         return v;
     }
 
+    @Override
+    public void onPause(){
+        swipeListView.closeOpenedItems();
+        super.onPause();
+    }
+
 
 
 
