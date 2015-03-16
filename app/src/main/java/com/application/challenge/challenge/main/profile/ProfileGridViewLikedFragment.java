@@ -57,8 +57,18 @@ public class ProfileGridViewLikedFragment extends GridViewFragment {
 
         final ArrayList<PhotoObject> photoArray = new ArrayList<PhotoObject>();
 
+        ParseUser user;
+        try{
+            user = EventBus.getDefault().getStickyEvent(ParseUser.class);
+        }catch(Exception e){
+            user = ParseUser.getCurrentUser();
+        }
+        if(user == null){
+            user = ParseUser.getCurrentUser();
+        }
+
         ParseQuery<LikeObject> query = new ParseQuery<LikeObject>("Like");
-        query.whereEqualTo("user", ParseUser.getCurrentUser());
+        query.whereEqualTo("user", user);
         query.orderByDescending("createdAt");
         query.include("photo");
         query.findInBackground(new FindCallback<LikeObject>() {

@@ -13,6 +13,8 @@ import com.application.challenge.challenge.domain.adapter.PictureListViewAdapter
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.parse.ParseUser;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by lucas on 16/1/15.
  */
@@ -24,7 +26,17 @@ public class ProfileListFragment extends android.support.v4.app.ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        pictureListViewAdapter = new PictureListViewAdapter(getActivity(), ParseHelper.getPicturesFromUser(ParseUser.getCurrentUser()));
+        ParseUser user;
+        try{
+            user = EventBus.getDefault().getStickyEvent(ParseUser.class);
+        }catch(Exception e){
+            user = ParseUser.getCurrentUser();
+        }
+        if(user == null){
+            user = ParseUser.getCurrentUser();
+        }
+
+        pictureListViewAdapter = new PictureListViewAdapter(getActivity(), ParseHelper.getPicturesFromUser(user));
     }
 
     @Override

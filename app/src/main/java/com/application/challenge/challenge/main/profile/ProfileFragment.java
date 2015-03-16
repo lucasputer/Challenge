@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.BlurHelper;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.main.commons.fragment.TabFragment;
@@ -30,6 +31,8 @@ import com.parse.ParseFile;
 import com.parse.ParseImageView;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -91,17 +94,17 @@ public class ProfileFragment extends ChallengeFragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        setProfileInformation(v);
+        ParseUser user;
+        try{
+            user = EventBus.getDefault().getStickyEvent(ParseUser.class);
+        }catch(Exception e){
+            user = ParseUser.getCurrentUser();
+        }
+        if(user == null){
+            user = ParseUser.getCurrentUser();
+        }
 
-        ParseUser.getCurrentUser().fetchInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject parseObject, ParseException e) {
-                if(e == null) {
-                    setProfileInformation(v);
-                }
-            }
-        });
-
+        setProfileInformation(v,user);
 
         setProfileTabs(v);
         return v;
@@ -148,8 +151,7 @@ public class ProfileFragment extends ChallengeFragment {
         return view;
     }
 
-    private void setProfileInformation(View v){
-        ParseUser currentUser = ParseUser.getCurrentUser();
+    private void setProfileInformation(View v, ParseUser currentUser){
 
 
         String name = "";
@@ -198,17 +200,17 @@ public class ProfileFragment extends ChallengeFragment {
         }
 
         TextView challenges = (TextView) v.findViewById(R.id.txt_challenges_amount_profile);
-        ParseHelper.setPhotosCountForUser(challenges,ParseUser.getCurrentUser());
+        ParseHelper.setPhotosCountForUser(challenges,currentUser);
 
         TextView following = (TextView) v.findViewById(R.id.txt_following_amount_profile);
-        if(ParseUser.getCurrentUser().get("followingCount") != null){
-            following.setText(ParseUser.getCurrentUser().get("followingCount").toString());
+        if(currentUser.get("followingCount") != null){
+            following.setText(currentUser.get("followingCount").toString());
         }else{
             following.setText("0");
         }
 
         TextView followers = (TextView) v.findViewById(R.id.txt_followers_amount_profile);
-        ParseHelper.setFollowersCountForUser(followers,ParseUser.getCurrentUser());
+        ParseHelper.setFollowersCountForUser(followers,currentUser);
 
     }
 

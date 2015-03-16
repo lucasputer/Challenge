@@ -1,6 +1,7 @@
 package com.application.challenge.challenge.domain.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -10,6 +11,8 @@ import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
+import com.application.challenge.challenge.main.challenges.ChallengesListActivity;
+import com.application.challenge.challenge.main.profile.ProfileActivity;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -21,13 +24,18 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by lucas on 16/1/15.
  */
 public class UserSearchListViewAdapter extends ParseQueryAdapter<ParseUser> {
 
+    private Context context;
+
     public UserSearchListViewAdapter(Context context, QueryFactory<ParseUser> queryFactory){
         super(context,queryFactory);
+        this.context = context;
     }
 
 
@@ -79,6 +87,15 @@ public class UserSearchListViewAdapter extends ParseQueryAdapter<ParseUser> {
             @Override
             public void onClick(View v) {
                 ParseHelper.followUser(user,follow);
+            }
+        });
+
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                EventBus.getDefault().postSticky(user);
+                context.startActivity(intent);
             }
         });
 
