@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,9 +16,12 @@ import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.FacebookLoginHelper;
 import com.application.challenge.challenge.domain.helper.TwitterLoginHelper;
 import com.application.challenge.challenge.main.MainActivity;
+import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -117,7 +121,7 @@ public class LoginActivity extends Activity {
             facebookLoginButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                    progressDialog = ProgressDialog.show(getActivity(), "", "Logging in with Facebook", true);
+                    progressDialog = ProgressDialog.show(getActivity(), "", "Entrando con Facebook", true);
                     List<String> permissions = Arrays.asList("public_profile", "user_friends", "user_about_me",
                             "user_relationships", "user_birthday", "user_location");
                     ParseFacebookUtils.logIn(permissions, getActivity(), new LogInCallback() {
@@ -142,7 +146,7 @@ public class LoginActivity extends Activity {
             twitterLoginButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
 
-                    progressDialog = ProgressDialog.show(getActivity(), "", "Logging in with Twitter", true);
+                    progressDialog = ProgressDialog.show(getActivity(), "", "Entrando con Twitter", true);
                     ParseTwitterUtils.logIn(rootView.getContext(), new LogInCallback() {
                         @Override
                         public void done(ParseUser user, ParseException err) {
@@ -170,36 +174,60 @@ public class LoginActivity extends Activity {
                     emailInput = (EditText) rootView.findViewById(R.id.edit_text_email);
                     passwordInput = (EditText) rootView.findViewById(R.id.edit_text_password);
 
-                    //TODO
-                    //validaciones de email y conrtasena
-
-                    progressDialog = ProgressDialog.show(getActivity(), "", "Signing up...", true);
+                    if(isValidEmail(emailInput.getText())){
+                        progressDialog = ProgressDialog.show(getActivity(), "", "Cargando...", true);
 
 
-                    ParseUser user = new ParseUser();
-                    user.setUsername(emailInput.getText().toString());
-                    user.setPassword(passwordInput.getText().toString());
+                        final ParseUser user = new ParseUser();
+                        user.setUsername(emailInput.getText().toString());
+                        user.setPassword(passwordInput.getText().toString());
+                        user.put("displayName",emailInput.getText().toString().split("@")[0]);
 
-                    user.signUpInBackground(new SignUpCallback() {
-                        public void done(ParseException e) {
-                            progressDialog.dismiss();
-                            if (e == null) {
-                                Toast.makeText(getActivity(), "User signed up", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(getActivity(), MainActivity.class));
+                        ParseQuery query = ParseUser.getQuery();
+                        query.whereEqualTo("username",user.getUsername());
+                        query.getFirstInBackground(new GetCallback() {
+                            @Override
+                            public void done(ParseObject parseObject, ParseException e) {
+                                if(e == null){
+                                    ParseUser.logInInBackground(emailInput.getText().toString(),passwordInput.getText().toString(), new LogInCallback() {
+                                        @Override
+                                        public void done(ParseUser user, ParseException e) {
+                                            if(e==null){
+                                                startActivity(new Intent(getActivity(), MainActivity.class));
+                                            }else{
+                                                Toast.makeText(getActivity(), "Error. Intentelo nuevamente mas tarde.", Toast.LENGTH_LONG).show();
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    user.signUpInBackground(new SignUpCallback() {
+                                        public void done(ParseException e) {
+                                            progressDialog.dismiss();
+                                            if (e == null) {
+                                                startActivity(new Intent(getActivity(), MainActivity.class));
 
-                            } else {
-                                Toast.makeText(getActivity(), "Sign up failed", Toast.LENGTH_LONG).show();
+                                            } else {
+                                                Toast.makeText(getActivity(), "Error. Intentelo nuevamente mas tarde.", Toast.LENGTH_LONG).show();
 
+                                            }
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+
+
+                    }else{
+                        Toast.makeText(getActivity(), "El email no es válido", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
-
-
-
             return rootView;
         }
+    }
+
+    private final static boolean isValidEmail(CharSequence target) {
+        return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }
