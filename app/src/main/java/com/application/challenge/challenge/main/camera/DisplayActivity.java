@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,14 +26,17 @@ import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
 import com.application.challenge.challenge.main.MainActivity;
+import com.parse.FindCallback;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseImageView;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -43,6 +48,7 @@ public class DisplayActivity extends ListActivity {
     private Bitmap thumbnailBitmap = null;
     private EditText subtitleText;
     private Button shareButton;
+    private EditText searchChallenge;
 
     private PhotoObject photo;
 
@@ -98,10 +104,39 @@ public class DisplayActivity extends ListActivity {
 
 
             if(settedChallenge == null){
-                challengesListViewAdapter = new ChallengesListViewAdapter(this, ParseHelper.getChallengeListQueryFactory());
-                setListAdapter(challengesListViewAdapter);
 
-                getListView().setSelector(R.color.lightGrey);
+                ParseQuery<ChallengeObject> query = ParseHelper.getChallengeListQuery();
+                query.findInBackground(new FindCallback<ChallengeObject>() {
+                    @Override
+                    public void done(List<ChallengeObject> challengeObjects, ParseException e) {
+                        challengesListViewAdapter = new ChallengesListViewAdapter(getApplicationContext(), challengeObjects );
+                        setListAdapter(challengesListViewAdapter);
+
+                        getListView().setSelector(R.color.lightGrey);
+                    }
+                });
+
+                searchChallenge = (EditText) findViewById(R.id.etxt_display_search);
+                searchChallenge.addTextChangedListener(new TextWatcher() {
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        System.out.println("Text ["+s+"]");
+
+                        challengesListViewAdapter.getFilter().filter(s.toString());
+                    }
+
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count,
+                                                  int after) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
+
             }
 
 

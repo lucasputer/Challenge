@@ -1,49 +1,31 @@
 package com.application.challenge.challenge.main.challenges;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
-import com.application.challenge.challenge.domain.adapter.ChallengesListViewAdapter;
-import com.application.challenge.challenge.domain.adapter.ChallengesListViewCustomAdapter;
+import com.application.challenge.challenge.domain.adapter.ChallengesSwipeListViewAdapter;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
-import com.application.challenge.challenge.domain.model.PhotoObject;
-import com.application.challenge.challenge.main.camera.CameraActivity;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
-import com.application.challenge.challenge.main.picture.PictureActivity;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
 import com.fortysevendeg.swipelistview.SwipeListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by lucas on 16/1/15.
  */
 public class ChallengesListFragment extends ChallengeFragment{
 
-    private ChallengesListViewCustomAdapter challengeListAdapter;
+    private ChallengesSwipeListViewAdapter challengeListAdapter;
     private SwipeListView swipeListView;
 
 
@@ -71,7 +53,7 @@ public class ChallengesListFragment extends ChallengeFragment{
 
 
                     //challengeList.addAll(challengeObjects);
-                    challengeListAdapter = new ChallengesListViewCustomAdapter(getActivity(),challengeObjects);
+                    challengeListAdapter = new ChallengesSwipeListViewAdapter(getActivity(),challengeObjects);
 
                     swipeListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 

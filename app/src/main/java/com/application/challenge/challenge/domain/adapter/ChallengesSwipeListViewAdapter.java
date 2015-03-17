@@ -34,12 +34,12 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by lucas on 16/1/15.
  */
-public class ChallengesListViewCustomAdapter extends BaseAdapter {
+public class ChallengesSwipeListViewAdapter extends BaseAdapter {
 
     private List<ChallengeObject> data;
     private Context context;
 
-    public ChallengesListViewCustomAdapter(Context context,List<ChallengeObject> data){
+    public ChallengesSwipeListViewAdapter(Context context, List<ChallengeObject> data){
         this.data = data;
         this.context = context;
     }
