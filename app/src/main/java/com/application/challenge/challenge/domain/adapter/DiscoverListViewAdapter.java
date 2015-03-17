@@ -1,6 +1,7 @@
 package com.application.challenge.challenge.domain.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.PhotoObject;
+import com.application.challenge.challenge.main.profile.ProfileActivity;
 import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
@@ -27,6 +29,8 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by lucas on 16/1/15.
@@ -105,6 +109,15 @@ public class DiscoverListViewAdapter extends ParseQueryAdapter<ParseUser> {
             @Override
             public void onClick(View v) {
                 ParseHelper.followUser(user,follow);
+            }
+        });
+
+        username.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                EventBus.getDefault().postSticky(user);
+                getContext().startActivity(intent);
             }
         });
 

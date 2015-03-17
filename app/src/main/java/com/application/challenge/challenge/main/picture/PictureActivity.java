@@ -15,6 +15,7 @@ import com.application.challenge.challenge.domain.custom.CircularImageView;
 import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.PhotoObject;
+import com.application.challenge.challenge.main.profile.ProfileActivity;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -67,6 +68,16 @@ public class PictureActivity extends Activity {
         }
 
         loadPicture();
+
+        username.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                EventBus.getDefault().postSticky(phObj.getUser());
+                startActivity(intent);
+            }
+        });
+
 
     }
 
