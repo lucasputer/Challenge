@@ -1,6 +1,6 @@
 package com.application.challenge.challenge.main.camera;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,16 +8,14 @@ import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
@@ -41,7 +39,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 
-public class DisplayActivity extends ListActivity {
+public class DisplayActivity extends Activity {
 
     static byte[] imageToShow=null;
     private Bitmap pictureBitmap = null;
@@ -54,6 +52,7 @@ public class DisplayActivity extends ListActivity {
 
     private ChallengeObject settedChallenge = null;
     private ChallengesListViewAdapter challengesListViewAdapter;
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +61,7 @@ public class DisplayActivity extends ListActivity {
         if (imageToShow == null) {
             Toast.makeText(this, R.string.no_image, Toast.LENGTH_LONG).show();
             finish();
-        }
-        else {
+        }else{
             setContentView(R.layout.activity_display);
 
 
@@ -77,6 +75,11 @@ public class DisplayActivity extends ListActivity {
             shareButton = (Button)findViewById(R.id.btn_display_share);
             shareButton.setEnabled(true);
 
+            lv = (ListView)findViewById(android.R.id.list);
+            lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            //lv.setSelector(getResources().getDrawable(R.drawable.challenges_list_view_selector));
+
+
             ParseImageView iv= (ParseImageView) this.findViewById(R.id.img_display_preview);
             BitmapFactory.Options opts=new BitmapFactory.Options();
 
@@ -87,20 +90,14 @@ public class DisplayActivity extends ListActivity {
 
 
             pictureBitmap = BitmapFactory.decodeByteArray(imageToShow, 0,imageToShow.length,opts);
-
             int dimension = getSquareCropDimensionForBitmap(pictureBitmap);
             pictureBitmap = ThumbnailUtils.extractThumbnail(pictureBitmap, dimension, dimension);
-
             thumbnailBitmap = Bitmap.createScaledBitmap(pictureBitmap, 200, 200
                     * pictureBitmap.getHeight() / pictureBitmap.getWidth(), false);
 
             iv.setImageBitmap(pictureBitmap);
-
-
             iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-
-            getListView().setSelector(R.color.grey);
 
 
             if(settedChallenge == null){
@@ -110,9 +107,7 @@ public class DisplayActivity extends ListActivity {
                     @Override
                     public void done(List<ChallengeObject> challengeObjects, ParseException e) {
                         challengesListViewAdapter = new ChallengesListViewAdapter(getApplicationContext(), challengeObjects );
-                        setListAdapter(challengesListViewAdapter);
-
-                        getListView().setSelector(R.color.lightGrey);
+                        lv.setAdapter(challengesListViewAdapter);
                     }
                 });
 
@@ -121,8 +116,6 @@ public class DisplayActivity extends ListActivity {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        System.out.println("Text ["+s+"]");
-
                         challengesListViewAdapter.getFilter().filter(s.toString());
                     }
 
@@ -140,12 +133,11 @@ public class DisplayActivity extends ListActivity {
             }
 
 
-            getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                    view.setSelected(true);
                     settedChallenge = challengesListViewAdapter.getItem(position);
-
                 }
             });
 

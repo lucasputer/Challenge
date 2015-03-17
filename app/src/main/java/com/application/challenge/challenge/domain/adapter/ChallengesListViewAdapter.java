@@ -40,6 +40,7 @@ public class ChallengesListViewAdapter  extends BaseAdapter implements Filterabl
     private List<ChallengeObject> filteredData;
     private Context context;
     private ItemFilter mFilter = new ItemFilter();
+    private ChallengeObject selectedItem;
 
     public ChallengesListViewAdapter(Context context, List<ChallengeObject> data){
         this.data = data;
@@ -69,7 +70,7 @@ public class ChallengesListViewAdapter  extends BaseAdapter implements Filterabl
         ViewHolder holder;
         if (convertView == null) {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = li.inflate(R.layout.element_challenge_row, parent, false);
+            convertView = li.inflate(R.layout.element_challenge_row_front, parent, false);
             holder = new ViewHolder();
             holder.titleTextView = (TextView) convertView.findViewById(R.id.challenge_title);
             holder.titleTextView.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);

@@ -36,51 +36,7 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/front"
-        android:orientation="horizontal"
-        android:background="#fff3f3f3"
-        android:tag="front">
-
-        <com.application.challenge.challenge.domain.custom.CircularImageView
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/login_backround"
-            android:layout_margin="8dp"
-            android:id="@+id/circled_challenge_image" />
-
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/challenge_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Este es el titulo"
-                android:textColor="@color/orange"
-                android:textStyle="bold"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/challenge_subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Esto es un subtitulo"
-                android:textColor="@color/grey"
-                android:textStyle="italic"
-                android:textSize="14sp" />
-
-            </LinearLayout>
-
-
-    </LinearLayout>
+    <!-- Incluye listView -->
+    <include layout="@layout/element_challenge_row_front"/>
 
 </FrameLayout>
