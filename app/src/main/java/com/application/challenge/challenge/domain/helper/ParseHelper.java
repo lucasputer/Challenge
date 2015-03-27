@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.cache.ImageLoader;
 import com.application.challenge.challenge.domain.custom.CircularImageView;
+import com.application.challenge.challenge.domain.custom.Interactions;
 import com.application.challenge.challenge.domain.custom.SquareImageView;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.FollowActivityObject;
@@ -153,6 +154,25 @@ public class ParseHelper {
                 query.whereContains("displayName",searchedText);
                 query.whereNotEqualTo("objectId",ParseUser.getCurrentUser().getObjectId());
                 query.setLimit(20);
+                return query;
+            }
+        };
+        return factory;
+    }
+
+    public static ParseQueryAdapter.QueryFactory<FollowActivityObject> getUsers(final String type, final ParseUser user){
+
+        ParseQueryAdapter.QueryFactory<FollowActivityObject>  factory = new ParseQueryAdapter.QueryFactory<FollowActivityObject>(){
+            public ParseQuery<FollowActivityObject> create(){
+                ParseQuery query = new ParseQuery<FollowActivityObject>("FollowActivity");
+                query.include("toUser");
+                query.include("fromUser");
+                if(type.equals(Interactions.FOLLOWINGS.toString())){
+                    query.whereEqualTo("fromUser",user);
+                }else if(type.equals(Interactions.FOLLOWERS.toString())){
+                    query.whereEqualTo("toUser",user);
+                }
+
                 return query;
             }
         };
@@ -326,17 +346,17 @@ public class ParseHelper {
         query.whereEqualTo("fromUser",ParseUser.getCurrentUser());
         query.whereEqualTo("toUser",user);
 
+        if(user != ParseUser.getCurrentUser()){
+            query.getFirstInBackground(new GetCallback<FollowActivityObject>() {
+                @Override
+                public void done(FollowActivityObject followActivityObject, ParseException e) {
+                    if(e!=null){
 
-           query.getFirstInBackground(new GetCallback<FollowActivityObject>() {
-               @Override
-               public void done(FollowActivityObject followActivityObject, ParseException e) {
-                   if(e!=null){
-
-                       button.setVisibility(View.VISIBLE);
-                   }
-               }
-           });
-
+                        button.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+        }
     }
 
 
@@ -353,7 +373,12 @@ public class ParseHelper {
                     followButton.setVisibility(View.GONE);
 
                     //userToFollow.put("followerCount",Integer.parseInt(userToFollow.get("followerCount").toString()) + 1);
-                    ParseUser.getCurrentUser().put("followingCount",Integer.parseInt(ParseUser.getCurrentUser().get("followingCount").toString()) + 1);
+                    if(ParseUser.getCurrentUser().get("followingCount") != null){
+                        ParseUser.getCurrentUser().put("followingCount",Integer.parseInt(ParseUser.getCurrentUser().get("followingCount").toString()) + 1);
+
+                    }else{
+                        ParseUser.getCurrentUser().put("followingCount",1);
+                    }
                     ParseUser.getCurrentUser().saveEventually(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {

@@ -83,6 +83,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="#e3834f"
+                android:id="@+id/relative_following_profile"
                 >
 
                 <RelativeLayout
@@ -119,6 +120,7 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="#edb191"
+                android:id="@+id/relative_followers_profile"
                 >
 
                 <RelativeLayout

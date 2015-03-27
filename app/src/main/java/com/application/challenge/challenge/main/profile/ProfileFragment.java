@@ -1,5 +1,6 @@
 package com.application.challenge.challenge.main.profile;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,9 +19,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.custom.Interactions;
 import com.application.challenge.challenge.domain.helper.BlurHelper;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
+import com.application.challenge.challenge.main.camera.CameraActivity;
+import com.application.challenge.challenge.main.commons.activity.SearchActivity;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.main.commons.fragment.TabFragment;
@@ -56,6 +60,8 @@ public class ProfileFragment extends ChallengeFragment {
     private OnFragmentInteractionListener mListener;
 
     private FragmentTabHost profileTabHost;
+    private ParseUser user;
+
 
     /**
      * Use this factory method to create a new instance of
@@ -94,7 +100,6 @@ public class ProfileFragment extends ChallengeFragment {
         // Inflate the layout for this fragment
         final View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        ParseUser user;
         try{
             user = EventBus.getDefault().getStickyEvent(ParseUser.class);
         }catch(Exception e){
@@ -103,6 +108,14 @@ public class ProfileFragment extends ChallengeFragment {
         if(user == null){
             user = ParseUser.getCurrentUser();
         }
+
+            user.fetchInBackground(new GetCallback<ParseUser>() {
+                @Override
+                public void done(ParseUser parseUser, ParseException e) {
+                    setProfileInformation(v,parseUser);
+
+                }
+            });
 
         setProfileInformation(v,user);
 
@@ -151,8 +164,9 @@ public class ProfileFragment extends ChallengeFragment {
         return view;
     }
 
-    private void setProfileInformation(View v, ParseUser currentUser){
+    private void setProfileInformation(View v, final ParseUser currentUser){
 
+        user = currentUser;
 
         String name = "";
         try{
@@ -211,6 +225,28 @@ public class ProfileFragment extends ChallengeFragment {
 
         TextView followers = (TextView) v.findViewById(R.id.txt_followers_amount_profile);
         ParseHelper.setFollowersCountForUser(followers,currentUser);
+
+        RelativeLayout relativeFollowing = (RelativeLayout)v.findViewById(R.id.relative_following_profile);
+        relativeFollowing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(getActivity(), SearchActivity.class);
+                intent.putExtra("type", Interactions.FOLLOWINGS.toString());
+                EventBus.getDefault().postSticky(currentUser);
+                startActivity(intent);
+            }
+        });
+
+        RelativeLayout relativeFollowers = (RelativeLayout)v.findViewById(R.id.relative_followers_profile);
+        relativeFollowers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().setClass(getActivity(), SearchActivity.class);
+                intent.putExtra("type", Interactions.FOLLOWERS.toString());
+                intent.putExtra("user",currentUser.getObjectId());
+                startActivity(intent);
+            }
+        });
 
     }
 
