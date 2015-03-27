@@ -9,7 +9,9 @@ import android.widget.ListView;
 import com.application.challenge.challenge.domain.adapter.DiscoverListViewAdapter;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.adapter.PictureListViewAdapter;
+import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.helper.TabHelper;
 import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 
@@ -34,6 +36,8 @@ public class DiscoverListFragment extends android.support.v4.app.ListFragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_list_view, container, false);
+
+        TabHelper.setTab(Tabs.SEARCH);
 
         ListView lv = (ListView) v.findViewById(android.R.id.list);
 

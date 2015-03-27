@@ -79,7 +79,7 @@
         </activity>
         <activity
             android:name=".main.commons.activity.SearchActivity"
-            android:label="@string/action_search_user"
+            android:label="@string/title_activity_search"
             android:parentActivityName=".main.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

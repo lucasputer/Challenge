@@ -1,5 +1,6 @@
 package com.application.challenge.challenge.main.challenges;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.widget.ListView;
 
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.adapter.ChallengesSwipeListViewAdapter;
+import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.helper.TabHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.fortysevendeg.swipelistview.BaseSwipeListViewListener;
@@ -42,6 +45,9 @@ public class ChallengesListFragment extends ChallengeFragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_list_view_swipe_challenges, container, false);
+
+
+        TabHelper.setTab(Tabs.CHALLENGES);
 
         swipeListView = (SwipeListView) v.findViewById(R.id.example_lv_list);
 

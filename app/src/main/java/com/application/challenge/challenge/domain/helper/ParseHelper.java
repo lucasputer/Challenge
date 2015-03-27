@@ -160,6 +160,15 @@ public class ParseHelper {
         return factory;
     }
 
+    public static ParseQuery<ChallengeObject> getChallengesFromSearch(final String searchedText){
+        ParseQuery query = new ParseQuery<ChallengeObject>("Challenge");
+        query.whereContains("name",searchedText);
+        query.include("firstPhoto");
+        query.include("objectId");
+        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+        return query;
+    }
+
     public static ParseQueryAdapter.QueryFactory<FollowActivityObject> getUsers(final String type, final ParseUser user){
 
         ParseQueryAdapter.QueryFactory<FollowActivityObject>  factory = new ParseQueryAdapter.QueryFactory<FollowActivityObject>(){

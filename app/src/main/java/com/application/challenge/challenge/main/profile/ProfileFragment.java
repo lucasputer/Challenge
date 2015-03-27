@@ -22,6 +22,7 @@ import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.custom.Interactions;
 import com.application.challenge.challenge.domain.helper.BlurHelper;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.helper.TabHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.main.camera.CameraActivity;
 import com.application.challenge.challenge.main.commons.activity.SearchActivity;
@@ -116,6 +117,8 @@ public class ProfileFragment extends ChallengeFragment {
 
                 }
             });
+
+        TabHelper.setTab(Tabs.PROFILE);
 
         setProfileInformation(v,user);
 

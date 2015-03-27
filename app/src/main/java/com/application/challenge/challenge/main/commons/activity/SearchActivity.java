@@ -16,10 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.adapter.ChallengesListViewAdapter;
 import com.application.challenge.challenge.domain.adapter.UserListViewAdapter;
 import com.application.challenge.challenge.domain.adapter.UserSearchListViewAdapter;
 import com.application.challenge.challenge.domain.custom.Interactions;
+import com.application.challenge.challenge.domain.custom.Tabs;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.helper.TabHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.FollowActivityObject;
 import com.parse.FindCallback;
@@ -35,6 +38,7 @@ public class SearchActivity extends ListActivity {
 
     UserSearchListViewAdapter userSearchListViewAdapter;
     UserListViewAdapter userListViewAdapter;
+    ChallengesListViewAdapter challengesListViewAdapter;
     ActionBar actionBar;
 
     @Override
@@ -61,16 +65,36 @@ public class SearchActivity extends ListActivity {
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            actionBar.setTitle(R.string.title_activity_search);
+            if(TabHelper.getTab() != Tabs.CHALLENGES){
+                actionBar.setTitle(R.string.title_activity_search_user);
 
-            String searchedText = intent.getStringExtra(SearchManager.QUERY);
+                String searchedText = intent.getStringExtra(SearchManager.QUERY);
 
-            userSearchListViewAdapter = new UserSearchListViewAdapter(this,ParseHelper.getUsersFromSearch(searchedText));
-            ListView lv = (ListView) findViewById(android.R.id.list);
+                userSearchListViewAdapter = new UserSearchListViewAdapter(this,ParseHelper.getUsersFromSearch(searchedText));
+                ListView lv = (ListView) findViewById(android.R.id.list);
 
-            lv.setAdapter(userSearchListViewAdapter);
-            userSearchListViewAdapter.loadObjects();
+                lv.setAdapter(userSearchListViewAdapter);
+                userSearchListViewAdapter.loadObjects();
+            }else{
+                actionBar.setTitle(R.string.title_activity_search_challenge);
 
+                String searchedText = intent.getStringExtra(SearchManager.QUERY);
+
+                ParseQuery<ChallengeObject> query = ParseHelper.getChallengesFromSearch(searchedText);
+                query.findInBackground(new FindCallback<ChallengeObject>() {
+                    @Override
+                    public void done(List<ChallengeObject> challengeObjects, ParseException e) {
+                        if(e == null){
+                            challengesListViewAdapter = new ChallengesListViewAdapter(getApplicationContext(),challengeObjects);
+                            ListView lv = (ListView) findViewById(android.R.id.list);
+
+                            lv.setAdapter(challengesListViewAdapter);
+                        }
+                    }
+                });
+
+
+            }
 
         }else{
             final String type = intent.getStringExtra("type");

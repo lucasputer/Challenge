@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.domain.helper.TabHelper;
 import com.application.challenge.challenge.main.commons.fragment.ChallengeFragment;
 import com.application.challenge.challenge.domain.custom.Tabs;
 
@@ -72,7 +73,9 @@ public class HomeFragment extends ChallengeFragment {
 
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-       setHomeTabs(v);
+        setHomeTabs(v);
+
+        TabHelper.setTab(Tabs.HOME);
 
         return v;
     }

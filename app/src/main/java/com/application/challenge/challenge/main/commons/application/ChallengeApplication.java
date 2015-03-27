@@ -5,6 +5,7 @@ import android.app.Application;
 import com.application.challenge.challenge.R;
 import com.application.challenge.challenge.domain.helper.FacebookLoginHelper;
 import com.application.challenge.challenge.domain.helper.ParseHelper;
+import com.application.challenge.challenge.domain.helper.TabHelper;
 import com.application.challenge.challenge.domain.helper.TwitterLoginHelper;
 import com.application.challenge.challenge.domain.model.ChallengeObject;
 import com.application.challenge.challenge.domain.model.FollowActivityObject;
@@ -66,6 +67,7 @@ public class ChallengeApplication extends Application {
         ParseHelper.initialize();
         FacebookLoginHelper.initialize();
         TwitterLoginHelper.initialize();
+        TabHelper.initialize();
 
     }
 
