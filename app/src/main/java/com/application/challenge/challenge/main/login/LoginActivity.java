@@ -20,10 +20,12 @@ import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseTwitterUtils;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import android.content.Intent;
@@ -109,7 +111,7 @@ public class LoginActivity extends Activity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+                                 final Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
 
             Typeface tf = Typeface.createFromAsset(getActivity().getAssets(),
@@ -131,6 +133,7 @@ public class LoginActivity extends Activity {
                             if (user != null) {
 
                                 FacebookLoginHelper.setMissingData();
+                                saveInstallation();
 
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                             }else{
@@ -154,6 +157,8 @@ public class LoginActivity extends Activity {
                             if (user != null) {
 
                                 TwitterLoginHelper.setMissingData();
+
+                                saveInstallation();
 
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                             }else{
@@ -193,6 +198,7 @@ public class LoginActivity extends Activity {
                                         @Override
                                         public void done(ParseUser user, ParseException e) {
                                             if(e==null){
+                                                saveInstallation();
                                                 startActivity(new Intent(getActivity(), MainActivity.class));
                                             }else{
                                                 Toast.makeText(getActivity(), "Error. Intentelo nuevamente mas tarde.", Toast.LENGTH_LONG).show();
@@ -204,6 +210,7 @@ public class LoginActivity extends Activity {
                                         public void done(ParseException e) {
                                             progressDialog.dismiss();
                                             if (e == null) {
+                                                saveInstallation();
                                                 startActivity(new Intent(getActivity(), MainActivity.class));
 
                                             } else {
@@ -229,5 +236,14 @@ public class LoginActivity extends Activity {
 
     private final static boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    private static void saveInstallation(){
+        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+
+            }
+        });
     }
 }
