@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +32,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="320dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_above="@+id/btn_display_share">
 
         <EditText
             android:layout_width="match_parent"
@@ -57,8 +58,11 @@
         android:textStyle="bold"
         android:background="#dc6423"
         android:onClick="sharePicture"
-        android:id="@+id/btn_display_share" />
+        android:id="@+id/btn_display_share"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 
-</LinearLayout>
+</RelativeLayout>
