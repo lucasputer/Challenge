@@ -32,4 +32,4 @@ Thumbs.db
 build/
 
 #archivo de properties para distintos entornos
-/app/src/main/res/values/properties.xml
+**/*/res/values/properties.xml
