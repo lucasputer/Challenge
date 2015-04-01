@@ -2,12 +2,16 @@ package com.application.challenge.challenge.main.commons.fragment;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 
 import com.application.challenge.challenge.R;
+import com.application.challenge.challenge.main.commons.application.ChallengeApplication;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 /**
  * Created by lucas on 29/12/14.
@@ -15,6 +19,9 @@ import com.application.challenge.challenge.R;
 public class ChallengeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private Tracker tracker;
+    private String activityId;
+    private String fragmentId;
 
     @Override
     public void onAttach(Activity activity) {
@@ -42,6 +49,28 @@ public class ChallengeFragment extends Fragment {
 //        transaction.commit();
 //        getChildFragmentManager().executePendingTransactions();
 //    }
+
+    @Override
+    public void onActivityCreated(final Bundle savedInstanceState) {
+
+        super.onActivityCreated(savedInstanceState);
+
+        this.tracker = ((ChallengeApplication) getActivity().getApplication()).getTracker(
+                ChallengeApplication.TrackerName.APP_TRACKER);
+
+        this.fragmentId = getClass().getSimpleName();
+        this.activityId = getActivity().getClass().getSimpleName();
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        tracker.setScreenName(fragmentId);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+
+    }
 
 
     public interface OnFragmentInteractionListener {
